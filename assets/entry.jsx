@@ -1,29 +1,21 @@
 import anime from "animejs"
 
 document.addEventListener("DOMContentLoaded", () => {
-  var maxElements = 210;
-  var colors = ['#FF324A', '#31FFA6', '#206EFF', '#FFFF99'];
+  let keys_entered = 0;
+  let wpm;
+  let time = 1;
+  setInterval(() => {
+    time++,
+    wpm = parseInt((keys_entered/5)/(time/60))
+    $('.Timer').replaceWith(`<li class="Timer">Time: ${time} seconds`)
+    $('.wpm').replaceWith(`<li class="wpm">WPM: ${wpm} wpm</li>`)
+  }, 1000)
 
-  var createElements = (function() {
-    var sectionEl = document.createElement('section');
-    for (var i = 0; i < maxElements; i++) {
-      var el = document.createElement('div');
-      el.style.background = colors[anime.random(0, 3)];
-      sectionEl.appendChild(el);
-    }
-    document.body.appendChild(sectionEl);
-  })();
+  let handleKeyboard = (e) => {
+      keys_entered++
+      $('.keys-entered').replaceWith(`<li class="keys-entered"> Keys Entered: ${keys_entered} </li>`)
+  }
 
-  $('body').click(() => {
-    anime({
-    targets: 'div',
-    translateX: function() { return anime.random(-6, 6) + 'rem'; },
-    translateY: function() { return anime.random(-6, 6) + 'rem'; },
-    scale: function() { return anime.random(10, 20) / 10; },
-    rotate: function() { return anime.random(-360, 360); },
-    delay: function() { return 400 + anime.random(0, 500); },
-    duration: function() { return anime.random(1000, 2000); },
-    direction: 'alternate',
-    loop: false
-  })});
-})
+  document.addEventListener('keydown', (e) => { handleKeyboard(e)})
+
+  });

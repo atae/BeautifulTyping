@@ -53,43 +53,22 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	document.addEventListener("DOMContentLoaded", function () {
-	  var maxElements = 210;
-	  var colors = ['#FF324A', '#31FFA6', '#206EFF', '#FFFF99'];
+	  var keys_entered = 0;
+	  var wpm = void 0;
+	  var time = 1;
+	  setInterval(function () {
+	    time++, wpm = parseInt(keys_entered / 5 / (time / 60));
+	    $('.Timer').replaceWith("<li class=\"Timer\">Time: " + time + " seconds");
+	    $('.wpm').replaceWith("<li class=\"wpm\">WPM: " + wpm + " wpm</li>");
+	  }, 1000);
 	
-	  var createElements = function () {
-	    var sectionEl = document.createElement('section');
-	    for (var i = 0; i < maxElements; i++) {
-	      var el = document.createElement('div');
-	      el.style.background = colors[_animejs2.default.random(0, 3)];
-	      sectionEl.appendChild(el);
-	    }
-	    document.body.appendChild(sectionEl);
-	  }();
+	  var handleKeyboard = function handleKeyboard(e) {
+	    keys_entered++;
+	    $('.keys-entered').replaceWith("<li class=\"keys-entered\"> Keys Entered: " + keys_entered + " </li>");
+	  };
 	
-	  $('body').click(function () {
-	    (0, _animejs2.default)({
-	      targets: 'div',
-	      translateX: function translateX() {
-	        return _animejs2.default.random(-6, 6) + 'rem';
-	      },
-	      translateY: function translateY() {
-	        return _animejs2.default.random(-6, 6) + 'rem';
-	      },
-	      scale: function scale() {
-	        return _animejs2.default.random(10, 20) / 10;
-	      },
-	      rotate: function rotate() {
-	        return _animejs2.default.random(-360, 360);
-	      },
-	      delay: function delay() {
-	        return 400 + _animejs2.default.random(0, 500);
-	      },
-	      duration: function duration() {
-	        return _animejs2.default.random(1000, 2000);
-	      },
-	      direction: 'alternate',
-	      loop: false
-	    });
+	  document.addEventListener('keydown', function (e) {
+	    handleKeyboard(e);
 	  });
 	});
 
