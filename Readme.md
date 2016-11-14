@@ -1,7 +1,7 @@
 ## Beautiful Typing
 
 ### Background
-Beautiful Typing is a series of arcade-style typing challenges that will test the user's ability to type in different situations.
+Beautiful Typing is a series of arcade-style typing challenges that will test the users ability to type in different situations.
 This will be accomplished with 3 basic goals in mind:
 
   1. Beautiful interactive aesthetics to keep the user immersed
@@ -57,19 +57,19 @@ After each stage, there will be a results screen with details for their ranking,
 
 This project will use the following technologies:
 
-- Vanilla JavaScript and 'jquery' for handling game logic
+- Vanilla JavaScript and `jquery` for handling game logic
 - `Anime.js` with `HTML5 Canvas` for modern animations and visual feedback
 - `Howler.js` will be used for handling sound
 - Webpack
 - Leaderboard implemented with dreamlo.com
 
-'title.js' - this script will be in charge of getting settings from the user and implementing these settings throughout the application
+`title.js` - this script will be in charge of getting settings from the user and implementing these settings throughout the application
 
-'game.js' - Game statistics will be handled here including WPM, timer, scoring, and combo counting.
+`game.js` - Game statistics will be handled here including WPM, timer, scoring, and combo counting.
 
-'animations.js' - Everything related to visuals and styling that need to be handled by `Anime.js` will be handled in this file.
+`animations.js` - Everything related to visuals and styling that need to be handled by `Anime.js` will be handled in this file.
 
-'level_handler.js' - The content for each level will be in here. This will include color scheme arrays, text, level-specific rules, and music playback. Current, text will be stored directly into this file, but if necessary I will implement a parser for text files.
+`level_handler.js` - The content for each level will be in here. This will include color scheme arrays, text, level-specific rules, and music playback. Current, text will be stored directly into this file, but if necessary I will implement a parser for text files.
 
 
 
@@ -78,7 +78,7 @@ This project will use the following technologies:
 **Day 1**: Get a working simple typing game working. This will be a single level. It should receive user input at this point and will output results in real time. Sounds and music will be implemented at this time.
 
 - Get a green bundle with webpack
-- 'title.js' and 'game.js' should be working together to show a working typing application
+- `title.js` and `game.js` should be working together to show a working typing application
 - make sure leaderboards are working as expected.
 
 **Day 2**: Learn `Anime.js` so that I can at least replicate what I want from their CodePen demoes. A lot of styling decisions will be made on this day. I will also begin designing levels and deciding how to handle text content.
