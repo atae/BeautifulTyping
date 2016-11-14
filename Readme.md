@@ -38,17 +38,17 @@ In addition, this project will include:
 
 The app will being with a title screen consisting of the leaderboards, a couple of options, and links for the Github, my LinkedIn, and Email.
 
-![tag wireframe](docs/Title Page.png)
+![tag wireframe](Docs/Title Page.png)
 
 There will be modals between levels detailing the level details with a single button for confirmation.
-![tag wireframe](docs/PreLevel Info.png)
+![tag wireframe](Docs/PreLevel Info.png)
 
 The app will be a full screen app that has a top bar with game status and a main screen with the text that needs to be typed.
 The main input screen is where most of the interactive elements will occur.
-![tag wireframe](docs/Gameplay.png)
+![tag wireframe](Docs/Gameplay.png)
 
 After each stage, there will be a results screen with details for their ranking, WPM, errors, etc.
-![tag wireframe](docs/Results.png)
+![tag wireframe](Docs/Results.png)
 
 
 
