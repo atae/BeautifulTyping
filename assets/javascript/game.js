@@ -1,15 +1,18 @@
 import Howler from 'howler'
-import changeBackground from './animation';
+import animation from './animation';
 // implement new Date once I figure it out
+
+
+
+
   export const startLevel = (currentLvl) => {
+    // debugger
+    // console.log(animation);
     let currentLevel = JSON.parse(JSON.stringify(currentLvl));
     let currentText = currentLevel['currentText']
     document.removeEventListener('keydown',(e) => { handleKeyboard(e)})
     clearInterval(gameWatcher);
-    let soundFiles = currentLevel['soundFiles']
-    let playMusic = new Howler.Howl({
-      src: [soundFiles]
-    });
+    // changeBackground();
     let score = 0;
     console.log(currentText);
     let keys_entered = 0;
@@ -23,17 +26,46 @@ import changeBackground from './animation';
     $('.currentText').replaceWith(`<h2 class="currentText">${currentText[0]}</h2>`)
     $('.done').replaceWith(`<h3 class="done">${done}</h3>`)
 
+    document.addEventListener("keydown", animation.handleEvent)
+    // (e) => {
+    //   // debugger
+    // if ($('.currentText').text().length <= 2){
+    //   document.addEventListener("keydown", animation.handleEvent);
+    //     // handleEvent;
+    // } else {
+    //   document.removeEventListener("keydown", animation.handleEvent);
+    // }
+    // })
+    // Setup Sound Here
+    let soundFiles = currentLevel['soundFiles']
+    let playMusic = new Howler.Howl({
+      src: [soundFiles],
+      loop: true,
+      html5: true,
+      mute: currentLevel['options']['muteMusicOption']
+    });
 
     let sfx = currentLevel['sfx']
     let errorSound = new Howler.Howl({
       src: [sfx[0]],
-      volume: 0.4
+      volume: 0.4,
+      mute: currentLevel['options']['muteSoundOption']
+
     });
 
     let typeSound = new Howler.Howl({
       src: [sfx[1]],
-      volume: 1
+      volume: 1,
+      mute: currentLevel['options']['muteSoundOption']
     })
+
+
+    //Setup Level Gimmicks here
+    let className = "currentText"
+    if (currentLevel["animations"]["shake"] === true) {
+      className += " shake"
+    }
+
 
     playMusic.play();
     $('.Level').replaceWith(`<li class="Level"> Level: ${currentLevel['level']} </li>`)
@@ -71,10 +103,10 @@ import changeBackground from './animation';
           $('.combo').replaceWith(`<h1 class="combo">Combo: ${combo}</h1>`)
           $('.score').replaceWith(`<li class="score">Score: ${score}</h1>`)
           if (currentText[0][0] == " " || done[done.length-1] == " "){
-            $('.currentText').replaceWith(`<h2 class="currentText">\u00A0${currentText[0]}</h2>`)
+            $('.currentText').replaceWith(`<h2 class="currentText" >\u00A0${currentText[0]}</h2>`)
             //Come back to this space glitch later
           } else {
-            $('.currentText').replaceWith(`<h2 class="currentText">${currentText[0]}</h2>`)
+            $('.currentText').replaceWith(`<h2 class="currentText" >${currentText[0]}</h2>`)
 
           }
         } else if(e.key !== "Shift" && e.key!== "Enter"){
@@ -96,7 +128,7 @@ import changeBackground from './animation';
           } else if (currentText[0].length === 0) {
             currentText = currentText.slice(1)
             done = ""
-            changeBackground();
+            // changeBackground();
             score += 250 * (parseInt((combo/10)) + 1) + parseInt(wpm + 1)
             $('.done').replaceWith(`<h3 class="done">${done}</h3>`)
             $('.currentText').replaceWith(`<h2 class="currentText">${currentText[0]}</h2>`)
@@ -108,29 +140,4 @@ import changeBackground from './animation';
           // $('.keys-entered').replaceWith(`<li class="keys-entered">Correct Keys Entered: ${keys_entered} </li>`)
 })
 
-
-
-
-
-
 }
-
-  export const handleStart = (e) => {
-
-    }
-
-
-  // export const waitForStart = (currentLvl) => {
-  //   document.addEventListener("keydown", handleStart(e))
-  // }
-  //
-  // export const waitForEnd = (currentLvl) => {
-  //   document.removeEventListener("keydown", handleStart(e))
-  // }
-
-  export const playMusic= (currentLevel) => {
-
-  }
-  //
-  // export const handleKeyboard =
-  // }

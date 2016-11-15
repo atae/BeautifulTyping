@@ -48,19 +48,31 @@ return Math.sqrt(Math.pow(l, 2) + Math.pow(h, 2));
 function addClickListeners() {
 // touch start starts when touch surface is touched?
 document.addEventListener("touchstart", handleEvent);
-// document.addEventListener("keydown", handleEvent);
+let counter = 0;
+let color = colorPicker.next();
+document.addEventListener("keydown", (e) => {
+  // debugger
+// if ($('.currentText').text().length <= 2){
+  counter ++;
+  $('.currentText').css("color", color)
+  if (counter % 30 === 0 || e.key == "1") {
+    handleEvent(e)    // handleEvent;
+  }
+// } else {
+  // $('.currentText').off('change',handleEvent);
+}
+)
 };
 
 const handleEvent = (e) => {
-  debugger
-// gets position of the touch?
+
   if (e.touches) {
     e.preventDefault();
     e = e.touches[0];
   }
   // goes through color
-  let pageX = 300
-  let pageY = 300
+  let pageX = Math.max(cW)
+  let pageY = Math.max(cH)
   var currentColor = colorPicker.current();
   var nextColor = colorPicker.next();
   // expands the color depending on the position of e
@@ -228,7 +240,7 @@ document.dispatchEvent(fauxClick);
 }
 }
 
+export default animation
 export const changeBackground = () => {
   handleEvent();
 }
-export default animation

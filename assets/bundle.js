@@ -63,13 +63,24 @@
 	    level: "Tutorial",
 	    currentText: ["Let's get this party started!", "Whoa, two sentences!", "THREEEEEE;;;;;", "end"],
 	    soundFiles: './assets/music/Beautiful_Typing.mp3',
-	    sfx: ['./assets/sounds/Blip_Select.wav', './assets/sounds/typewriter.wav']
+	    sfx: ['./assets/sounds/Blip_Select.wav', './assets/sounds/typewriter.wav'],
+	    options: {
+	      muteSoundOption: false,
+	      muteMusicOption: false
+	    },
+	    animations: {
+	      shake: true,
+	      spotlight: false,
+	      flags: false,
+	      cats: false,
+	      random: false
+	    }
 	  };
 	  var gameStarted = false;
 	  //ToggleSound
 	  var textToType = ["Let's get this typed.", "Let's also get this typed"];
 	  var Start = function Start(e) {
-	    debugger;
+	    // debugger
 	    if (e.key == "1" && gameStarted === false) {
 	      document.removeEventListener('keydown', Start);
 	      gameStarted = true;
@@ -77,6 +88,21 @@
 	    }
 	  };
 	
+	  $('.soundOption').on('click', function () {
+	    if ($('.soundOption').text() === " Sound: On ") {
+	      $('.soundOption').replaceWith('<li class="soundOption"> Sound: Off </li>');
+	    } else if ($('.soundOption').text() === " Sound: Off ") {
+	      $('.soundOption').replaceWith('<li class="soundOption"> Sound: On </li>');
+	    }
+	  });
+	
+	  $('.musicOption').on('click', function () {
+	    if ($('.musicOption').text() === " Music: On ") {
+	      $('.musicOption').replaceWith('<li class="musicOption"> Music: Off </li>');
+	    } else if ($('.musicOption').text() === " Music: Off ") {
+	      $('.musicOption').replaceWith('<li class="musicOption"> Music: On </li>');
+	    }
+	  });
 	  document.addEventListener("keydown", Start);
 	
 	  (0, _animation2.default)();
@@ -732,7 +758,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.playMusic = exports.handleStart = exports.startLevel = undefined;
+	exports.startLevel = undefined;
 	
 	var _howler = __webpack_require__(3);
 	
@@ -745,17 +771,18 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// implement new Date once I figure it out
+	
+	
 	var startLevel = exports.startLevel = function startLevel(currentLvl) {
+	  // debugger
+	  // console.log(animation);
 	  var currentLevel = JSON.parse(JSON.stringify(currentLvl));
 	  var currentText = currentLevel['currentText'];
 	  document.removeEventListener('keydown', function (e) {
 	    handleKeyboard(e);
 	  });
 	  clearInterval(gameWatcher);
-	  var soundFiles = currentLevel['soundFiles'];
-	  var playMusic = new _howler2.default.Howl({
-	    src: [soundFiles]
-	  });
+	  // changeBackground();
 	  var score = 0;
 	  console.log(currentText);
 	  var keys_entered = 0;
@@ -769,16 +796,44 @@
 	  $('.currentText').replaceWith('<h2 class="currentText">' + currentText[0] + '</h2>');
 	  $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
 	
+	  document.addEventListener("keydown", _animation2.default.handleEvent);
+	  // (e) => {
+	  //   // debugger
+	  // if ($('.currentText').text().length <= 2){
+	  //   document.addEventListener("keydown", animation.handleEvent);
+	  //     // handleEvent;
+	  // } else {
+	  //   document.removeEventListener("keydown", animation.handleEvent);
+	  // }
+	  // })
+	  // Setup Sound Here
+	  var soundFiles = currentLevel['soundFiles'];
+	  var playMusic = new _howler2.default.Howl({
+	    src: [soundFiles],
+	    loop: true,
+	    html5: true,
+	    mute: currentLevel['options']['muteMusicOption']
+	  });
+	
 	  var sfx = currentLevel['sfx'];
 	  var errorSound = new _howler2.default.Howl({
 	    src: [sfx[0]],
-	    volume: 0.4
+	    volume: 0.4,
+	    mute: currentLevel['options']['muteSoundOption']
+	
 	  });
 	
 	  var typeSound = new _howler2.default.Howl({
 	    src: [sfx[1]],
-	    volume: 1
+	    volume: 1,
+	    mute: currentLevel['options']['muteSoundOption']
 	  });
+	
+	  //Setup Level Gimmicks here
+	  var className = "currentText";
+	  if (currentLevel["animations"]["shake"] === true) {
+	    className += " shake";
+	  }
 	
 	  playMusic.play();
 	  $('.Level').replaceWith('<li class="Level"> Level: ' + currentLevel['level'] + ' </li>');
@@ -815,10 +870,10 @@
 	        $('.combo').replaceWith('<h1 class="combo">Combo: ' + combo + '</h1>');
 	        $('.score').replaceWith('<li class="score">Score: ' + score + '</h1>');
 	        if (currentText[0][0] == " " || done[done.length - 1] == " ") {
-	          $('.currentText').replaceWith('<h2 class="currentText">\xA0' + currentText[0] + '</h2>');
+	          $('.currentText').replaceWith('<h2 class="currentText" >\xA0' + currentText[0] + '</h2>');
 	          //Come back to this space glitch later
 	        } else {
-	          $('.currentText').replaceWith('<h2 class="currentText">' + currentText[0] + '</h2>');
+	          $('.currentText').replaceWith('<h2 class="currentText" >' + currentText[0] + '</h2>');
 	        }
 	      } else if (e.key !== "Shift" && e.key !== "Enter") {
 	        errors++;
@@ -841,7 +896,7 @@
 	      } else if (currentText[0].length === 0) {
 	        currentText = currentText.slice(1);
 	        done = "";
-	        (0, _animation2.default)();
+	        // changeBackground();
 	        score += 250 * (parseInt(combo / 10) + 1) + parseInt(wpm + 1);
 	        $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
 	        $('.currentText').replaceWith('<h2 class="currentText">' + currentText[0] + '</h2>');
@@ -850,21 +905,6 @@
 	    // $('.keys-entered').replaceWith(`<li class="keys-entered">Correct Keys Entered: ${keys_entered} </li>`)
 	  });
 	};
-	
-	var handleStart = exports.handleStart = function handleStart(e) {};
-	
-	// export const waitForStart = (currentLvl) => {
-	//   document.addEventListener("keydown", handleStart(e))
-	// }
-	//
-	// export const waitForEnd = (currentLvl) => {
-	//   document.removeEventListener("keydown", handleStart(e))
-	// }
-	
-	var playMusic = exports.playMusic = function playMusic(currentLevel) {};
-	//
-	// export const handleKeyboard =
-	// }
 
 /***/ },
 /* 3 */
@@ -3693,19 +3733,30 @@
 	  function addClickListeners() {
 	    // touch start starts when touch surface is touched?
 	    document.addEventListener("touchstart", handleEvent);
-	    // document.addEventListener("keydown", handleEvent);
+	    var counter = 0;
+	    var color = colorPicker.next();
+	    document.addEventListener("keydown", function (e) {
+	      // debugger
+	      // if ($('.currentText').text().length <= 2){
+	      counter++;
+	      $('.currentText').css("color", color);
+	      if (counter % 30 === 0 || e.key == "1") {
+	        handleEvent(e); // handleEvent;
+	      }
+	      // } else {
+	      // $('.currentText').off('change',handleEvent);
+	    });
 	  };
 	
 	  var handleEvent = function handleEvent(e) {
-	    debugger;
-	    // gets position of the touch?
+	
 	    if (e.touches) {
 	      e.preventDefault();
 	      e = e.touches[0];
 	    }
 	    // goes through color
-	    var pageX = 300;
-	    var pageY = 300;
+	    var pageX = Math.max(cW);
+	    var pageY = Math.max(cH);
 	    var currentColor = colorPicker.current();
 	    var nextColor = colorPicker.next();
 	    // expands the color depending on the position of e
@@ -3872,10 +3923,10 @@
 	  }
 	};
 	
+	exports.default = animation;
 	var changeBackground = exports.changeBackground = function changeBackground() {
 	  handleEvent();
 	};
-	exports.default = animation;
 
 /***/ }
 /******/ ]);
