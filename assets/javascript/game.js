@@ -62,8 +62,11 @@ import animation from './animation';
 
     //Setup Level Gimmicks here
     let className = "currentText"
-    if (currentLevel["animations"]["shake"] === true) {
-      className += " shake"
+    let toggleAnimation = (element) => {
+      if (currentLevel["animations"]["shake"] === true) {
+        element.toggleClass("shake")
+        $('.done').toggleClass('shake')
+      }
     }
 
 
@@ -87,8 +90,9 @@ import animation from './animation';
     },
      1000)
      $('.navbar').toggleClass('hidden')
-
+     toggleAnimation($('.currentText'))
     document.addEventListener('keydown', (e) => {
+
       if (currentText.length > 1) {
         if (e.key === currentText[0][0]){
           // debugger
@@ -104,10 +108,11 @@ import animation from './animation';
           $('.score').replaceWith(`<li class="score">Score: ${score}</h1>`)
           if (currentText[0][0] == " " || done[done.length-1] == " "){
             $('.currentText').replaceWith(`<h2 class="currentText" >\u00A0${currentText[0]}</h2>`)
+            toggleAnimation($('.currentText'))
             //Come back to this space glitch later
           } else {
             $('.currentText').replaceWith(`<h2 class="currentText" >${currentText[0]}</h2>`)
-
+            toggleAnimation($('.currentText'))
           }
         } else if(e.key !== "Shift" && e.key!== "Enter"){
           errors ++
@@ -132,6 +137,8 @@ import animation from './animation';
             score += 250 * (parseInt((combo/10)) + 1) + parseInt(wpm + 1)
             $('.done').replaceWith(`<h3 class="done">${done}</h3>`)
             $('.currentText').replaceWith(`<h2 class="currentText">${currentText[0]}</h2>`)
+            toggleAnimation($('.currentText'))
+
           }
 
       } else if (currentText[0] == "end"){
