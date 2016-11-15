@@ -3,27 +3,34 @@
   <head>
     <meta charset="utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="./assets/CSS/reset.css" media="screen" title="no title">
     <link rel="stylesheet" href="./assets/CSS/beauTyping.css" media="screen" title="no title">
     <script type="text/javascript" src="./assets/bundle.js"></script>
     <title></title>
   </head>
   <body>
-    <navbar>
+
+    <header class = "navbar hidden">
       <ul class="stats">
-        <li> Level: </li>
-        <li> Score: </li>
+        <li class = "Level"> Level: </li>
+        <li class = "Score"> Score: </li>
         <li class = "Timer"> Time: 0 sec</li>
         <li class = "wpm"> WPM: 0 wpm</li>
         <li class = "maxWpm"> Max WPM: 0 wpm</li>
         <li class ="keys-entered"> Keys Entered: 0 </li>
         <li class ="errors"> Errors: 0 </li>
-        <li class ="done"> Done keys</li>
-        <li class ="currentText"> Press 1 to Start </li>
       </ul>
-    </navbar>
-    <canvas id="c"></canvas>
-      <!-- <h2 class="gameText">Test</h2>
-      <button></button> -->
+    </header>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div class="text">
+      <h2 class ="done"></h2>
+      <h3 class ="currentText"> Press 1 to Start </h3>
+    </div>
+
     <style type="text/css">
     .dreamloLBTable { border-collapse:collapse;text-align:center;width: 200px; }
     .dreamloLBTable th { border-bottom: 1px solid #EEEEEE;font-weight:bold;margin:0;padding:4px; }
