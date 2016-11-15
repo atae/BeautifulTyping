@@ -1,21 +1,21 @@
 import anime from "animejs"
+import {startLevel, handleKeyboard} from './javascript/game';
 
 document.addEventListener("DOMContentLoaded", () => {
-  let keys_entered = 0;
-  let wpm;
-  let time = 1;
-  setInterval(() => {
-    time++,
-    wpm = parseInt((keys_entered/5)/(time/60))
-    $('.Timer').replaceWith(`<li class="Timer">Time: ${time} seconds`)
-    $('.wpm').replaceWith(`<li class="wpm">WPM: ${wpm} wpm</li>`)
-  }, 1000)
+  let currentLevel = ["Let's get this party started!", "Whoa, two sentences!", "THREEEEEE;;;;;", "end"]
 
-  let handleKeyboard = (e) => {
-      keys_entered++
-      $('.keys-entered').replaceWith(`<li class="keys-entered"> Keys Entered: ${keys_entered} </li>`)
-  }
+  let textToType = ["Let's get this typed.", "Let's also get this typed"]
+  document.addEventListener("keydown", (e) => {
+    if (e.key == "1") {
+    startLevel(currentLevel);
+    }
+  })
 
-  document.addEventListener('keydown', (e) => { handleKeyboard(e)})
 
-  });
+
+
+
+});
+
+//Soundtrack
+// Results Page: Shogun Beatz

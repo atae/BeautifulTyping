@@ -50,27 +50,23 @@
 	
 	var _animejs2 = _interopRequireDefault(_animejs);
 	
+	var _game = __webpack_require__(2);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	document.addEventListener("DOMContentLoaded", function () {
-	  var keys_entered = 0;
-	  var wpm = void 0;
-	  var time = 1;
-	  setInterval(function () {
-	    time++, wpm = parseInt(keys_entered / 5 / (time / 60));
-	    $('.Timer').replaceWith("<li class=\"Timer\">Time: " + time + " seconds");
-	    $('.wpm').replaceWith("<li class=\"wpm\">WPM: " + wpm + " wpm</li>");
-	  }, 1000);
+	  var currentLevel = ["Let's get this party started!", "Whoa, two sentences!", "THREEEEEE;;;;;", "end"];
 	
-	  var handleKeyboard = function handleKeyboard(e) {
-	    keys_entered++;
-	    $('.keys-entered').replaceWith("<li class=\"keys-entered\"> Keys Entered: " + keys_entered + " </li>");
-	  };
-	
-	  document.addEventListener('keydown', function (e) {
-	    handleKeyboard(e);
+	  var textToType = ["Let's get this typed.", "Let's also get this typed"];
+	  document.addEventListener("keydown", function (e) {
+	    if (e.key == "1") {
+	      (0, _game.startLevel)(currentLevel);
+	    }
 	  });
 	});
+	
+	//Soundtrack
+	// Results Page: Shogun Beatz
 
 /***/ },
 /* 1 */
@@ -709,6 +705,78 @@
 	
 	}));
 
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	
+	// implement new Date once I figure it out
+	var startLevel = exports.startLevel = function startLevel(currentLevel) {
+	  console.log(currentLevel);
+	  var keys_entered = 0;
+	  var wpm = void 0;
+	  var time = 0;
+	  var maxWpm = 0;
+	  var errors = 0;
+	  $('.currentText').replaceWith('<h2 class="currentText">' + currentLevel[0] + '</h2>');
+	
+	  var gameWatcher = setInterval(function () {
+	    time++;
+	    wpm = parseInt(keys_entered / 5 / (time / 60));
+	
+	    if (wpm > maxWpm) {
+	      maxWpm = wpm;
+	    }
+	    $('.Timer').replaceWith('<li class="Timer">Time: ' + time + ' seconds');
+	    $('.wpm').replaceWith('<li class="wpm">WPM: ' + wpm + ' wpm </li>');
+	    $('.maxWpm').replaceWith('<li class="maxWpm">Max WPM: ' + maxWpm + ' wpm</li>');
+	  }, 1000);
+	
+	  var done = "";
+	  document.addEventListener('keydown', function (e) {
+	    if (currentLevel.length > 1) {
+	      if (e.key === currentLevel[0][0]) {
+	        // debugger
+	        done += currentLevel[0][0];
+	        currentLevel[0] = currentLevel[0].slice(1);
+	        console.log(currentLevel);
+	        keys_entered++;
+	        $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
+	        $('.currentText').replaceWith('<h2 class="currentText">' + currentLevel[0] + '</h2>');
+	      } else if (e.key !== "Shift") {
+	        errors++;
+	        $('.errors').replaceWith('<li class="errors"> Errors: ' + errors + '</li>');
+	      }
+	      if (currentLevel[0] == "" && currentLevel[1] == "end") {
+	        currentLevel = currentLevel.slice(1);
+	        clearInterval(gameWatcher);
+	        done = "";
+	        $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
+	        $('.currentText').replaceWith('<h2> That\'s it! </h2>');
+	        //replace this line with results screen in the future
+	        document.removeEventListener('keydown', function (e) {
+	          handleKeyboard(e);
+	        });
+	      } else if (currentLevel[0].length === 0) {
+	        currentLevel = currentLevel.slice(1);
+	        done = "";
+	        $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
+	        $('.currentText').replaceWith('<h2 class="currentText">' + currentLevel[0] + '</h2>');
+	      }
+	    } else if (currentLevel[0] == "end") {}
+	    // $('.keys-entered').replaceWith(`<li class="keys-entered">Correct Keys Entered: ${keys_entered} </li>`)
+	  });
+	};
+	//
+	// export const handleKeyboard =
+	// }
 
 /***/ }
 /******/ ]);
