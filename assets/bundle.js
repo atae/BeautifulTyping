@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	var _animejs = __webpack_require__(1);
 	
@@ -52,23 +52,34 @@
 	
 	var _game = __webpack_require__(2);
 	
+	var _animation = __webpack_require__(4);
+	
+	var _animation2 = _interopRequireDefault(_animation);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	document.addEventListener("DOMContentLoaded", function () {
-	  var currentLevel = {
+	  var currentLvl = {
 	    level: "Tutorial",
 	    currentText: ["Let's get this party started!", "Whoa, two sentences!", "THREEEEEE;;;;;", "end"],
 	    soundFiles: './assets/music/Beautiful_Typing.mp3',
-	    sfx: ['./assets/sounds/Blip_Select.wav']
+	    sfx: ['./assets/sounds/Blip_Select.wav', './assets/sounds/typewriter.wav']
 	  };
-	
+	  var gameStarted = false;
 	  //ToggleSound
 	  var textToType = ["Let's get this typed.", "Let's also get this typed"];
-	  document.addEventListener("keydown", function (e) {
-	    if (e.key == "1") {
-	      (0, _game.startLevel)(currentLevel);
+	  var Start = function Start(e) {
+	    debugger;
+	    if (e.key == "1" && gameStarted === false) {
+	      document.removeEventListener('keydown', Start);
+	      gameStarted = true;
+	      (0, _game.startLevel)(currentLvl);
 	    }
-	  });
+	  };
+	
+	  document.addEventListener("keydown", Start);
+	
+	  (0, _animation2.default)();
 	});
 	
 	//Soundtrack
@@ -721,37 +732,52 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.playMusic = exports.startLevel = undefined;
+	exports.playMusic = exports.handleStart = exports.startLevel = undefined;
 	
 	var _howler = __webpack_require__(3);
 	
 	var _howler2 = _interopRequireDefault(_howler);
 	
+	var _animation = __webpack_require__(4);
+	
+	var _animation2 = _interopRequireDefault(_animation);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// implement new Date once I figure it out
-	var startLevel = exports.startLevel = function startLevel(currentLevel) {
+	var startLevel = exports.startLevel = function startLevel(currentLvl) {
+	  var currentLevel = JSON.parse(JSON.stringify(currentLvl));
 	  var currentText = currentLevel['currentText'];
-	
-	  console.log(currentText);
-	  var keys_entered = 0;
-	  var wpm = void 0;
-	  var time = 0;
-	  var maxWpm = 0;
-	  var errors = 0;
-	  var done = "";
-	  $('.currentText').replaceWith('<h2 class="currentText">' + currentText[0] + '</h2>');
-	  $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
-	
+	  document.removeEventListener('keydown', function (e) {
+	    handleKeyboard(e);
+	  });
+	  clearInterval(gameWatcher);
 	  var soundFiles = currentLevel['soundFiles'];
 	  var playMusic = new _howler2.default.Howl({
 	    src: [soundFiles]
 	  });
+	  var score = 0;
+	  console.log(currentText);
+	  var keys_entered = 0;
+	  var wpm = 0;
+	  var time = 0;
+	  var maxWpm = 0;
+	  var errors = 0;
+	  var done = "";
+	  var combo = 0;
+	  var maxCombo = 0;
+	  $('.currentText').replaceWith('<h2 class="currentText">' + currentText[0] + '</h2>');
+	  $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
 	
 	  var sfx = currentLevel['sfx'];
-	  var sfx1 = new _howler2.default.Howl({
+	  var errorSound = new _howler2.default.Howl({
 	    src: [sfx[0]],
 	    volume: 0.4
+	  });
+	
+	  var typeSound = new _howler2.default.Howl({
+	    src: [sfx[1]],
+	    volume: 1
 	  });
 	
 	  playMusic.play();
@@ -778,20 +804,27 @@
 	    if (currentText.length > 1) {
 	      if (e.key === currentText[0][0]) {
 	        // debugger
+	        typeSound.play();
 	        done += currentText[0][0];
 	        currentText[0] = currentText[0].slice(1);
 	        console.log(currentText);
 	        keys_entered++;
 	        $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
+	        combo++;
+	        score += 100 * (parseInt(combo / 10) + 1) + parseInt(wpm * 0.5);
+	        $('.combo').replaceWith('<h1 class="combo">Combo: ' + combo + '</h1>');
+	        $('.score').replaceWith('<li class="score">Score: ' + score + '</h1>');
 	        if (currentText[0][0] == " " || done[done.length - 1] == " ") {
 	          $('.currentText').replaceWith('<h2 class="currentText">\xA0' + currentText[0] + '</h2>');
 	          //Come back to this space glitch later
 	        } else {
 	          $('.currentText').replaceWith('<h2 class="currentText">' + currentText[0] + '</h2>');
 	        }
-	      } else if (e.key !== "Shift") {
+	      } else if (e.key !== "Shift" && e.key !== "Enter") {
 	        errors++;
-	        sfx1.play();
+	        errorSound.play();
+	        combo = 0;
+	        $('.combo').replaceWith('<h1 class="combo">Combo: ' + combo + '</h1>');
 	        $('.errors').replaceWith('<li class="errors"> Errors: ' + errors + '</li>');
 	      }
 	      if (currentText[0] == "" && currentText[1] == "end") {
@@ -808,6 +841,8 @@
 	      } else if (currentText[0].length === 0) {
 	        currentText = currentText.slice(1);
 	        done = "";
+	        (0, _animation2.default)();
+	        score += 250 * (parseInt(combo / 10) + 1) + parseInt(wpm + 1);
 	        $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
 	        $('.currentText').replaceWith('<h2 class="currentText">' + currentText[0] + '</h2>');
 	      }
@@ -815,6 +850,16 @@
 	    // $('.keys-entered').replaceWith(`<li class="keys-entered">Correct Keys Entered: ${keys_entered} </li>`)
 	  });
 	};
+	
+	var handleStart = exports.handleStart = function handleStart(e) {};
+	
+	// export const waitForStart = (currentLvl) => {
+	//   document.addEventListener("keydown", handleStart(e))
+	// }
+	//
+	// export const waitForEnd = (currentLvl) => {
+	//   document.removeEventListener("keydown", handleStart(e))
+	// }
 	
 	var playMusic = exports.playMusic = function playMusic(currentLevel) {};
 	//
@@ -3583,6 +3628,254 @@
 	})();
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.changeBackground = undefined;
+	
+	var _animejs = __webpack_require__(1);
+	
+	var _animejs2 = _interopRequireDefault(_animejs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var animation = function animation() {
+	  var c = document.getElementById("c");
+	  //Sets canvase and canvase size
+	  var ctx = c.getContext("2d");
+	  var cH;
+	  var cW;
+	  //Canvas Background
+	  var bgColor = "#FF6138";
+	
+	  //When do these get used?
+	  var animations = [];
+	  var circles = [];
+	
+	  // Chooses color randomly based on preset array
+	  var colorPicker = function () {
+	    var colors = ["#FF6138", "#FFBE53", "#2980B9", "#282741"];
+	    var index = 0;
+	    function next() {
+	      index = index++ < colors.length - 1 ? index : 0;
+	      return colors[index];
+	    }
+	    function current() {
+	      return colors[index];
+	    }
+	    return {
+	      next: next,
+	      current: current
+	    };
+	  }();
+	
+	  //How does it remove animation?
+	  function removeAnimation(animation) {
+	    var index = animations.indexOf(animation);
+	    if (index > -1) animations.splice(index, 1);
+	  }
+	
+	  // fills the page depending on the size of the page, goes out in a circle
+	  function calcPageFillRadius(x, y) {
+	    var l = Math.max(x - 0, cW - x);
+	    var h = Math.max(y - 0, cH - y);
+	    return Math.sqrt(Math.pow(l, 2) + Math.pow(h, 2));
+	  }
+	
+	  //Looks at clicks to start the event hopefully
+	  function addClickListeners() {
+	    // touch start starts when touch surface is touched?
+	    document.addEventListener("touchstart", handleEvent);
+	    // document.addEventListener("keydown", handleEvent);
+	  };
+	
+	  var handleEvent = function handleEvent(e) {
+	    debugger;
+	    // gets position of the touch?
+	    if (e.touches) {
+	      e.preventDefault();
+	      e = e.touches[0];
+	    }
+	    // goes through color
+	    var pageX = 300;
+	    var pageY = 300;
+	    var currentColor = colorPicker.current();
+	    var nextColor = colorPicker.next();
+	    // expands the color depending on the position of e
+	    var targetR = calcPageFillRadius(pageX, pageY);
+	    var rippleSize = Math.min(200, cW * .4);
+	    var minCoverDuration = 750;
+	
+	    var pageFill = new Circle({
+	      x: pageX,
+	      y: pageY,
+	      r: 0,
+	      fill: nextColor
+	    });
+	    var fillAnimation = (0, _animejs2.default)({
+	      targets: pageFill,
+	      r: targetR,
+	      duration: Math.max(targetR / 2, minCoverDuration),
+	      easing: "easeOutQuart",
+	      complete: function complete() {
+	        bgColor = pageFill.fill;
+	        removeAnimation(fillAnimation);
+	      }
+	    });
+	
+	    var ripple = new Circle({
+	      x: pageX,
+	      y: pageY,
+	      r: 0,
+	      fill: currentColor,
+	      stroke: {
+	        width: 3,
+	        color: currentColor
+	      },
+	      opacity: 1
+	    });
+	    var rippleAnimation = (0, _animejs2.default)({
+	      targets: ripple,
+	      r: rippleSize,
+	      opacity: 0,
+	      easing: "easeOutExpo",
+	      duration: 900,
+	      complete: removeAnimation
+	    });
+	
+	    var particles = [];
+	    for (var i = 0; i < 32; i++) {
+	      var particle = new Circle({
+	        x: pageX,
+	        y: pageY,
+	        fill: currentColor,
+	        r: _animejs2.default.random(24, 48)
+	      });
+	      particles.push(particle);
+	    }
+	    var particlesAnimation = (0, _animejs2.default)({
+	      targets: particles,
+	      x: function x(particle) {
+	        return particle.x + _animejs2.default.random(rippleSize, -rippleSize);
+	      },
+	      y: function y(particle) {
+	        return particle.y + _animejs2.default.random(rippleSize * 1.15, -rippleSize * 1.15);
+	      },
+	      r: 0,
+	      easing: "easeOutExpo",
+	      duration: _animejs2.default.random(1000, 1300),
+	      complete: removeAnimation
+	    });
+	    animations.push(fillAnimation, rippleAnimation, particlesAnimation);
+	  };
+	
+	  function extend(a, b) {
+	    for (var key in b) {
+	      if (b.hasOwnProperty(key)) {
+	        a[key] = b[key];
+	      }
+	    }
+	    return a;
+	  }
+	
+	  var Circle = function Circle(opts) {
+	    extend(this, opts);
+	  };
+	
+	  Circle.prototype.draw = function () {
+	    ctx.globalAlpha = this.opacity || 1;
+	    ctx.beginPath();
+	    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+	    if (this.stroke) {
+	      ctx.strokeStyle = this.stroke.color;
+	      ctx.lineWidth = this.stroke.width;
+	      ctx.stroke();
+	    }
+	    if (this.fill) {
+	      ctx.fillStyle = this.fill;
+	      ctx.fill();
+	    }
+	    ctx.closePath();
+	    ctx.globalAlpha = 1;
+	  };
+	
+	  var animate = (0, _animejs2.default)({
+	    duration: Infinity,
+	    update: function update() {
+	      ctx.fillStyle = bgColor;
+	      ctx.fillRect(0, 0, cW, cH);
+	      animations.forEach(function (anim) {
+	        anim.animatables.forEach(function (animatable) {
+	          animatable.target.draw();
+	        });
+	      });
+	    }
+	  });
+	
+	  var resizeCanvas = function resizeCanvas() {
+	    cW = window.innerWidth;
+	    cH = window.innerHeight;
+	    c.width = cW * devicePixelRatio;
+	    c.height = cH * devicePixelRatio;
+	    ctx.scale(devicePixelRatio, devicePixelRatio);
+	  };
+	
+	  (function init() {
+	    resizeCanvas();
+	    if (window.CP) {
+	      // CodePen's loop detection was causin' problems
+	      // and I have no idea why, so...
+	      window.CP.PenTimer.MAX_TIME_IN_LOOP_WO_EXIT = 6000;
+	    }
+	    window.addEventListener("resize", resizeCanvas);
+	    addClickListeners();
+	    if (!!window.location.pathname.match(/fullcpgrid/)) {
+	      startFauxClicking();
+	    }
+	    handleInactiveUser();
+	  })();
+	
+	  function handleInactiveUser() {
+	    var inactive = setTimeout(function () {
+	      fauxClick(cW / 2, cH / 2);
+	    }, 2000);
+	
+	    function clearInactiveTimeout() {
+	      clearTimeout(inactive);
+	      document.removeEventListener("mousedown", clearInactiveTimeout);
+	      document.removeEventListener("touchstart", clearInactiveTimeout);
+	    }
+	
+	    document.addEventListener("mousedown", clearInactiveTimeout);
+	    document.addEventListener("touchstart", clearInactiveTimeout);
+	  }
+	
+	  function startFauxClicking() {
+	    setTimeout(function () {
+	      fauxClick(_animejs2.default.random(cW * .2, cW * .8), _animejs2.default.random(cH * .2, cH * .8));
+	      startFauxClicking();
+	    }, _animejs2.default.random(200, 900));
+	  }
+	
+	  function fauxClick(x, y) {
+	    var fauxClick = new Event("mousedown");
+	    fauxClick.pageX = x;
+	    fauxClick.pageY = y;
+	    document.dispatchEvent(fauxClick);
+	  }
+	};
+	
+	var changeBackground = exports.changeBackground = function changeBackground() {
+	  handleEvent();
+	};
+	exports.default = animation;
 
 /***/ }
 /******/ ]);
