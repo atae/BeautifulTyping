@@ -12,7 +12,6 @@ import animation from './animation';
     let currentText = currentLevel['currentText']
     document.removeEventListener('keydown',(e) => { handleKeyboard(e)})
     clearInterval(gameWatcher);
-    // changeBackground();
     let score = 0;
     console.log(currentText);
     let keys_entered = 0;
@@ -25,45 +24,48 @@ import animation from './animation';
     let maxCombo = 0;
     $('.currentText').replaceWith(`<span class="currentText">${currentText[0]}</span>`)
     $('.done').replaceWith(`<span class="done">${done}</span>`)
+    $('.combo').replaceWith(`<li class="combo">Combo: ${combo}</li>`)
+    $('.Level').replaceWith(`<li class="Level"> Level: ${currentLevel['level']} </li>`)
+    $('.Timer').replaceWith(`<li class="Timer">Time: ${time} seconds`)
+    $('.wpm').replaceWith(`<li class="wpm">WPM: ${wpm} wpm </li>`)
+    $('.maxWpm').replaceWith(`<li class="maxWpm">Max WPM: ${maxWpm} wpm</li>`)
 
-    document.addEventListener("keydown", animation.handleEvent)
-    // (e) => {
-    //   // debugger
-    // if ($('.currentText').text().length <= 2){
-    //   document.addEventListener("keydown", animation.handleEvent);
-    //     // handleEvent;
-    // } else {
-    //   document.removeEventListener("keydown", animation.handleEvent);
-    // }
-    // })
-    // Setup Sound Here
-    let soundFiles = currentLevel['soundFiles']
-    let playMusic = new Howler.Howl({
-      src: [soundFiles],
-      loop: true,
-      html5: true,
-      mute: currentLevel['options']['muteMusicOption']
-    });
+    //Setup sounds
 
-    let sfx = currentLevel['sfx']
-    let errorSound = new Howler.Howl({
-      src: [sfx[0]],
-      volume: 0.4,
-      mute: currentLevel['options']['muteSoundOption']
+      let soundFiles = currentLevel['soundFiles']
+      let playMusic = new Howler.Howl({
+        src: soundFiles[0],
+        loop: true,
+        html5: true,
+        mute: currentLevel['options']['muteMusicOption']
+      });
+      console.log(soundFiles[1]);
+      let playResult = new Howler.Howl({
+        src: soundFiles[1],
+        loop: true,
+        html5: true,
+        mute: currentLevel['options']['muteMusicOption']
+      })
 
-    });
+      let sfx = currentLevel['sfx']
+      let errorSound = new Howler.Howl({
+        src: [sfx[0]],
+        volume: 0.4,
+        mute: currentLevel['options']['muteSoundOption']
 
-    let typeSound = new Howler.Howl({
-      src: [sfx[1]],
-      volume: 1,
-      mute: currentLevel['options']['muteSoundOption']
-    })
+      });
 
-    let dingSound = new Howler.Howl({
-      src: [sfx[2]],
-      volume: 1,
-      mute: currentLevel['options']['muteSoundOption']
-    })
+      let typeSound = new Howler.Howl({
+        src: [sfx[1]],
+        volume: 1,
+        mute: currentLevel['options']['muteSoundOption']
+      })
+
+      let dingSound = new Howler.Howl({
+        src: [sfx[2]],
+        volume: 1,
+        mute: currentLevel['options']['muteSoundOption']
+      })
 
     //Setup Level Gimmicks here
     let className = "currentText"
@@ -82,14 +84,7 @@ import animation from './animation';
       }
     }
 
-
-    playMusic.play();
-    $('.combo').replaceWith(`<li class="combo">Combo: ${combo}</li>`)
-    $('.Level').replaceWith(`<li class="Level"> Level: ${currentLevel['level']} </li>`)
-    $('.Timer').replaceWith(`<li class="Timer">Time: ${time} seconds`)
-    $('.wpm').replaceWith(`<li class="wpm">WPM: ${wpm} wpm </li>`)
-    $('.maxWpm').replaceWith(`<li class="maxWpm">Max WPM: ${maxWpm} wpm</li>`)
-
+    //setup Stats Bar
     let gameWatcher = setInterval(() => {
       time++;
     wpm = parseInt((keys_entered/5)/(time/60))
@@ -104,6 +99,13 @@ import animation from './animation';
 
     },
      1000)
+
+
+
+
+    playMusic.play();
+
+
      $('.navbar').toggleClass('hidden')
      toggleAnimation($('.currentText'))
     document.addEventListener('keydown', (e) => {
@@ -144,6 +146,7 @@ import animation from './animation';
             done = ""
             $('.done').replaceWith(`<span class="done">${done}</span>`)
             $(`.currentText`).replaceWith(`<span> That's it! </span>`)
+            playResult.play();
             //replace this line with results screen in the future
             document.removeEventListener('keydown',(e) => { handleKeyboard(e)})
           } else if (currentText[0].length === 0) {
