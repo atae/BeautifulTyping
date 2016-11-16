@@ -10,11 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // titleScreen();
   //ToggleSound
   let options = {
-    muteSoundOption: true,
+    muteSoundOption: false,
     muteMusicOption: false
   }
   //get level Name
-  let currentLevel = getLevel('level1', options)
+  let currentLevel = getLevel('level2', options)
   let nextLevel;
   let gameStarted = false;
 
@@ -35,6 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
     $('.soundOption').replaceWith('<li class="soundOption"> Sound: On </li>')
   }
   })
+
+  // $('.soundOption').on('click', () => {
+  //   if ($('.soundOption').text() === " Sound: Off ") {
+  //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: On </li>')
+  // }
+  // })
 
 
     $('.musicOption').on('click', () => {

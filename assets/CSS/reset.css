@@ -45,13 +45,11 @@ q:before, q:after {
 blockquote, q {
 	quotes: "" "";
 }
-span{
-  word-wrap: normal;
-}
-div+span+span:after {  /* last span element's pseudo element */
-    content:"";
-    display: block;
-}
+
 .hidden {
   visibility: hidden;
+}
+
+.removed {
+	display:none;
 }

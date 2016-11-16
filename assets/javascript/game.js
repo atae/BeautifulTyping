@@ -16,12 +16,16 @@ import animation from './animation';
     console.log(currentText);
     let keys_entered = 0;
     let wpm = 0;
+    let averageWpm = 0;
+    let averageWpmCounter = 0;
     let time = 0;
     let maxWpm = 0;
     let errors = 0;
     let done = ""
     let combo = 0;
     let maxCombo = 0;
+    $(`.results`).addClass("removed")
+    // $(`.stageNavigation`).addClass('removed')
     $('.currentText').replaceWith(`<span class="currentText" ><u>${currentText[0][0]}</u>${currentText[0].slice(1)}</span>`)
     $('.done').replaceWith(`<span class="done">${done}</span>`)
     $('.combo').replaceWith(`<li class="combo">Combo: ${combo}</li>`)
@@ -84,11 +88,14 @@ import animation from './animation';
       }
     }
 
+    let retryStage = (currentLevel) => {
+      startLevel(currentLevel)
+    }
     //setup Stats Bar
     let gameWatcher = setInterval(() => {
       time++;
     wpm = parseInt((keys_entered/5)/(time/60))
-
+    averageWpm = parseInt((averageWpm + wpm) / 2)
     if (wpm > maxWpm) {
       maxWpm = wpm
     }
@@ -96,7 +103,7 @@ import animation from './animation';
       $('.Timer').replaceWith(`<li class="Timer">Time: ${time} seconds`)
       $('.wpm').replaceWith(`<li class="wpm">WPM: ${wpm} wpm </li>`)
       $('.maxWpm').replaceWith(`<li class="maxWpm">Max WPM: ${maxWpm} wpm</li>`)
-
+      $('.averageWpm').replaceWith(`<li class="averageWpm"> AverageWPM: ${averageWpm} wpm</li`)
     },
      1000)
 
@@ -108,6 +115,7 @@ import animation from './animation';
 
      $('.navbar').toggleClass('hidden')
      toggleAnimation($('.currentText'))
+
     document.addEventListener('keydown', (e) => {
       let previousSpace = false
       if (currentText.length > 1) {
@@ -157,10 +165,12 @@ import animation from './animation';
             clearInterval(gameWatcher);
             done = ""
             $('.done').replaceWith(`<span class="done">${done}</span>`)
-            $(`.currentText`).replaceWith(`<span> That's it! </span>`)
+            $(`.currentText`).replaceWith(`<span class="done"></span>`)
             playResult.play();
             //replace this line with results screen in the future
             document.removeEventListener('keydown',(e) => { handleKeyboard(e)})
+            $(`.results`).toggleClass("removed")
+            // $(`.stageNavigation`).toggleClass('removed')
           } else if (currentText[0].length === 0) {
             currentText = currentText.slice(1)
             done = ""

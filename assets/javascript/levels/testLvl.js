@@ -13,6 +13,8 @@ export const testLevel = {
   level: "Tutorial",
   currentText: ["Let's get this party started!", "Whoa, two sentences!", "THREEEEEE;;;;;", "end"],
   prelevelText: ["testing testing 1 2 3"],
+  currentLevel: 'testLevel',
+  nextLevel: "longTestLvl",
   animations: {
     shake: false,
     spotlight: true,
