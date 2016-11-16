@@ -42,3 +42,9 @@ export const getLevel = (levelName, soundOption) => {
   }
   console.log(levels[levelName]);
 }
+
+export const getNextLevel = (levelName, soundOption) => {
+  if (typeof levels[levelName] == 'undefined'){
+    return {level: "End of the Game"}
+  }
+}

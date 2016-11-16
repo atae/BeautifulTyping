@@ -2,21 +2,22 @@ import anime from "animejs"
 import {handleStart, startLevel, handleKeyboard} from './javascript/game';
 import animation from './javascript/animation';
 import {getLevel} from './javascript/levels/levelRequire';
+import titleScreen from './javascript/title/titleScreen'
 
 // import {getLevel}from './javascript/level_handler';
 
 document.addEventListener("DOMContentLoaded", () => {
-
-
-    let options = {
-      muteSoundOption: true,
-      muteMusicOption: false
-    }
-    //get level Name
-  let currentLevel = getLevel('testLevel', options)
+  titleScreen();
+  //ToggleSound
+  let options = {
+    muteSoundOption: true,
+    muteMusicOption: false
+  }
+  //get level Name
+  let currentLevel = getLevel('level1', options)
   let nextLevel;
   let gameStarted = false;
-  //ToggleSound
+
   const Start = (e) => {
     // debugger
     if (e.key == "1" && gameStarted === false) {

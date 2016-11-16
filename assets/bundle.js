@@ -58,21 +58,26 @@
 	
 	var _levelRequire = __webpack_require__(5);
 	
+	var _titleScreen = __webpack_require__(14);
+	
+	var _titleScreen2 = _interopRequireDefault(_titleScreen);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// import {getLevel}from './javascript/level_handler';
 	
 	document.addEventListener("DOMContentLoaded", function () {
-	
+	  (0, _titleScreen2.default)();
+	  //ToggleSound
 	  var options = {
 	    muteSoundOption: true,
 	    muteMusicOption: false
 	  };
 	  //get level Name
-	  var currentLevel = (0, _levelRequire.getLevel)('testLevel', options);
+	  var currentLevel = (0, _levelRequire.getLevel)('level1', options);
 	  var nextLevel = void 0;
 	  var gameStarted = false;
-	  //ToggleSound
+	
 	  var Start = function Start(e) {
 	    // debugger
 	    if (e.key == "1" && gameStarted === false) {
@@ -3960,7 +3965,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.getLevel = undefined;
+	exports.getNextLevel = exports.getLevel = undefined;
 	
 	var _level = __webpack_require__(6);
 	
@@ -4013,6 +4018,12 @@
 	  };
 	  console.log(levels[levelName]);
 	};
+	
+	var getNextLevel = exports.getNextLevel = function getNextLevel(levelName, soundOption) {
+	  if (typeof levels[levelName] == 'undefined') {
+	    return { level: "End of the Game" };
+	  }
+	};
 
 /***/ },
 /* 6 */
@@ -4033,7 +4044,19 @@
 	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
 	//order is Error, Type, Complete
 	
-	var level1 = exports.level1 = {};
+	var level1 = exports.level1 = {
+	  level: '1 - The Intro',
+	  currentText: ["Welcome!", "If you're looking for someone", "with a charming smile,", "and mad coding chops", "you should give Andrew Tae", "a chance to interview!", "Either way,", "please sit back and enjoy", "the hardest typing test you have ever seen.", "Luckily, you can't lose in this game.", "However, if you want a high score,", "you're going to have a rough time.", "Have fun and good luck!", "end"],
+	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  nextLevel: 'testLevel',
+	  animations: {
+	    shake: false,
+	    spotlight: false,
+	    flags: false,
+	    cats: false,
+	    random: false
+	  }
+	};
 
 /***/ },
 /* 7 */
@@ -4196,6 +4219,7 @@
 	  level: "Even Longer Text Holy SHit",
 	  currentText: ["Alright, let's get some super long words into this application. What other words can we use I wonder?", "Time to paste a whoooole paragraph in here. I don't know how to type the Lorem thing but it's fine, there are plenty of other words in the actual english language that I can use instead. So take THAT international policy!", "THREEEEEEEEEEEKJSKJHASNKJASJHGDASLCNLIHWQIUDGQWLENQWKLGKDYJASHV>GSLFDH>Z<", "end"],
 	  prelevelText: ["Suuuuuuuper long testing What's up every body it's time for some loooooooong typing I hope everyone was able to make it here okay. Press 1 now to being the game!"],
+	  nextLevel: 'level1',
 	  animations: {
 	    shake: false,
 	    spotlight: true,
@@ -4204,6 +4228,12 @@
 	    random: false
 	  }
 	};
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	"use strict";
 
 /***/ }
 /******/ ]);

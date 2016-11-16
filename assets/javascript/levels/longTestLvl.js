@@ -14,6 +14,7 @@ export const longTestLvl = {
    "Time to paste a whoooole paragraph in here. I don't know how to type the Lorem thing but it's fine, there are plenty of other words in the actual english language that I can use instead. So take THAT international policy!",
     "THREEEEEEEEEEEKJSKJHASNKJASJHGDASLCNLIHWQIUDGQWLENQWKLGKDYJASHV>GSLFDH>Z<", "end"],
   prelevelText: ["Suuuuuuuper long testing What's up every body it's time for some loooooooong typing I hope everyone was able to make it here okay. Press 1 now to being the game!"],
+  nextLevel: 'level1',
   animations: {
     shake: false,
     spotlight: true,
