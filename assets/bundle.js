@@ -58,16 +58,14 @@
 	
 	var _levelRequire = __webpack_require__(5);
 	
-	var _titleScreen = __webpack_require__(14);
-	
-	var _titleScreen2 = _interopRequireDefault(_titleScreen);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// import titleScreen from './javascript/title/titleScreen'
 	
 	// import {getLevel}from './javascript/level_handler';
 	
 	document.addEventListener("DOMContentLoaded", function () {
-	  (0, _titleScreen2.default)();
+	  // titleScreen();
 	  //ToggleSound
 	  var options = {
 	    muteSoundOption: true,
@@ -792,7 +790,7 @@
 	  var done = "";
 	  var combo = 0;
 	  var maxCombo = 0;
-	  $('.currentText').replaceWith('<span class="currentText">' + currentText[0] + '</span>');
+	  $('.currentText').replaceWith('<span class="currentText" ><u>' + currentText[0][0] + '</u>' + currentText[0].slice(1) + '</span>');
 	  $('.done').replaceWith('<span class="done">' + done + '</span>');
 	  $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
 	  $('.Level').replaceWith('<li class="Level"> Level: ' + currentLevel['level'] + ' </li>');
@@ -873,26 +871,37 @@
 	  $('.navbar').toggleClass('hidden');
 	  toggleAnimation($('.currentText'));
 	  document.addEventListener('keydown', function (e) {
-	
+	    var previousSpace = false;
 	    if (currentText.length > 1) {
 	      if (e.key === currentText[0][0]) {
 	        // debugger
 	        typeSound.play();
-	        done += currentText[0][0];
+	        if (currentText[0][0] == " ") {
+	          done += '\xA0';
+	        } else {
+	          done += currentText[0][0];
+	        }
 	        currentText[0] = currentText[0].slice(1);
 	        console.log(currentText);
 	        keys_entered++;
-	        $('.done').replaceWith('<span class="done">' + done + '</span>');
+	        console.log(done);
+	        if (previousSpace === true) {
+	          $('.done').replaceWith('<span class="done" >' + done + ' </span>');
+	          previousSpace = false;
+	        } else {
+	          $('.done').replaceWith('<span class="done">' + done + '</span>');
+	        }
 	        combo++;
 	        score += 100 * (parseInt(combo / 10) + 1) + parseInt(wpm * 0.5);
 	        $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
 	        $('.score').replaceWith('<li class="score">Score: ' + score + '</li>');
-	        if (currentText[0][0] == " " || done[done.length - 1] == " ") {
-	          $('.currentText').replaceWith('<span class="currentText" >\xA0' + currentText[0] + '</span>');
+	        if (currentText[0][0] == " ") {
+	          $('.currentText').replaceWith('<span class="currentText" ><u>\xA0</u>' + currentText[0].slice(1) + '</span>');
 	          toggleAnimation($('.currentText'));
+	          previousSpace = true;
 	          //Come back to this space glitch later
 	        } else {
-	          $('.currentText').replaceWith('<span class="currentText" >' + currentText[0] + '</span>');
+	          $('.currentText').replaceWith('<span class="currentText" ><u>' + currentText[0][0] + '</u>' + currentText[0].slice(1) + '</span>');
 	          toggleAnimation($('.currentText'));
 	        }
 	      } else if (e.key !== "Shift" && e.key !== "Enter") {
@@ -922,7 +931,7 @@
 	        // changeBackground();
 	        score += 250 * (parseInt(combo / 10) + 1) + parseInt(wpm + 1);
 	        $('.done').replaceWith('<span class="done">' + done + '</span>');
-	        $('.currentText').replaceWith('<span class="currentText">' + currentText[0] + '</span>');
+	        $('.currentText').replaceWith('<span class="currentText" ><u>' + currentText[0][0] + '</u>' + currentText[0].slice(1) + '</span>');
 	        toggleAnimation($('.currentText'));
 	      }
 	    } else if (currentText[0] == "end") {}
@@ -3717,7 +3726,7 @@
 	  var cH;
 	  var cW;
 	  //Canvas Background
-	  var bgColor = "#FF6138";
+	  var bgColor = "#2980B9";
 	
 	  //When do these get used?
 	  var animations = [];
@@ -3725,7 +3734,7 @@
 	
 	  // Chooses color randomly based on preset array
 	  var colorPicker = function () {
-	    var colors = ["#FF6138", "#2980B9", "#282741"];
+	    var colors = ["#282741", "#FF6138", "#2980B9"];
 	    var textColors = colors.slice(1).push(colors[0]);
 	    var index = 0;
 	    function next() {
@@ -4222,18 +4231,12 @@
 	  nextLevel: 'level1',
 	  animations: {
 	    shake: false,
-	    spotlight: true,
+	    spotlight: false,
 	    flags: false,
 	    cats: false,
 	    random: false
 	  }
 	};
-
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-	"use strict";
 
 /***/ }
 /******/ ]);

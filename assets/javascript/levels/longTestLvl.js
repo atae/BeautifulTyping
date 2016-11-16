@@ -17,7 +17,7 @@ export const longTestLvl = {
   nextLevel: 'level1',
   animations: {
     shake: false,
-    spotlight: true,
+    spotlight: false,
     flags: false,
     cats: false,
     random: false

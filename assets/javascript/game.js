@@ -22,7 +22,7 @@ import animation from './animation';
     let done = ""
     let combo = 0;
     let maxCombo = 0;
-    $('.currentText').replaceWith(`<span class="currentText">${currentText[0]}</span>`)
+    $('.currentText').replaceWith(`<span class="currentText" ><u>${currentText[0][0]}</u>${currentText[0].slice(1)}</span>`)
     $('.done').replaceWith(`<span class="done">${done}</span>`)
     $('.combo').replaceWith(`<li class="combo">Combo: ${combo}</li>`)
     $('.Level').replaceWith(`<li class="Level"> Level: ${currentLevel['level']} </li>`)
@@ -109,26 +109,38 @@ import animation from './animation';
      $('.navbar').toggleClass('hidden')
      toggleAnimation($('.currentText'))
     document.addEventListener('keydown', (e) => {
-
+      let previousSpace = false
       if (currentText.length > 1) {
         if (e.key === currentText[0][0]){
           // debugger
           typeSound.play();
-          done += currentText[0][0]
+          if (currentText[0][0] == " "){
+            done += "\u00A0"
+          } else {
+            done += currentText[0][0]
+          }
           currentText[0] = currentText[0].slice(1)
           console.log(currentText);
           keys_entered++
+          console.log(done);
+          if ( previousSpace === true){
+            $('.done').replaceWith(`<span class="done" >${done}\u0020</span>`)
+            previousSpace = false
+          } else {
           $('.done').replaceWith(`<span class="done">${done}</span>`)
+          }
           combo++;
           score += (100 * (parseInt((combo/10))+ 1)) + parseInt(wpm*0.5)
           $('.combo').replaceWith(`<li class="combo">Combo: ${combo}</li>`)
           $('.score').replaceWith(`<li class="score">Score: ${score}</li>`)
-          if (currentText[0][0] == " " || done[done.length-1] == " "){
-            $('.currentText').replaceWith(`<span class="currentText" >\u00A0${currentText[0]}</span>`)
+          if (currentText[0][0] == " "){
+            $('.currentText').replaceWith(`<span class="currentText" ><u>\u00A0</u>${currentText[0].slice(1)}</span>`)
             toggleAnimation($('.currentText'))
+            previousSpace = true
             //Come back to this space glitch later
-          } else {
-            $('.currentText').replaceWith(`<span class="currentText" >${currentText[0]}</span>`)
+          }
+          else {
+            $('.currentText').replaceWith(`<span class="currentText" ><u>${currentText[0][0]}</u>${currentText[0].slice(1)}</span>`)
             toggleAnimation($('.currentText'))
           }
         } else if(e.key !== "Shift" && e.key!== "Enter"){
@@ -156,7 +168,7 @@ import animation from './animation';
             // changeBackground();
             score += 250 * (parseInt((combo/10)) + 1) + parseInt(wpm + 1)
             $('.done').replaceWith(`<span class="done">${done}</span>`)
-            $('.currentText').replaceWith(`<span class="currentText">${currentText[0]}</span>`)
+            $('.currentText').replaceWith(`<span class="currentText" ><u>${currentText[0][0]}</u>${currentText[0].slice(1)}</span>`)
             toggleAnimation($('.currentText'))
 
           }

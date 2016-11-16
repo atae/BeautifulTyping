@@ -8,7 +8,7 @@ var ctx = c.getContext("2d");
 var cH;
 var cW;
 //Canvas Background
-var bgColor = "#FF6138";
+var bgColor = "#2980B9";
 
 //When do these get used?
 var animations = [];
@@ -16,7 +16,7 @@ var circles = [];
 
 // Chooses color randomly based on preset array
 var colorPicker = (function() {
-var colors = ["#FF6138", "#2980B9", "#282741"];
+var colors = ["#282741","#FF6138", "#2980B9" ];
 var textColors = colors.slice(1).push(colors[0]);
 var index = 0;
 function next() {

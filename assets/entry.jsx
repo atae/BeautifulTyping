@@ -2,12 +2,12 @@ import anime from "animejs"
 import {handleStart, startLevel, handleKeyboard} from './javascript/game';
 import animation from './javascript/animation';
 import {getLevel} from './javascript/levels/levelRequire';
-import titleScreen from './javascript/title/titleScreen'
+// import titleScreen from './javascript/title/titleScreen'
 
 // import {getLevel}from './javascript/level_handler';
 
 document.addEventListener("DOMContentLoaded", () => {
-  titleScreen();
+  // titleScreen();
   //ToggleSound
   let options = {
     muteSoundOption: true,
