@@ -19,13 +19,11 @@ section {
 
 
 h2 {
-  color: #2ecc71;
-  font-size: 60px;
+
 }
 
 h3 {
-  color: white;
-  font-size: 60px;
+
 }
 
 ul{
@@ -69,11 +67,15 @@ li { margin: 20px;}
 
 .currentText{
   z-index: 3;
+  color: #2ecc71;
+  font-size: 60px;
 }
 
 .done{
   z-index: 4;
   float: left;
+  color: white;
+  font-size: 60px;
 }
 
 canvas {

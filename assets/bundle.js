@@ -811,8 +811,8 @@
 	  var done = "";
 	  var combo = 0;
 	  var maxCombo = 0;
-	  $('.currentText').replaceWith('<h2 class="currentText">' + currentText[0] + '</h2>');
-	  $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
+	  $('.currentText').replaceWith('<span class="currentText">' + currentText[0] + '</span>');
+	  $('.done').replaceWith('<span class="done">' + done + '</span>');
 	
 	  document.addEventListener("keydown", _animation2.default.handleEvent);
 	  // (e) => {
@@ -901,17 +901,17 @@
 	        currentText[0] = currentText[0].slice(1);
 	        console.log(currentText);
 	        keys_entered++;
-	        $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
+	        $('.done').replaceWith('<span class="done">' + done + '</span>');
 	        combo++;
 	        score += 100 * (parseInt(combo / 10) + 1) + parseInt(wpm * 0.5);
 	        $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
 	        $('.score').replaceWith('<li class="score">Score: ' + score + '</li>');
 	        if (currentText[0][0] == " " || done[done.length - 1] == " ") {
-	          $('.currentText').replaceWith('<h2 class="currentText" >\xA0' + currentText[0] + '</h2>');
+	          $('.currentText').replaceWith('<span class="currentText" >\xA0' + currentText[0] + '</span>');
 	          toggleAnimation($('.currentText'));
 	          //Come back to this space glitch later
 	        } else {
-	          $('.currentText').replaceWith('<h2 class="currentText" >' + currentText[0] + '</h2>');
+	          $('.currentText').replaceWith('<span class="currentText" >' + currentText[0] + '</span>');
 	          toggleAnimation($('.currentText'));
 	        }
 	      } else if (e.key !== "Shift" && e.key !== "Enter") {
@@ -927,8 +927,8 @@
 	        currentText = currentText.slice(1);
 	        clearInterval(gameWatcher);
 	        done = "";
-	        $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
-	        $('.currentText').replaceWith('<h2> That\'s it! </h2>');
+	        $('.done').replaceWith('<span class="done">' + done + '</span>');
+	        $('.currentText').replaceWith('<span> That\'s it! </span>');
 	        //replace this line with results screen in the future
 	        document.removeEventListener('keydown', function (e) {
 	          handleKeyboard(e);
@@ -939,8 +939,8 @@
 	        dingSound.play();
 	        // changeBackground();
 	        score += 250 * (parseInt(combo / 10) + 1) + parseInt(wpm + 1);
-	        $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
-	        $('.currentText').replaceWith('<h2 class="currentText">' + currentText[0] + '</h2>');
+	        $('.done').replaceWith('<span class="done">' + done + '</span>');
+	        $('.currentText').replaceWith('<span class="currentText">' + currentText[0] + '</span>');
 	        toggleAnimation($('.currentText'));
 	      }
 	    } else if (currentText[0] == "end") {}
