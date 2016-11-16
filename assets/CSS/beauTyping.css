@@ -19,21 +19,43 @@ section {
 
 
 h2 {
-  color: black;
-  font-size: 20px;
+  color: #2ecc71;
+  font-size: 60px;
 }
 
 h3 {
-  color: gray;
-  font-size: 20px;
+  color: white;
+  font-size: 60px;
 }
 
-ul {
+ul{
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
+  box-shadow:40px;
+}
+
+.stats{
+  border-bottom: 2px solid black;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  /*position: absolute;*/
+}
+.options ul{
+  border-top: 2px solid black;
+  /*position: absolute;*/
 }
 
 li { margin: 20px;}
+
+/*html{
+  min-height: 1200px;
+  min-width: 1920px;
+}*/
 
 .text {
   margin: 0 auto;
@@ -41,6 +63,17 @@ li { margin: 20px;}
   display:flex;
   justify-content: flex-start;
   flex-direction: row;
+  /*position:absolute;*/
+  z-index:2;
+}
+
+.currentText{
+  z-index: 3;
+}
+
+.done{
+  z-index: 4;
+  float: left;
 }
 
 canvas {
@@ -66,18 +99,42 @@ h2.shake,
 	display:inline-block
 }
 
+@-webkit-keyframes spotlightBounce {
+    0%   { left:0vw; top:0vh;}
+    25%  { left:200px; top:0px;}
+    50%  { left:200px; top:200px;}
+    75%  { left:0px; top:200px;}
+    100% {left:0px; top:0px;}
+}
+
+.spotlight{
+	border-radius: 50%;
+	width: 500px;
+	height: 500px;
+  position: absolute;
+  background: #2ecc71;
+  animation-name: spotlightBounce;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  z-index: 1;
+  box-shadow:40px;
+	/* width and height can be anything, as long as they're equal */
+}
+
+
+
 @-webkit-keyframes spaceboots {
-	0% { -webkit-transform: translate(16px, 8px) rotate(0deg); }
-	10% { -webkit-transform: translate(-8px, -16px) rotate(-1deg); }
-	20% { -webkit-transform: translate(-24px, 4px) rotate(1deg); }
-	30% { -webkit-transform: translate(4px, 16px) rotate(0deg); }
-	40% { -webkit-transform: translate(8px, -8px) rotate(1deg); }
-	50% { -webkit-transform: translate(-8px, 16px) rotate(-1deg); }
-	60% { -webkit-transform: translate(-24px, 8px) rotate(0deg); }
-	70% { -webkit-transform: translate(16px, 8px) rotate(-1deg); }
-	80% { -webkit-transform: translate(-8px, -8px) rotate(1deg); }
-	90% { -webkit-transform: translate(16px, 16px) rotate(0deg); }
-	100% { -webkit-transform: translate(8px, -16px) rotate(-1deg); }
+	0% { -webkit-transform: translate(32px, 16px) rotate(0deg); }
+	10% { -webkit-transform: translate(-16px, -32px) rotate(-1deg); }
+	20% { -webkit-transform: translate(-48px, 8px) rotate(1deg); }
+	30% { -webkit-transform: translate(8px, 32px) rotate(0deg); }
+	40% { -webkit-transform: translate(16px, -16px) rotate(1deg); }
+	50% { -webkit-transform: translate(-16px, 32px) rotate(-1deg); }
+	60% { -webkit-transform: translate(-48px, 16px) rotate(0deg); }
+	70% { -webkit-transform: translate(32px, 16px) rotate(-1deg); }
+	80% { -webkit-transform: translate(-16px, -16px) rotate(1deg); }
+	90% { -webkit-transform: translate(32px, 32px) rotate(0deg); }
+	100% { -webkit-transform: translate(16px, -32px) rotate(-1deg); }
 }
 .shake{
 	-webkit-animation-name: spaceboots;
@@ -85,4 +142,11 @@ h2.shake,
 	-webkit-transform-origin:50% 50%;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: linear;
+}
+.textBox{
+  display:flex;
+  justify-content: center;
+
+  flex-direction: column;
+  height: 70vh;
 }

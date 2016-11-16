@@ -63,28 +63,46 @@
 	    level: "Tutorial",
 	    currentText: ["Let's get this party started!", "Whoa, two sentences!", "THREEEEEE;;;;;", "end"],
 	    soundFiles: './assets/music/Beautiful_Typing.mp3',
-	    sfx: ['./assets/sounds/Blip_Select.wav', './assets/sounds/typewriter.wav'],
+	    sfx: ['./assets/sounds/Blip_Select.wav', './assets/sounds/typewriter.wav', './assets/sounds/Pickup_Coin10.wav'],
 	    options: {
 	      muteSoundOption: false,
 	      muteMusicOption: false
 	    },
 	    animations: {
-	      shake: true,
-	      spotlight: false,
+	      shake: false,
+	      spotlight: true,
 	      flags: false,
 	      cats: false,
 	      random: false
 	    }
 	  };
+	
+	  var longLvl = {
+	    level: "Even Longer Text Holy SHit",
+	    currentText: ["Alright, let's get some super long words into this application. What other words can we use I wonder?", "Time to paste a whoooole paragraph in here. I don't know how to type the Lorem thing but it's fine, there are plenty of other words in the actual english language that I can use instead. So take THAT international policy!", "THREEEEEEEEEEEKJSKJHASNKJASJHGDASLCNLIHWQIUDGQWLENQWKLGKDYJASHV>GSLFDH>Z<", "end"],
+	    soundFiles: './assets/music/Beautiful_Typing.mp3',
+	    sfx: ['./assets/sounds/Blip_Select.wav', './assets/sounds/typewriter.wav', './assets/sounds/Pickup_Coin10.wav'],
+	    options: {
+	      muteSoundOption: false,
+	      muteMusicOption: false
+	    },
+	    animations: {
+	      shake: false,
+	      spotlight: true,
+	      flags: false,
+	      cats: false,
+	      random: false
+	    }
+	  };
+	
 	  var gameStarted = false;
 	  //ToggleSound
-	  var textToType = ["Let's get this typed.", "Let's also get this typed"];
 	  var Start = function Start(e) {
 	    // debugger
 	    if (e.key == "1" && gameStarted === false) {
 	      document.removeEventListener('keydown', Start);
 	      gameStarted = true;
-	      (0, _game.startLevel)(currentLvl);
+	      (0, _game.startLevel)(longLvl);
 	    }
 	  };
 	
@@ -829,6 +847,12 @@
 	    mute: currentLevel['options']['muteSoundOption']
 	  });
 	
+	  var dingSound = new _howler2.default.Howl({
+	    src: [sfx[2]],
+	    volume: 1,
+	    mute: currentLevel['options']['muteSoundOption']
+	  });
+	
 	  //Setup Level Gimmicks here
 	  var className = "currentText";
 	  var toggleAnimation = function toggleAnimation(element) {
@@ -836,9 +860,18 @@
 	      element.toggleClass("shake");
 	      $('.done').toggleClass('shake');
 	    }
+	
+	    if (currentLevel["animations"]["spotlight"]) {
+	      var ctx = $('#c')[0].getContext("2d");
+	      ctx.beginPath();
+	      ctx.arc(75, 75, 10, 0, Math.PI * 2, true);
+	      ctx.closePath();
+	      ctx.fill();
+	    }
 	  };
 	
 	  playMusic.play();
+	  $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
 	  $('.Level').replaceWith('<li class="Level"> Level: ' + currentLevel['level'] + ' </li>');
 	  $('.Timer').replaceWith('<li class="Timer">Time: ' + time + ' seconds');
 	  $('.wpm').replaceWith('<li class="wpm">WPM: ' + wpm + ' wpm </li>');
@@ -871,8 +904,8 @@
 	        $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
 	        combo++;
 	        score += 100 * (parseInt(combo / 10) + 1) + parseInt(wpm * 0.5);
-	        $('.combo').replaceWith('<h1 class="combo">Combo: ' + combo + '</h1>');
-	        $('.score').replaceWith('<li class="score">Score: ' + score + '</h1>');
+	        $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
+	        $('.score').replaceWith('<li class="score">Score: ' + score + '</li>');
 	        if (currentText[0][0] == " " || done[done.length - 1] == " ") {
 	          $('.currentText').replaceWith('<h2 class="currentText" >\xA0' + currentText[0] + '</h2>');
 	          toggleAnimation($('.currentText'));
@@ -885,10 +918,11 @@
 	        errors++;
 	        errorSound.play();
 	        combo = 0;
-	        $('.combo').replaceWith('<h1 class="combo">Combo: ' + combo + '</h1>');
+	        $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
 	        $('.errors').replaceWith('<li class="errors"> Errors: ' + errors + '</li>');
 	      }
 	      if (currentText[0] == "" && currentText[1] == "end") {
+	        dingSound.play();
 	        playMusic.stop();
 	        currentText = currentText.slice(1);
 	        clearInterval(gameWatcher);
@@ -902,6 +936,7 @@
 	      } else if (currentText[0].length === 0) {
 	        currentText = currentText.slice(1);
 	        done = "";
+	        dingSound.play();
 	        // changeBackground();
 	        score += 250 * (parseInt(combo / 10) + 1) + parseInt(wpm + 1);
 	        $('.done').replaceWith('<h3 class="done">' + done + '</h3>');
@@ -945,7 +980,8 @@
 	
 	  // Chooses color randomly based on preset array
 	  var colorPicker = function () {
-	    var colors = ["#FF6138", "#FFBE53", "#2980B9", "#282741"];
+	    var colors = ["#FF6138", "#2980B9", "#282741"];
+	    var textColors = colors.slice(1).push(colors[0]);
 	    var index = 0;
 	    function next() {
 	      index = index++ < colors.length - 1 ? index : 0;
@@ -954,13 +990,15 @@
 	    function current() {
 	      return colors[index];
 	    }
+	    function text() {
+	      return textColors[index];
+	    }
 	    return {
 	      next: next,
 	      current: current
 	    };
 	  }();
 	
-	  //How does it remove animation?
 	  function removeAnimation(animation) {
 	    var index = animations.indexOf(animation);
 	    if (index > -1) animations.splice(index, 1);
@@ -978,7 +1016,7 @@
 	    // touch start starts when touch surface is touched?
 	    document.addEventListener("touchstart", handleEvent);
 	    var counter = 0;
-	    var color = colorPicker.next();
+	    var color = "#2ecc71";
 	    document.addEventListener("keydown", function (e) {
 	      // debugger
 	      // if ($('.currentText').text().length <= 2){
@@ -999,8 +1037,8 @@
 	      e = e.touches[0];
 	    }
 	    // goes through color
-	    var pageX = Math.max(cW);
-	    var pageY = Math.max(cH);
+	    var pageX = Math.random() * cW;
+	    var pageY = Math.random() * cH;
 	    var currentColor = colorPicker.current();
 	    var nextColor = colorPicker.next();
 	    // expands the color depending on the position of e
@@ -1132,14 +1170,14 @@
 	    window.addEventListener("resize", resizeCanvas);
 	    addClickListeners();
 	    if (!!window.location.pathname.match(/fullcpgrid/)) {
-	      startFauxClicking();
+	      // startFauxClicking();
 	    }
 	    handleInactiveUser();
 	  })();
 	
 	  function handleInactiveUser() {
 	    var inactive = setTimeout(function () {
-	      fauxClick(cW / 2, cH / 2);
+	      // fauxClick(cW/2, cH/2);
 	    }, 2000);
 	
 	    function clearInactiveTimeout() {
@@ -1152,19 +1190,20 @@
 	    document.addEventListener("touchstart", clearInactiveTimeout);
 	  }
 	
-	  function startFauxClicking() {
-	    setTimeout(function () {
-	      fauxClick(_animejs2.default.random(cW * .2, cW * .8), _animejs2.default.random(cH * .2, cH * .8));
-	      startFauxClicking();
-	    }, _animejs2.default.random(200, 900));
-	  }
-	
-	  function fauxClick(x, y) {
-	    var fauxClick = new Event("mousedown");
-	    fauxClick.pageX = x;
-	    fauxClick.pageY = y;
-	    document.dispatchEvent(fauxClick);
-	  }
+	  // function startFauxClicking() {
+	  // setTimeout(function(){
+	  //   fauxClick(anime.random( cW * .2, cW * .8), anime.random(cH * .2, cH * .8));
+	  //   startFauxClicking();
+	  // }, anime.random(200, 900));
+	  // }
+	  //
+	  // function fauxClick(x, y) {
+	  // var fauxClick = new Event("mousedown");
+	  // fauxClick.pageX = x;
+	  // fauxClick.pageY = y;
+	  // document.dispatchEvent(fauxClick);
+	  //
+	  // }
 	};
 	
 	exports.default = animation;

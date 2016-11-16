@@ -13,7 +13,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	font-weight: inherit;
 	font-style: inherit;
 	font-size: 100%;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Roboto Slab', sans-serif;
 	vertical-align: baseline;
 }
 /* remember to define focus styles! */
@@ -27,6 +27,7 @@ body {
 }
 ol, ul {
 	list-style: none;
+  font-size: 20px;
 }
 /* tables still need 'cellspacing="0"' in the markup */
 table {
@@ -46,5 +47,5 @@ blockquote, q {
 }
 
 .hidden {
-  display: none;
+  visibility: hidden;
 }

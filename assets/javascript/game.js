@@ -59,6 +59,11 @@ import animation from './animation';
       mute: currentLevel['options']['muteSoundOption']
     })
 
+    let dingSound = new Howler.Howl({
+      src: [sfx[2]],
+      volume: 1,
+      mute: currentLevel['options']['muteSoundOption']
+    })
 
     //Setup Level Gimmicks here
     let className = "currentText"
@@ -67,10 +72,19 @@ import animation from './animation';
         element.toggleClass("shake")
         $('.done').toggleClass('shake')
       }
+
+      if (currentLevel["animations"]["spotlight"]){
+        var ctx = $('#c')[0].getContext("2d");
+        ctx.beginPath();
+        ctx.arc(75, 75, 10, 0, Math.PI*2, true);
+        ctx.closePath();
+        ctx.fill();
+      }
     }
 
 
     playMusic.play();
+    $('.combo').replaceWith(`<li class="combo">Combo: ${combo}</li>`)
     $('.Level').replaceWith(`<li class="Level"> Level: ${currentLevel['level']} </li>`)
     $('.Timer').replaceWith(`<li class="Timer">Time: ${time} seconds`)
     $('.wpm').replaceWith(`<li class="wpm">WPM: ${wpm} wpm </li>`)
@@ -87,6 +101,7 @@ import animation from './animation';
       $('.Timer').replaceWith(`<li class="Timer">Time: ${time} seconds`)
       $('.wpm').replaceWith(`<li class="wpm">WPM: ${wpm} wpm </li>`)
       $('.maxWpm').replaceWith(`<li class="maxWpm">Max WPM: ${maxWpm} wpm</li>`)
+
     },
      1000)
      $('.navbar').toggleClass('hidden')
@@ -104,8 +119,8 @@ import animation from './animation';
           $('.done').replaceWith(`<h3 class="done">${done}</h3>`)
           combo++;
           score += (100 * (parseInt((combo/10))+ 1)) + parseInt(wpm*0.5)
-          $('.combo').replaceWith(`<h1 class="combo">Combo: ${combo}</h1>`)
-          $('.score').replaceWith(`<li class="score">Score: ${score}</h1>`)
+          $('.combo').replaceWith(`<li class="combo">Combo: ${combo}</li>`)
+          $('.score').replaceWith(`<li class="score">Score: ${score}</li>`)
           if (currentText[0][0] == " " || done[done.length-1] == " "){
             $('.currentText').replaceWith(`<h2 class="currentText" >\u00A0${currentText[0]}</h2>`)
             toggleAnimation($('.currentText'))
@@ -118,10 +133,11 @@ import animation from './animation';
           errors ++
           errorSound.play();
           combo = 0
-          $('.combo').replaceWith(`<h1 class="combo">Combo: ${combo}</h1>`)
+          $('.combo').replaceWith(`<li class="combo">Combo: ${combo}</li>`)
           $(`.errors`).replaceWith(`<li class="errors"> Errors: ${errors}</li>`)
         }
           if (currentText[0] == "" && currentText[1] == "end") {
+            dingSound.play();
             playMusic.stop();
             currentText = currentText.slice(1)
             clearInterval(gameWatcher);
@@ -133,6 +149,7 @@ import animation from './animation';
           } else if (currentText[0].length === 0) {
             currentText = currentText.slice(1)
             done = ""
+            dingSound.play();
             // changeBackground();
             score += 250 * (parseInt((combo/10)) + 1) + parseInt(wpm + 1)
             $('.done').replaceWith(`<h3 class="done">${done}</h3>`)

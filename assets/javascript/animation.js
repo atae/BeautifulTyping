@@ -16,7 +16,8 @@ var circles = [];
 
 // Chooses color randomly based on preset array
 var colorPicker = (function() {
-var colors = ["#FF6138", "#FFBE53", "#2980B9", "#282741"];
+var colors = ["#FF6138", "#2980B9", "#282741"];
+var textColors = colors.slice(1).push(colors[0]);
 var index = 0;
 function next() {
   index = index++ < colors.length-1 ? index : 0;
@@ -25,13 +26,15 @@ function next() {
 function current() {
   return colors[index]
 }
+function text() {
+  return textColors[index]
+}
 return {
   next: next,
   current: current
 }
 })();
 
-//How does it remove animation?
 function removeAnimation(animation) {
 var index = animations.indexOf(animation);
 if (index > -1) animations.splice(index, 1);
@@ -49,7 +52,7 @@ function addClickListeners() {
 // touch start starts when touch surface is touched?
 document.addEventListener("touchstart", handleEvent);
 let counter = 0;
-let color = colorPicker.next();
+let color = "#2ecc71";
 document.addEventListener("keydown", (e) => {
   // debugger
 // if ($('.currentText').text().length <= 2){
@@ -71,8 +74,8 @@ const handleEvent = (e) => {
     e = e.touches[0];
   }
   // goes through color
-  let pageX = Math.max(cW)
-  let pageY = Math.max(cH)
+  let pageX = Math.random() * cW
+  let pageY = Math.random() * cH
   var currentColor = colorPicker.current();
   var nextColor = colorPicker.next();
   // expands the color depending on the position of e
@@ -204,14 +207,14 @@ if (window.CP) {
 window.addEventListener("resize", resizeCanvas);
 addClickListeners();
 if (!!window.location.pathname.match(/fullcpgrid/)) {
-  startFauxClicking();
+  // startFauxClicking();
 }
 handleInactiveUser();
 })();
 
 function handleInactiveUser() {
 var inactive = setTimeout(function(){
-  fauxClick(cW/2, cH/2);
+  // fauxClick(cW/2, cH/2);
 }, 2000);
 
 function clearInactiveTimeout() {
@@ -224,20 +227,20 @@ document.addEventListener("mousedown", clearInactiveTimeout);
 document.addEventListener("touchstart", clearInactiveTimeout);
 }
 
-function startFauxClicking() {
-setTimeout(function(){
-  fauxClick(anime.random( cW * .2, cW * .8), anime.random(cH * .2, cH * .8));
-  startFauxClicking();
-}, anime.random(200, 900));
-}
-
-function fauxClick(x, y) {
-var fauxClick = new Event("mousedown");
-fauxClick.pageX = x;
-fauxClick.pageY = y;
-document.dispatchEvent(fauxClick);
-
-}
+// function startFauxClicking() {
+// setTimeout(function(){
+//   fauxClick(anime.random( cW * .2, cW * .8), anime.random(cH * .2, cH * .8));
+//   startFauxClicking();
+// }, anime.random(200, 900));
+// }
+//
+// function fauxClick(x, y) {
+// var fauxClick = new Event("mousedown");
+// fauxClick.pageX = x;
+// fauxClick.pageY = y;
+// document.dispatchEvent(fauxClick);
+//
+// }
 }
 
 export default animation
