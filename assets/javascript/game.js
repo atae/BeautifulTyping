@@ -1,8 +1,11 @@
 import Howler from 'howler'
 import animation from './animation';
+import {getLevel} from './levels/levelRequire';
+import titleScreen from './title/titleScreen'
+
 // implement new Date once I figure it out
 
-
+//Implement current score to pass amongst levels
 
 
   export const startLevel = (currentLvl) => {
@@ -10,6 +13,8 @@ import animation from './animation';
     // console.log(animation);
     // $('.navbar').toggleClass('hidden')
     $('.title').addClass("removed")
+    $('.done').remove();
+    $('.currentText').remove();
     $('.text').append('<h2><span class="done"></span><span class="currentText"></span>')
     let currentLevel = JSON.parse(JSON.stringify(currentLvl));
     let currentText = currentLevel['currentText']
@@ -172,6 +177,20 @@ import animation from './animation';
             //replace this line with results screen in the future
             document.removeEventListener('keydown',(e) => { handleKeyboard(e)})
             $(`.results`).toggleClass("removed")
+            $(`.retryStage`).one('click', () => {
+              playResult.stop()
+              startLevel(currentLevel)
+            })
+
+            $(`.nextStage`).one('click', () => {
+              playResult.stop()
+              // debugger
+              startLevel(getLevel(currentLevel['nextLevel'],currentLevel['options']))})
+
+              $('.returnToTitle').one('click', () => {
+                playResult.stop();
+                titleScreen();
+              })
             // $(`.stageNavigation`).toggleClass('removed')
           } else if (currentText[0].length === 0) {
             currentText = currentText.slice(1)

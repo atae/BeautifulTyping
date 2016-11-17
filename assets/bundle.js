@@ -780,9 +780,17 @@
 	
 	var _animation2 = _interopRequireDefault(_animation);
 	
+	var _levelRequire = __webpack_require__(5);
+	
+	var _titleScreen = __webpack_require__(14);
+	
+	var _titleScreen2 = _interopRequireDefault(_titleScreen);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// implement new Date once I figure it out
+	
+	//Implement current score to pass amongst levels
 	
 	
 	var startLevel = exports.startLevel = function startLevel(currentLvl) {
@@ -790,6 +798,8 @@
 	  // console.log(animation);
 	  // $('.navbar').toggleClass('hidden')
 	  $('.title').addClass("removed");
+	  $('.done').remove();
+	  $('.currentText').remove();
 	  $('.text').append('<h2><span class="done"></span><span class="currentText"></span>');
 	  var currentLevel = JSON.parse(JSON.stringify(currentLvl));
 	  var currentText = currentLevel['currentText'];
@@ -950,6 +960,21 @@
 	          handleKeyboard(e);
 	        });
 	        $('.results').toggleClass("removed");
+	        $('.retryStage').one('click', function () {
+	          playResult.stop();
+	          startLevel(currentLevel);
+	        });
+	
+	        $('.nextStage').one('click', function () {
+	          playResult.stop();
+	          // debugger
+	          startLevel((0, _levelRequire.getLevel)(currentLevel['nextLevel'], currentLevel['options']));
+	        });
+	
+	        $('.returnToTitle').one('click', function () {
+	          playResult.stop();
+	          (0, _titleScreen2.default)();
+	        });
 	        // $(`.stageNavigation`).toggleClass('removed')
 	      } else if (currentText[0].length === 0) {
 	        currentText = currentText.slice(1);
@@ -4045,11 +4070,13 @@
 	  var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
 	  //order is Error, Type, Complete
 	
+	  // debugger
 	  return {
 	    // soundFiles: songfiles['gameNormal'],
 	    level: levels[levelName]['level'],
 	    currentText: levels[levelName]['currentText'],
 	    prelevelText: levels[levelName]['prelevelText'],
+	    nextLevel: levels[levelName]['nextLevel'],
 	    animations: levels[levelName]['animations'],
 	    soundFiles: [songfiles['gameNormal'], songfiles['result']],
 	    sfx: soundEffects,
@@ -4159,7 +4186,7 @@
 	  currentText: ["In this study, I visualized connexin36-immunoreactive gap junctions and examined the structural features of the interconnected dendrites arising from parvalbumin (PV)-positive interneurons in layer 4 of the feline visual cortex.", "These viruses make sfRNAs by co-opting a cellular exoribonuclease using structured RNAs called xrRNAs.", "end"],
 	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
 	  currentLevel: 'level3',
-	  nextLevel: 'testLevel',
+	  nextLevel: 'level4',
 	  animations: {
 	    shake: false,
 	    spotlight: false,
@@ -4192,7 +4219,7 @@
 	  level: '4 - The Cat',
 	  currentText: ["shytnhi.;o8ng d", "gh6op;;;lvfvfggfbv", "brhnykm8lrmjsfr3tr4hhy5ju6i8jn5s", "w aqxdcwrhngvynj6kmu7,il;o[pmk;", ".luy[]hy6nfr cd bl,///////////;'''''''54265y4trdjfghc9 lkjbtdhs113544444444444444444444439wa]", "end"],
 	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
-	  nextLevel: 'testLevel',
+	  nextLevel: 'level5',
 	  animations: {
 	    shake: false,
 	    spotlight: false,
@@ -4371,9 +4398,22 @@
 	    muteSoundOption: false,
 	    muteMusicOption: false
 	  };
-	  $('.LevelSelect').prepend('<ul class="LevelSelect"><li id="start"> Start Game </li><li class="level">Level Select</li><li class="leaderboards">Leaderboards</li></ul>');
+	  $('.LevelSelect').prepend('<ul class="LevelSelect"><li id="start"> Start Game </li><li class="level">Level Select</li><li id="leaderboards">Leaderboards</li></ul>');
+	  $('#start').on('click', function () {
+	    titleMusic.stop();
+	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level1', options));
+	  });
+	
 	  $('.level').on('click', function () {
 	    $('.levelList').toggleClass("removed");
+	  });
+	  $('.test').on('click', function (e) {
+	    titleMusic.stop();
+	    (0, _game.startLevel)((0, _levelRequire.getLevel)('testLevel', options));
+	  });
+	  $('.longTest').on('click', function (e) {
+	    titleMusic.stop();
+	    (0, _game.startLevel)((0, _levelRequire.getLevel)('longTestLvl', options));
 	  });
 	  $('.level1').on('click', function (e) {
 	    titleMusic.stop();
@@ -4399,9 +4439,36 @@
 	    titleMusic.stop();
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level6', options));
 	  });
-	  $('.leaderboards').on('click', function (e) {
-	    $('.dreamloLBTable').toggleClass('removed');
-	  });
+	  // $('.leaderboards').on('click', e=> {
+	  //   $('.dreamloLBTable').toggleClass('removed');
+	  //
+	  // })
+	
+	  // Get the modal
+	  var modal = document.getElementById('myModal');
+	
+	  // Get the button that opens the modal
+	  var btn = document.getElementById("leaderboards");
+	
+	  // Get the <span> element that closes the modal
+	  var span = document.getElementsByClassName("close")[0];
+	
+	  // When the user clicks on the button, open the modal
+	  btn.onclick = function () {
+	    modal.style.display = "block";
+	  };
+	
+	  // When the user clicks on <span> (x), close the modal
+	  span.onclick = function () {
+	    modal.style.display = "none";
+	  };
+	
+	  // When the user clicks anywhere outside of the modal, close it
+	  window.onclick = function (event) {
+	    if (event.target == modal) {
+	      modal.style.display = "none";
+	    }
+	  };
 	};
 	
 	// $('#start').on('click', startGame())

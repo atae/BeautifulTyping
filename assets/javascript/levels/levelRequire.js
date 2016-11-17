@@ -27,11 +27,13 @@ export const getLevel = (levelName, soundOption) => {
   let soundEffects = [`assets/sounds/Blip_Select.wav`, `assets/sounds/typewriter.wav`, `assets/sounds/Pickup_Coin10.wav`]
   //order is Error, Type, Complete
 
+  // debugger
   return {
     // soundFiles: songfiles['gameNormal'],
   level: levels[levelName]['level'],
   currentText: levels[levelName]['currentText'],
   prelevelText: levels[levelName]['prelevelText'],
+  nextLevel: levels[levelName]['nextLevel'],
   animations: levels[levelName]['animations'],
   soundFiles: [songfiles['gameNormal'], songfiles['result']],
   sfx: soundEffects,

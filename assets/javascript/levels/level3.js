@@ -14,7 +14,7 @@ export const level3 = {
   "These viruses make sfRNAs by co-opting a cellular exoribonuclease using structured RNAs called xrRNAs.", "end"],
   prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
   currentLevel: 'level3',
-  nextLevel: 'testLevel',
+  nextLevel: 'level4',
   animations: {
     shake: false,
     spotlight: false,
