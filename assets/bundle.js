@@ -4221,7 +4221,19 @@
 	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
 	//order is Error, Type, Complete
 	
-	var level5 = exports.level5 = {};
+	var level5 = exports.level5 = {
+	  level: '',
+	  currentText: ["", "end"],
+	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  nextLevel: 'level6',
+	  animations: {
+	    shake: true,
+	    spotlight: false,
+	    flags: false,
+	    cats: false,
+	    random: false
+	  }
+	};
 
 /***/ },
 /* 11 */
@@ -4242,7 +4254,19 @@
 	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
 	//order is Error, Type, Complete
 	
-	var level6 = exports.level6 = {};
+	var level6 = exports.level6 = {
+	  level: '',
+	  currentText: [" ", "end"],
+	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  nextLevel: 'end',
+	  animations: {
+	    shake: false,
+	    spotlight: true,
+	    flags: false,
+	    cats: false,
+	    random: false
+	  }
+	};
 
 /***/ },
 /* 12 */
@@ -4327,32 +4351,56 @@
 	
 	var _game = __webpack_require__(2);
 	
+	var _howler = __webpack_require__(3);
+	
+	var _howler2 = _interopRequireDefault(_howler);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	var titleScreen = function titleScreen() {
+	
+	  var titleMusic = new _howler2.default.Howl({
+	    src: ['./assets/music/Vatic_Sketch_1.mp3']
+	  });
+	
+	  titleMusic.play();
+	
+	  // $('.dreamloLBTable').addClass('removed');
+	
 	  var options = {
 	    muteSoundOption: false,
 	    muteMusicOption: false
 	  };
-	  $('.LevelSelect').prepend('<ul class="LevelSelect"><li id="start"> Start Game </li><li class="level">Level Select</li></ul>');
+	  $('.LevelSelect').prepend('<ul class="LevelSelect"><li id="start"> Start Game </li><li class="level">Level Select</li><li class="leaderboards">Leaderboards</li></ul>');
 	  $('.level').on('click', function () {
 	    $('.levelList').toggleClass("removed");
 	  });
 	  $('.level1').on('click', function (e) {
+	    titleMusic.stop();
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level1', options));
 	  });
 	  $('.level2').on('click', function (e) {
+	    titleMusic.stop();
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level2', options));
 	  });
 	  $('.level3').on('click', function (e) {
+	    titleMusic.stop();
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level3', options));
 	  });
 	  $('.level4').on('click', function (e) {
+	    titleMusic.stop();
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level4', options));
 	  });
 	  $('.level5').on('click', function (e) {
+	    titleMusic.stop();
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level5', options));
 	  });
 	  $('.level6').on('click', function (e) {
+	    titleMusic.stop();
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level6', options));
+	  });
+	  $('.leaderboards').on('click', function (e) {
+	    $('.dreamloLBTable').toggleClass('removed');
 	  });
 	};
 	

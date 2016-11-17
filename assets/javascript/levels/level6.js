@@ -8,4 +8,16 @@ let songfiles = {
 let soundEffects = [`assets/sounds/Blip_Select.wav`, `assets/sounds/typewriter.wav`, `assets/sounds/Pickup_Coin10.wav`]
   //order is Error, Type, Complete
 
-export const level6 = {}
+export const level6 = {
+    level: '',
+    currentText: [" ","end"],
+    prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+    nextLevel: 'end',
+    animations: {
+      shake: false,
+      spotlight: true,
+      flags: false,
+      cats: false,
+      random: false
+    }
+}
