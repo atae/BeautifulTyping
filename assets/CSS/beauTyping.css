@@ -21,14 +21,18 @@ section {
   height: 22rem;
 }
 
+li{
+  cursor:pointer;
+}
 
 header {
 background: #ecf0f1;
 }
 
-header ul {
-
+header ul li{
+cursor:default;
 }
+
 h2 {
 
 }
@@ -217,13 +221,22 @@ h2.shake,
   margin-bottom: 40px;
 }
 
+.results ul li{
+  cursor: default;
+}
+
 .stageNavigation{
   text-align:center;
   width: 60vw;
 }
+
+.stageNavigation ul li {
+  cursor: pointer;
+}
 .removed {
 	display:none;
 }
+
 
 /* The Modal (background) */
 .modal {

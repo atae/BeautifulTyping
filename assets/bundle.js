@@ -828,6 +828,9 @@
 	  $('.Timer').replaceWith('<li class="Timer">Time: ' + time + ' seconds');
 	  $('.wpm').replaceWith('<li class="wpm">WPM: ' + wpm + ' wpm </li>');
 	  $('.maxWpm').replaceWith('<li class="maxWpm">Max WPM: ' + maxWpm + ' wpm</li>');
+	  $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
+	  $('.score').replaceWith('<li class="score">Score: ' + score + '</li>');
+	  $('.errors').replaceWith('<li class="errors"> Errors: ' + errors + '</li>');
 	
 	  //Setup sounds
 	
@@ -898,7 +901,10 @@
 	    $('.Timer').replaceWith('<li class="Timer">Time: ' + time + ' seconds');
 	    $('.wpm').replaceWith('<li class="wpm">WPM: ' + wpm + ' wpm </li>');
 	    $('.maxWpm').replaceWith('<li class="maxWpm">Max WPM: ' + maxWpm + ' wpm</li>');
-	    $('.averageWpm').replaceWith('<li class="averageWpm"> AverageWPM: ' + averageWpm + ' wpm</li');
+	    $('.averageWpm').replaceWith('<li class="averageWpm"> Average WPM: ' + averageWpm + ' wpm</li');
+	    $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
+	    $('.score').replaceWith('<li class="score">Score: ' + score + '</li>');
+	    $('.errors').replaceWith('<li class="errors"> Errors: ' + errors + '</li>');
 	  }, 1000);
 	
 	  playMusic.play();
@@ -962,17 +968,25 @@
 	        $('.results').toggleClass("removed");
 	        $('.retryStage').one('click', function () {
 	          playResult.stop();
+	          $('.nextStage').off('click');
+	          $('.returnToTitle').off('click');
 	          startLevel(currentLvl);
 	        });
 	
 	        $('.nextStage').one('click', function () {
 	          playResult.stop();
+	          $('.retryStage').off('click');
+	          $('.returnToTitle').off('click');
 	          startLevel((0, _levelRequire.getLevel)(currentLevel['nextLevel'], currentLevel['options']));
 	        });
 	
 	        $('.returnToTitle').one('click', function () {
-	          playResult.stop();
-	          (0, _titleScreen2.default)();
+	          document.reload();
+	          // playResult.stop();
+	          // $(`.results`).toggleClass("removed")
+	          // $(`.retryStage`).off('click');
+	          // $(`.nextStage`).off('click');
+	          // titleScreen();
 	        });
 	        // $(`.stageNavigation`).toggleClass('removed')
 	      } else if (currentText[0].length === 0) {
@@ -3785,7 +3799,7 @@
 	
 	  // Chooses color randomly based on preset array
 	  var colorPicker = function () {
-	    var colors = ["#FF6138", "#2980B9", "#FFBE53", "#e74c3c", "#16a085", "#9b59b6"];
+	    var colors = ["#2980B9", "#FFBE53", "#16a085"];
 	    var textColors = colors.slice(1).push(colors[0]);
 	    var index = 0;
 	    function next() {
@@ -3833,6 +3847,7 @@
 	      // } else {
 	      // $('.currentText').off('change',handleEvent);
 	    });
+	    document.addEventListener("mousedown", handleEvent);
 	    var a = setInterval(function () {
 	      handleEvent({ touches: null });
 	    }, Math.random() * 100 + 140);
@@ -4147,13 +4162,12 @@
 	//order is Error, Type, Complete
 	
 	var level2 = exports.level2 = {
-	  level: '2 - The Business',
-	  currentText: ["The source added that some production of GM's Chevrolet marque could be shifted from Asia to Europe, with Russelsheim the likely beneficiary", "The modified contract increases the cap on retrofits needed on early production planes due to issues that arose in testing, which is still continuing, the U.S. Defense Department said in a daily listing of contract awards.", "The Superior Court of Justice ruled in favor of the federal tax authority in its appeal against an injunction granted in March that suspended payment of the taxes by Vale.", "end"],
+	  level: '2 - The Coffee',
+	  currentText: ["Scrum meeting at 7PM. Don't be late!", "The security guards called again. You can't keep parking in the spaces reserved for the charity winners. Please move your car now.", "Coffee machine is down again. Looks like we'll have to go get some coffee from across the- Oh, I see you've already got your own cup. Carry on.", "Where is my stapler? Where IS my stapler? WHERE is my stapler? Where is my STAPLER?", "SYNERGY!!!", "!!!!11111iii!!!iii!!ii!!ii!11llll", "end"],
 	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
-	  currentLevel: 'level2',
 	  nextLevel: 'level3',
 	  animations: {
-	    shake: false,
+	    shake: true,
 	    spotlight: false,
 	    flags: false,
 	    cats: false,
@@ -4248,8 +4262,8 @@
 	//order is Error, Type, Complete
 	
 	var level5 = exports.level5 = {
-	  level: '',
-	  currentText: ["", "end"],
+	  level: '5 - The Coffee',
+	  currentText: ["Scrum meeting at 7PM. Don't be late!", "The security guards called again. You can't keep parking in the spaces reserved for the charity winners. Please move your car now.", "Coffee machine is down again. Looks like we'll have to go get some coffee from across the- Oh, I see you've already got your own cup. Carry on.", "Where is my stapler? Where IS my stapler? WHERE is my stapler? Where is my STAPLER?", "SYNERGY!!!", "!!!!11111iii!!!iii!!ii!!ii!11llll", "end"],
 	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
 	  nextLevel: 'level6',
 	  animations: {
@@ -4383,8 +4397,28 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var titleScreen = function titleScreen() {
+	var resetPage = function resetPage() {
 	
+	  $('.level').replaceWith('<li class = "Level"> Beautiful Typing </li>');
+	  $('.score').replaceWith('<li class = "score hidden"> Score: 0</li>');
+	  $('.Timer').replaceWith('<li class = "Timer hidden"> Time: 0 sec</li>');
+	  $('.wpm').replaceWith('<li class = "wpm hidden"> WPM: 0 wpm</li>');
+	  $('.maxWpm').replaceWith('<li class = "maxWpm hidden"> Max WPM: 0 wpm</li>');
+	  $('.errors').replaceWith('<li class ="errors hidden"> Errors: 0 </li>');
+	  $('.titleName').replaceWith('<h2 class="titleName animated bounceInDown"> Beautiful Typing </h2>');
+	  // $(`.LevelSelect`).replaceWith(`<ul class="LevelSelect animated bounceInLeft">
+	  //     </ul>
+	  //
+	  //     <div id="myModal" class="modal">
+	  //
+	  //         </div>
+	  //
+	  //   </div>
+	  //     <br/>`)
+	};
+	
+	var titleScreen = function titleScreen() {
+	  resetPage();
 	  var titleMusic = new _howler2.default.Howl({
 	    src: ['./assets/music/Vatic_Sketch_1.mp3']
 	  });

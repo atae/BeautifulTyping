@@ -2,8 +2,29 @@ import {getLevel} from '../levels/levelRequire';
 import {handleStart, startLevel, handleKeyboard} from '../game';
 import Howler from 'howler'
 
-const titleScreen = () => {
+const resetPage = () => {
 
+    $('.level').replaceWith(`<li class = "Level"> Beautiful Typing </li>`)
+    $('.score').replaceWith(`<li class = "score hidden"> Score: 0</li>`)
+    $('.Timer').replaceWith(`<li class = "Timer hidden"> Time: 0 sec</li>`)
+    $('.wpm').replaceWith(`<li class = "wpm hidden"> WPM: 0 wpm</li>`)
+    $('.maxWpm').replaceWith(`<li class = "maxWpm hidden"> Max WPM: 0 wpm</li>`)
+    $('.errors').replaceWith(`<li class ="errors hidden"> Errors: 0 </li>`)
+    $('.titleName').replaceWith(`<h2 class="titleName animated bounceInDown"> Beautiful Typing </h2>`)
+    // $(`.LevelSelect`).replaceWith(`<ul class="LevelSelect animated bounceInLeft">
+    //     </ul>
+    //
+    //     <div id="myModal" class="modal">
+    //
+    //         </div>
+    //
+    //   </div>
+    //     <br/>`)
+}
+
+
+const titleScreen = () => {
+  resetPage()
   let titleMusic = new Howler.Howl({
     src:['./assets/music/Vatic_Sketch_1.mp3']
   }

@@ -41,6 +41,9 @@ import titleScreen from './title/titleScreen'
     $('.Timer').replaceWith(`<li class="Timer">Time: ${time} seconds`)
     $('.wpm').replaceWith(`<li class="wpm">WPM: ${wpm} wpm </li>`)
     $('.maxWpm').replaceWith(`<li class="maxWpm">Max WPM: ${maxWpm} wpm</li>`)
+    $('.combo').replaceWith(`<li class="combo">Combo: ${combo}</li>`)
+    $('.score').replaceWith(`<li class="score">Score: ${score}</li>`)
+    $(`.errors`).replaceWith(`<li class="errors"> Errors: ${errors}</li>`)
 
     //Setup sounds
 
@@ -111,7 +114,11 @@ import titleScreen from './title/titleScreen'
       $('.Timer').replaceWith(`<li class="Timer">Time: ${time} seconds`)
       $('.wpm').replaceWith(`<li class="wpm">WPM: ${wpm} wpm </li>`)
       $('.maxWpm').replaceWith(`<li class="maxWpm">Max WPM: ${maxWpm} wpm</li>`)
-      $('.averageWpm').replaceWith(`<li class="averageWpm"> AverageWPM: ${averageWpm} wpm</li`)
+      $('.averageWpm').replaceWith(`<li class="averageWpm"> Average WPM: ${averageWpm} wpm</li`)
+      $('.combo').replaceWith(`<li class="combo">Combo: ${combo}</li>`)
+      $('.score').replaceWith(`<li class="score">Score: ${score}</li>`)
+      $(`.errors`).replaceWith(`<li class="errors"> Errors: ${errors}</li>`)
+
     },
      1000)
 
@@ -179,16 +186,25 @@ import titleScreen from './title/titleScreen'
             $(`.results`).toggleClass("removed")
             $(`.retryStage`).one('click', () => {
               playResult.stop()
+              $(`.nextStage`).off('click');
+              $(`.returnToTitle`).off('click');
               startLevel(currentLvl)
             })
 
             $(`.nextStage`).one('click', () => {
               playResult.stop()
-              startLevel(getLevel(currentLevel['nextLevel'],currentLevel['options']))})
+              $(`.retryStage`).off('click');
+              $(`.returnToTitle`).off('click');
+              startLevel(getLevel(currentLevel['nextLevel'],currentLevel['options']
+            ))})
 
               $('.returnToTitle').one('click', () => {
-                playResult.stop();
-                titleScreen();
+                document.reload();
+                // playResult.stop();
+                // $(`.results`).toggleClass("removed")
+                // $(`.retryStage`).off('click');
+                // $(`.nextStage`).off('click');
+                // titleScreen();
               })
             // $(`.stageNavigation`).toggleClass('removed')
           } else if (currentText[0].length === 0) {

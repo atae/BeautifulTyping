@@ -16,7 +16,7 @@ var circles = [];
 
 // Chooses color randomly based on preset array
 var colorPicker = (function() {
-var colors = ["#FF6138","#2980B9", "#FFBE53", "#e74c3c", "#16a085", "#9b59b6" ];
+var colors = ["#2980B9", "#FFBE53", "#16a085"];
 var textColors = colors.slice(1).push(colors[0]);
 var index = 0;
 function next() {
@@ -65,6 +65,7 @@ document.addEventListener("keydown", (e) => {
   // $('.currentText').off('change',handleEvent);
 }
 )
+document.addEventListener("mousedown", handleEvent);
 let a = setInterval(() => {handleEvent({touches: null})}, Math.random()*100 + 140)
 window.setTimeout(()=> {clearInterval(a)}, 1000)
 };
