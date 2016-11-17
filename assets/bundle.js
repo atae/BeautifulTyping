@@ -962,12 +962,11 @@
 	        $('.results').toggleClass("removed");
 	        $('.retryStage').one('click', function () {
 	          playResult.stop();
-	          startLevel(currentLevel);
+	          startLevel(currentLvl);
 	        });
 	
 	        $('.nextStage').one('click', function () {
 	          playResult.stop();
-	          // debugger
 	          startLevel((0, _levelRequire.getLevel)(currentLevel['nextLevel'], currentLevel['options']));
 	        });
 	

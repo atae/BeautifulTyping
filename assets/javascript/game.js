@@ -179,12 +179,11 @@ import titleScreen from './title/titleScreen'
             $(`.results`).toggleClass("removed")
             $(`.retryStage`).one('click', () => {
               playResult.stop()
-              startLevel(currentLevel)
+              startLevel(currentLvl)
             })
 
             $(`.nextStage`).one('click', () => {
               playResult.stop()
-              // debugger
               startLevel(getLevel(currentLevel['nextLevel'],currentLevel['options']))})
 
               $('.returnToTitle').one('click', () => {
