@@ -25,15 +25,27 @@ section {
 header {
 background: #ecf0f1;
 }
+
+header ul {
+
+}
 h2 {
 
 }
 
+.title{
+  display: block;
+}
 h3 {
   z-index: 3;
   color: white;
   font-size: 60px;
   text-align: center;
+}
+
+.levelList{
+  display:inline;
+  margin: 0 auto;
 }
 
 ul{
@@ -68,7 +80,7 @@ li { margin: 20px;}
 
 .text {
   margin: 0 auto;
-  padding: 40px;
+  /*padding: 40px;*/
   display: inline;
   justify-content: flex-start;
   flex-direction: row;
@@ -92,6 +104,11 @@ span{
   color: #2ecc71;
   font-size: 60px;
   word-break: break-word;
+}
+
+.titleName{
+  font-size: 80px;
+  text-align: center;
 }
 
 .done{

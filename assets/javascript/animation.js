@@ -65,6 +65,8 @@ document.addEventListener("keydown", (e) => {
   // $('.currentText').off('change',handleEvent);
 }
 )
+let a = setInterval(() => {handleEvent({touches: null})}, Math.random()*100 + 140)
+window.setTimeout(()=> {clearInterval(a)}, 1000)
 };
 
 const handleEvent = (e) => {

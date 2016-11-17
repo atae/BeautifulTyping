@@ -8,6 +8,9 @@ import animation from './animation';
   export const startLevel = (currentLvl) => {
     // debugger
     // console.log(animation);
+    // $('.navbar').toggleClass('hidden')
+    $('.title').addClass("removed")
+    $('.text').append('<h2><span class="done"></span><span class="currentText"></span>')
     let currentLevel = JSON.parse(JSON.stringify(currentLvl));
     let currentText = currentLevel['currentText']
     document.removeEventListener('keydown',(e) => { handleKeyboard(e)})
@@ -113,7 +116,6 @@ import animation from './animation';
     playMusic.play();
 
 
-     $('.navbar').toggleClass('hidden')
      toggleAnimation($('.currentText'))
 
     document.addEventListener('keydown', (e) => {
