@@ -22,7 +22,9 @@ section {
 }
 
 
-
+header {
+background: #ecf0f1;
+}
 h2 {
 
 }
@@ -46,13 +48,14 @@ ul{
 }
 
 .options {
+  /*background: #ecf0f1;*/
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   /*position: absolute;*/
 }
 .options ul{
-  border-top: 2px solid black;
+  /*border-top: 2px solid black;*/
   /*position: absolute;*/
 }
 
@@ -66,7 +69,7 @@ li { margin: 20px;}
 .text {
   margin: 0 auto;
   padding: 40px;
-  display: flex;
+  display: inline;
   justify-content: flex-start;
   flex-direction: row;
   /*position:absolute;*/
@@ -77,6 +80,7 @@ li { margin: 20px;}
   z-index: 3;
   color: white;
   font-size: 60px;
+  margin-bottom: 100px;
 }
 
 span{
@@ -177,12 +181,17 @@ h2.shake,
   margin: 0 auto;
   display:block;
   align-items: center;
+  border: 1px solid black;
+  padding: 5px;
+  width: 300px;
+  background: #f1c40f;
+  margin-bottom: 40px;
 }
 
 .results{
-  display:flex;
+  display:inline;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content:space-around;;
   margin-bottom: 40px;
 }
 

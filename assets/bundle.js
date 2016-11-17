@@ -72,7 +72,7 @@
 	    muteMusicOption: false
 	  };
 	  //get level Name
-	  var currentLevel = (0, _levelRequire.getLevel)('level2', options);
+	  var currentLevel = (0, _levelRequire.getLevel)('testLevel', options);
 	  var nextLevel = void 0;
 	  var gameStarted = false;
 	
@@ -1344,7 +1344,7 @@
 	
 	var level2 = exports.level2 = {
 	  level: '2 - The Business',
-	  currentText: ["The source added that some production of GM's Chevrolet marque", "could be shifted from Asia to Europe, with Russelsheim the likely beneficiary", "The modified contract increases the cap on retrofits needed on early production", "planes due to issues that arose in testing, which is still continuing,", "the U.S. Defense Department said in a daily listing of contract awards.", "The Superior Court of Justice ruled in favor of the federal tax authority", "in its appeal against an injunction granted in March", "that suspended payment of the taxes by Vale.", "end"],
+	  currentText: ["The source added that some production of GM's Chevrolet marque could be shifted from Asia to Europe, with Russelsheim the likely beneficiary", "The modified contract increases the cap on retrofits needed on early production planes due to issues that arose in testing, which is still continuing, the U.S. Defense Department said in a daily listing of contract awards.", "The Superior Court of Justice ruled in favor of the federal tax authority in its appeal against an injunction granted in March that suspended payment of the taxes by Vale.", "end"],
 	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
 	  currentLevel: 'level2',
 	  nextLevel: 'level3',
@@ -1378,7 +1378,7 @@
 	
 	var level3 = exports.level3 = {
 	  level: '3 - The Scientist',
-	  currentText: ["In this study, I visualized connexin36-immunoreactive gap junctions", "and examined the structural features of the interconnected dendrites", "arising from parvalbumin (PV)-positive interneurons in layer 4 of the feline visual cortex.", "These viruses make sfRNAs by co-opting a", "cellular exoribonuclease using structured RNAs called xrRNAs.", "end"],
+	  currentText: ["In this study, I visualized connexin36-immunoreactive gap junctions and examined the structural features of the interconnected dendrites arising from parvalbumin (PV)-positive interneurons in layer 4 of the feline visual cortex.", "These viruses make sfRNAs by co-opting a cellular exoribonuclease using structured RNAs called xrRNAs.", "end"],
 	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
 	  currentLevel: 'level3',
 	  nextLevel: 'testLevel',
@@ -1410,7 +1410,19 @@
 	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
 	//order is Error, Type, Complete
 	
-	var level4 = exports.level4 = {};
+	var level4 = exports.level4 = {
+	  level: '4 - The Cat',
+	  currentText: ["shytnhi.;o8ng d", "gh6op;;;lvfvfggfbv", "brhnykm8lrmjsfr3tr4hhy5ju6i8jn5s", "w aqxdcwrhngvynj6kmu7,il;o[pmk;", ".luy[]hy6nfr cd bl,///////////;'''''''54265y4trdjfghc9 lkjbtdhs113544444444444444444444439wa]", "end"],
+	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  nextLevel: 'testLevel',
+	  animations: {
+	    shake: false,
+	    spotlight: false,
+	    flags: false,
+	    cats: false,
+	    random: false
+	  }
+	};
 
 /***/ },
 /* 9 */

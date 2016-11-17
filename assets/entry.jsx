@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     muteMusicOption: false
   }
   //get level Name
-  let currentLevel = getLevel('level2', options)
+  let currentLevel = getLevel('testLevel', options)
   let nextLevel;
   let gameStarted = false;
 
