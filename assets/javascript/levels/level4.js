@@ -15,7 +15,7 @@ export const level4 = {
   "brhnykm8lrmjsfr3tr4hhy5ju6i8jn5s",
   "w aqxdcwrhngvynj6kmu7,il;o[pmk;",
   ".luy[]hy6nfr cd bl,///////////;'''''''54265y4trdjfghc9 lkjbtdhs113544444444444444444444439wa]", "end"],
-  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+  prelevelText: ["My cat decided to take a turn on the keyboard. This is her contribution."],
   nextLevel: 'level5',
   animations: {
     shake: false,

@@ -1421,7 +1421,7 @@
 	var level2 = exports.level2 = {
 	  level: '2 - The Coffee',
 	  currentText: ["Scrum meeting at 7PM. Don't be late!", "The security guards called again. You can't keep parking in the spaces reserved for the charity winners. Please move your car now.", "Coffee machine is down again. Looks like we'll have to go get some coffee from across the- Oh, I see you've already got your own cup. Carry on.", "Where is my stapler? Where IS my stapler? WHERE is my stapler? Where is my STAPLER?", "SYNERGY!!!", "!!11!1i!iil!1l1l1l1", "end"],
-	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  prelevelText: ["This level will simulate an environment wherein you have consumed 5 more cups of coffee than usual. This will test perseverance."],
 	  nextLevel: 'level3',
 	  animations: {
 	    shake: true,
@@ -1454,7 +1454,7 @@
 	var level3 = exports.level3 = {
 	  level: '3 - The Scientist',
 	  currentText: ["In this study, I visualized connexin36-immunoreactive gap junctions and examined the structural features of the interconnected dendrites arising from parvalbumin (PV)-positive interneurons in layer 4 of the feline visual cortex.", "These viruses make sfRNAs by co-opting a cellular exoribonuclease using structured RNAs called xrRNAs.", "end"],
-	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  prelevelText: ["This will test your ability to type scientific words that you have likely seen for the first time. "],
 	  currentLevel: 'level3',
 	  nextLevel: 'level4',
 	  animations: {
@@ -1488,7 +1488,7 @@
 	var level4 = exports.level4 = {
 	  level: '4 - The Cat',
 	  currentText: ["shytnhi.;o8ng d", "gh6op;;;lvfvfggfbv", "brhnykm8lrmjsfr3tr4hhy5ju6i8jn5s", "w aqxdcwrhngvynj6kmu7,il;o[pmk;", ".luy[]hy6nfr cd bl,///////////;'''''''54265y4trdjfghc9 lkjbtdhs113544444444444444444444439wa]", "end"],
-	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  prelevelText: ["My cat decided to take a turn on the keyboard. This is her contribution."],
 	  nextLevel: 'level5',
 	  animations: {
 	    shake: false,
@@ -1519,9 +1519,9 @@
 	//order is Error, Type, Complete
 	
 	var level5 = exports.level5 = {
-	  level: '5 - The Coffee',
-	  currentText: ["Scrum meeting at 7PM. Don't be late!", "The security guards called again. You can't keep parking in the spaces reserved for the charity winners. Please move your car now.", "Coffee machine is down again. Looks like we'll have to go get some coffee from across the- Oh, I see you've already got your own cup. Carry on.", "Where is my stapler? Where IS my stapler? WHERE is my stapler? Where is my STAPLER?", "SYNERGY!!!", "!!!!11111iii!!!iii!!ii!!ii!11llll", "end"],
-	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  level: '5 - ',
+	  currentText: ["", "end"],
+	  prelevelText: [""],
 	  nextLevel: 'level6',
 	  animations: {
 	    shake: true,

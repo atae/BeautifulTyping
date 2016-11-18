@@ -14,7 +14,7 @@ export const level2 = {
   "The security guards called again. You can't keep parking in the spaces reserved for the charity winners. Please move your car now.",
   "Coffee machine is down again. Looks like we'll have to go get some coffee from across the- Oh, I see you've already got your own cup. Carry on.",
    "Where is my stapler? Where IS my stapler? WHERE is my stapler? Where is my STAPLER?", "SYNERGY!!!","!!11!1i!iil!1l1l1l1","end"],
-  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+  prelevelText: ["This level will simulate an environment wherein you have consumed 5 more cups of coffee than usual. This will test perseverance."],
   nextLevel: 'level3',
   animations: {
     shake: true,

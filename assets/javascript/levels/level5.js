@@ -9,12 +9,9 @@ let soundEffects = [`assets/sounds/Blip_Select.wav`, `assets/sounds/typewriter.w
   //order is Error, Type, Complete
 
 export const level5 = {
-  level: '5 - The Coffee',
-  currentText: ["Scrum meeting at 7PM. Don't be late!",
-  "The security guards called again. You can't keep parking in the spaces reserved for the charity winners. Please move your car now.",
-  "Coffee machine is down again. Looks like we'll have to go get some coffee from across the- Oh, I see you've already got your own cup. Carry on.",
-   "Where is my stapler? Where IS my stapler? WHERE is my stapler? Where is my STAPLER?", "SYNERGY!!!","!!!!11111iii!!!iii!!ii!!ii!11llll","end"],
-  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+  level: '5 - ',
+  currentText: ["","end"],
+  prelevelText: [""],
   nextLevel: 'level6',
   animations: {
     shake: true,

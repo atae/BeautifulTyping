@@ -18,8 +18,9 @@ body{
 .preLevelText{
   position:absolute;
   z-index: 10;
-  width:100%;
-  height: 100%;
+  margin: 0 auto;
+  /*width:100%;
+  height: 100%;*/
 }
 section {
   display: flex;
