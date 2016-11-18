@@ -26,7 +26,6 @@ This project uses the following technologies:
 
   ![tag screenshot](screenshots/Example%20Level%20State.png)
 
-### Game Text Execution
 
 
 
