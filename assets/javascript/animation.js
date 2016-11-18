@@ -67,7 +67,7 @@ document.addEventListener("keydown", (e) => {
 )
 document.addEventListener("mousedown", handleEvent);
 let a = setInterval(() => {handleEvent({touches: null})}, Math.random()*100 + 140)
-window.setTimeout(()=> {clearInterval(a)}, 1000)
+window.setTimeout(()=> {clearInterval(a)}, 2000)
 };
 
 const handleEvent = (e) => {

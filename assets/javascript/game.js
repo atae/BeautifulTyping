@@ -6,6 +6,9 @@ import titleScreen from './title/titleScreen'
 // implement new Date once I figure it out
 
 //Implement current score to pass amongst levels
+  // export const startLevel = (currentLvl) => {
+  //
+  // }
 
 
   export const startLevel = (currentLvl) => {
@@ -21,7 +24,6 @@ import titleScreen from './title/titleScreen'
     document.removeEventListener('keydown',(e) => { handleKeyboard(e)})
     clearInterval(gameWatcher);
     let score = 0;
-    console.log(currentText);
     let keys_entered = 0;
     let wpm = 0;
     let averageWpm = 0;
@@ -54,7 +56,6 @@ import titleScreen from './title/titleScreen'
         html5: true,
         mute: currentLevel['options']['muteMusicOption']
       });
-      console.log(soundFiles[1]);
       let playResult = new Howler.Howl({
         src: soundFiles[1],
         loop: true,
@@ -142,9 +143,7 @@ import titleScreen from './title/titleScreen'
             done += currentText[0][0]
           }
           currentText[0] = currentText[0].slice(1)
-          console.log(currentText);
           keys_entered++
-          console.log(done);
           if ( previousSpace === true){
             $('.done').replaceWith(`<span class="done" >${done}\u0020</span>`)
             previousSpace = false
@@ -197,6 +196,15 @@ import titleScreen from './title/titleScreen'
               $(`.returnToTitle`).off('click');
               startLevel(getLevel(currentLevel['nextLevel'],currentLevel['options']
             ))})
+
+            $(`.nextStage`).one('keypress', (e) => {
+              debugger
+              if (e.key==="Enter"){
+              playResult.stop()
+              $(`.retryStage`).off('click');
+              $(`.returnToTitle`).off('click');
+              startLevel(getLevel(currentLevel['nextLevel'],currentLevel['options']
+            ))}})
 
               $('.returnToTitle').one('click', () => {
                 // document.reload();

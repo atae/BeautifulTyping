@@ -9,14 +9,13 @@ import titleScreen from './javascript/title/titleScreen'
 document.addEventListener("DOMContentLoaded", () => {
   titleScreen();
   //ToggleSound
+  // debugger
   let options = {
     muteSoundOption: false,
     muteMusicOption: false
   }
   //get level Name
-  let currentLevel = getLevel('testLevel', options)
-  let nextLevel;
-  let gameStarted = false;
+
 
   const Start = (e) => {
     // debugger
@@ -28,18 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // }
   }
 
-  $('.soundOption').on('click', () => {
-
-    let currentText = $('.soundOption').text()
-    let newText = (currentText = " Sound: Off ")? " Sound: On " : " Sound: Off "
-    $('.soundOption').text(newText);
-  //
-  //   if ($('.soundOption').text() === " Sound: On ") {
-  //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: Off </li>')
-  // } else if ($('.soundOption').text() === " Sound: Off ") {
-  //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: On </li>')
-  // }
-  })
 
 
   // $('.soundOption').on('click', () => {
@@ -49,13 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // })
 
 
-    $('.musicOption').on('click', () => {
-      if ($('.musicOption').text() === " Music: On ") {
-      $('.musicOption').replaceWith('<li class="musicOption"> Music: Off </li>')
-    } else if ($('.musicOption').text() === " Music: Off ") {
-      $('.musicOption').replaceWith('<li class="musicOption"> Music: On </li>')
-    }
-    })
   document.addEventListener("keydown", Start)
 
   animation();

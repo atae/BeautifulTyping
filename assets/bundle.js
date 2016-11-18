@@ -69,37 +69,23 @@
 	document.addEventListener("DOMContentLoaded", function () {
 	  (0, _titleScreen2.default)();
 	  //ToggleSound
+	  // debugger
 	  var options = {
 	    muteSoundOption: false,
 	    muteMusicOption: false
 	  };
 	  //get level Name
-	  var currentLevel = (0, _levelRequire.getLevel)('testLevel', options);
-	  var nextLevel = void 0;
-	  var gameStarted = false;
 	
-	  var Start = function Start(e) {
-	    // debugger
-	    // if (e.key == "1" && gameStarted === false) {
-	    //   document.removeEventListener('keydown', Start)
-	    //   gameStarted = true;
-	    // // nextLevel = getLevel('longTestLvl');
-	    // startLevel(currentLevel);
-	    // }
-	  };
 	
-	  $('.soundOption').on('click', function () {
+	  var Start = function Start(e) {}
+	  // debugger
+	  // if (e.key == "1" && gameStarted === false) {
+	  //   document.removeEventListener('keydown', Start)
+	  //   gameStarted = true;
+	  // // nextLevel = getLevel('longTestLvl');
+	  // startLevel(currentLevel);
+	  // }
 	
-	    var currentText = $('.soundOption').text();
-	    var newText = (currentText = " Sound: Off ") ? " Sound: On " : " Sound: Off ";
-	    $('.soundOption').text(newText);
-	    //
-	    //   if ($('.soundOption').text() === " Sound: On ") {
-	    //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: Off </li>')
-	    // } else if ($('.soundOption').text() === " Sound: Off ") {
-	    //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: On </li>')
-	    // }
-	  });
 	
 	  // $('.soundOption').on('click', () => {
 	  //   if ($('.soundOption').text() === " Sound: Off ") {
@@ -108,14 +94,7 @@
 	  // })
 	
 	
-	  $('.musicOption').on('click', function () {
-	    if ($('.musicOption').text() === " Music: On ") {
-	      $('.musicOption').replaceWith('<li class="musicOption"> Music: Off </li>');
-	    } else if ($('.musicOption').text() === " Music: Off ") {
-	      $('.musicOption').replaceWith('<li class="musicOption"> Music: On </li>');
-	    }
-	  });
-	  document.addEventListener("keydown", Start);
+	  ;document.addEventListener("keydown", Start);
 	
 	  (0, _animation2.default)();
 	});
@@ -791,6 +770,9 @@
 	// implement new Date once I figure it out
 	
 	//Implement current score to pass amongst levels
+	// export const startLevel = (currentLvl) => {
+	//
+	// }
 	
 	
 	var startLevel = exports.startLevel = function startLevel(currentLvl) {
@@ -808,7 +790,6 @@
 	  });
 	  clearInterval(gameWatcher);
 	  var score = 0;
-	  console.log(currentText);
 	  var keys_entered = 0;
 	  var wpm = 0;
 	  var averageWpm = 0;
@@ -841,7 +822,6 @@
 	    html5: true,
 	    mute: currentLevel['options']['muteMusicOption']
 	  });
-	  console.log(soundFiles[1]);
 	  var playResult = new _howler2.default.Howl({
 	    src: soundFiles[1],
 	    loop: true,
@@ -923,9 +903,7 @@
 	          done += currentText[0][0];
 	        }
 	        currentText[0] = currentText[0].slice(1);
-	        console.log(currentText);
 	        keys_entered++;
-	        console.log(done);
 	        if (previousSpace === true) {
 	          $('.done').replaceWith('<span class="done" >' + done + ' </span>');
 	          previousSpace = false;
@@ -978,6 +956,16 @@
 	          $('.retryStage').off('click');
 	          $('.returnToTitle').off('click');
 	          startLevel((0, _levelRequire.getLevel)(currentLevel['nextLevel'], currentLevel['options']));
+	        });
+	
+	        $('.nextStage').one('keypress', function (e) {
+	          debugger;
+	          if (e.key === "Enter") {
+	            playResult.stop();
+	            $('.retryStage').off('click');
+	            $('.returnToTitle').off('click');
+	            startLevel((0, _levelRequire.getLevel)(currentLevel['nextLevel'], currentLevel['options']));
+	          }
 	        });
 	
 	        $('.returnToTitle').one('click', function () {
@@ -3853,7 +3841,7 @@
 	    }, Math.random() * 100 + 140);
 	    window.setTimeout(function () {
 	      clearInterval(a);
-	    }, 1000);
+	    }, 2000);
 	  };
 	
 	  var handleEvent = function handleEvent(e) {
@@ -4163,7 +4151,7 @@
 	
 	var level2 = exports.level2 = {
 	  level: '2 - The Coffee',
-	  currentText: ["Scrum meeting at 7PM. Don't be late!", "The security guards called again. You can't keep parking in the spaces reserved for the charity winners. Please move your car now.", "Coffee machine is down again. Looks like we'll have to go get some coffee from across the- Oh, I see you've already got your own cup. Carry on.", "Where is my stapler? Where IS my stapler? WHERE is my stapler? Where is my STAPLER?", "SYNERGY!!!", "!!!!11111iii!!!iii!!ii!!ii!11llll", "end"],
+	  currentText: ["Scrum meeting at 7PM. Don't be late!", "The security guards called again. You can't keep parking in the spaces reserved for the charity winners. Please move your car now.", "Coffee machine is down again. Looks like we'll have to go get some coffee from across the- Oh, I see you've already got your own cup. Carry on.", "Where is my stapler? Where IS my stapler? WHERE is my stapler? Where is my STAPLER?", "SYNERGY!!!", "!!11!1i!iil!1l1l1l1", "end"],
 	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
 	  nextLevel: 'level3',
 	  animations: {
@@ -4398,14 +4386,14 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var resetPage = function resetPage() {
-	
-	  $('.level').replaceWith('<li class = "Level"> Beautiful Typing </li>');
+	  $('.Level').replaceWith('<li class = "Level"> Beautiful Typing </li>');
 	  $('.score').replaceWith('<li class = "score hidden"> Score: 0</li>');
 	  $('.Timer').replaceWith('<li class = "Timer hidden"> Time: 0 sec</li>');
 	  $('.wpm').replaceWith('<li class = "wpm hidden"> WPM: 0 wpm</li>');
 	  $('.maxWpm').replaceWith('<li class = "maxWpm hidden"> Max WPM: 0 wpm</li>');
 	  $('.errors').replaceWith('<li class ="errors hidden"> Errors: 0 </li>');
 	  $('.titleName').replaceWith('<h2 class="titleName animated bounceInDown"> Beautiful Typing </h2>');
+	  $('.combo').replaceWith('<li class = "combo hidden"> Combo: 0 </li>');
 	
 	  // $(`.LevelSelect`).replaceWith(`<ul class="LevelSelect animated bounceInLeft">
 	  //     </ul>
@@ -4422,14 +4410,28 @@
 	  resetPage();
 	  $('.text').remove('.title');
 	  $('.title').removeClass('removed');
+	  $('.levelList').addClass("removed");
+	
 	  var titleMusic = new _howler2.default.Howl({
-	    src: ['./assets/music/Vatic_Sketch_1.mp3']
+	    src: ['./assets/music/Vatic_Sketch_1.mp3'],
+	    loop: true
 	  });
+	  // if ($('.soundOption')===" Sound: Off "){
+	
 	
 	  titleMusic.play();
+	  // debugger
 	
-	  // $('.dreamloLBTable').addClass('removed');
+	  if ($('.musicOption').text() === " Music: Off ") {
+	    // debugger
+	    titleMusic.stop();
+	  } else {
+	    titleMusic.play();
+	    // debugger
+	  }
 	
+	  // // $('.dreamloLBTable').addClass('removed');
+	  //
 	  var options = {
 	    muteSoundOption: false,
 	    muteMusicOption: false
@@ -4442,48 +4444,44 @@
 	    titleMusic.stop();
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level1', options));
 	  });
-	
-	  $('#levels').on('click', function () {
+	  // if (!$('#levels').onClick){
+	  //   $('#levels').on('click', ()=>{
+	  //     $('.levelList').toggleClass("removed")
+	  //   })
+	  // }
+	  document.getElementById('levels').addEventListener('click', function () {
 	    $('.levelList').toggleClass("removed");
 	  });
 	  $('.test').on('click', function (e) {
 	    titleMusic.stop();
-	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('testLevel', options));
 	  });
 	  $('.longTest').on('click', function (e) {
 	    titleMusic.stop();
-	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('longTestLvl', options));
 	  });
 	  $('.level1').on('click', function (e) {
 	    titleMusic.stop();
-	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level1', options));
 	  });
 	  $('.level2').on('click', function (e) {
 	    titleMusic.stop();
-	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level2', options));
 	  });
 	  $('.level3').on('click', function (e) {
 	    titleMusic.stop();
-	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level3', options));
 	  });
 	  $('.level4').on('click', function (e) {
 	    titleMusic.stop();
-	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level4', options));
 	  });
 	  $('.level5').on('click', function (e) {
 	    titleMusic.stop();
-	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level5', options));
 	  });
 	  $('.level6').on('click', function (e) {
 	    titleMusic.stop();
-	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level6', options));
 	  });
 	  // $('.leaderboards').on('click', e=> {
@@ -4516,6 +4514,53 @@
 	      modal.style.display = "none";
 	    }
 	  };
+	  $('.soundOption').on('click', function (e) {
+	    // debugger
+	    // e.stopPropagation();
+	    var currentText = $('.soundOption').text();
+	    var newText = currentText === " Sound: Off " ? " Sound: On " : " Sound: Off ";
+	    if (newText === " Sound: Off ") {
+	      debugger;
+	      options['muteSoundOption'] = true;
+	      options['muteMusicOption'] = true;
+	      titleMusic.mute(true);
+	    } else {
+	      // debugger
+	      options['muteSoundOption'] = false;
+	      options['muteMusicOption'] = false;
+	      titleMusic.mute(false);
+	
+	      // Howler.unmute();
+	    }
+	    // }
+	
+	
+	    $('.soundOption').text(newText);
+	    //
+	    //   if ($('.soundOption').text() === " Sound: On ") {
+	    //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: Off </li>')
+	    // } else if ($('.soundOption').text() === " Sound: Off ") {
+	    //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: On </li>')
+	    // }
+	  });
+	
+	  // $('.musicOption').on('click', (e) => {
+	  //   // e.stopPropagation();
+	  //
+	  //   let currentMusicText = $('.musicOption').text()
+	  //   let newMusicText = (currentMusicText === " Music: Off ")? " Music: On " : " Music: Off "
+	  //   if (newMusicText === " Music: Off ") {
+	  //
+	  //     titleMusic.mute(true);
+	  //     options['muteMusicOption'] = true
+	  //   } else {
+	  //     titleMusic.mute(false);
+	  //
+	  //     options['muteMusicOption'] = false
+	  //   }
+	  //   $('.musicOption').text(newMusicText);
+	  // })
+	
 	};
 	
 	// $('#start').on('click', startGame())
