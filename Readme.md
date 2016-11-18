@@ -20,11 +20,11 @@ This project uses the following technologies:
 
   In my `levelRequire.js`, I handle all of the requests for levels by comparing the text argument and returning the corresponding JSON object
 
-  ![tag screenshot](Docs/Screenshots/Level%20Handler.png)
+  ![tag screenshot](screenshots/Level%20Handler.png)
 
   Each level object has every variable needed to change the game, including booleans to indicate which animations to use.
 
-  ![tag screenshot](Docs/Screenshots/Example%20Level%20State.png)
+  ![tag screenshot](screenshots/Example%20Level%20State.png)
 
 ### Game Text Execution
 
