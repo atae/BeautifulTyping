@@ -800,6 +800,7 @@
 	    var done = "";
 	    var combo = 0;
 	    var maxCombo = 0;
+	    var medal = void 0;
 	    $('.results').addClass("removed");
 	    // $(`.stageNavigation`).addClass('removed')
 	    $('.currentText').replaceWith('<span class="currentText" ><u>' + currentText[0][0] + '</u>' + currentText[0].slice(1) + '</span>');
@@ -921,16 +922,26 @@
 	    var className = "currentText";
 	    var toggleAnimation = function toggleAnimation(element) {
 	      if (currentLevel["animations"]["shake"] === true) {
-	        element.toggleClass("shake");
-	        $('.done').toggleClass('shake');
+	        element.addClass("shake");
+	        $('.done').addClass('shake');
 	      }
 	
-	      if (currentLevel["animations"]["spotlight"]) {
-	        var ctx = $('#c')[0].getContext("2d");
-	        ctx.beginPath();
-	        ctx.arc(75, 75, 10, 0, Math.PI * 2, true);
-	        ctx.closePath();
-	        ctx.fill();
+	      if (currentLevel["animations"]["spotlight"] === true) {
+	        // var ctx = $('#c')[0].getContext("2d");
+	        // ctx.beginPath();
+	        // ctx.arc(75, 75, 10, 0, Math.PI*2, true);
+	        // ctx.closePath();
+	        // ctx.fill();
+	        $('.spotlight').removeClass("hidden");
+	      }
+	    };
+	
+	    var removeAnimation = function removeAnimation(element) {
+	      if (element) {
+	        element.removeClass("shake");
+	      }
+	      if ($('.results').attr('class') !== "results removed") {
+	        $('.spotlight').addClass("hidden");
 	      }
 	    };
 	
@@ -999,6 +1010,7 @@
 	          $('.errors').replaceWith('<li class="errors"> Errors: ' + errors + '</li>');
 	        }
 	        if (currentText[0] == "" && currentText[1] == "end") {
+	          removeAnimation($('.currentText'));
 	          dingSound.play();
 	          playMusic.stop();
 	          currentText = currentText.slice(1);
@@ -1049,6 +1061,7 @@
 	            $('.results').addClass("removed");
 	            $('.retryStage').off('click');
 	            $('.nextStage').off('click');
+	            $('.spotlight').addClass("hidden");
 	            (0, _titleScreen2.default)();
 	          });
 	          // $(`.stageNavigation`).toggleClass('removed')
@@ -1061,6 +1074,7 @@
 	          $('.done').replaceWith('<span class="done">' + done + '</span>');
 	          $('.currentText').replaceWith('<span class="currentText" ><u>' + currentText[0][0] + '</u>' + currentText[0].slice(1) + '</span>');
 	          toggleAnimation($('.currentText'));
+	          // toggleAnimation($('.currentText'))
 	        }
 	      } else if (currentText[0] == "end") {}
 	    });
@@ -1082,6 +1096,8 @@
 	
 	      $('.done').replaceWith('<span class="done">' + done + '</span>');
 	      $('.currentText').replaceWith('<span class="done"></span>');
+	      $('.spotlight').addClass("hidden");
+	
 	      (0, _titleScreen2.default)();
 	      // $('.keys-entered').replaceWith(`<li class="keys-entered">Correct Keys Entered: ${keys_entered} </li>`)
 	    });
@@ -1419,6 +1435,8 @@
 	
 	var _longTestLvl = __webpack_require__(12);
 	
+	var _titleScreen = __webpack_require__(13);
+	
 	var getLevel = exports.getLevel = function getLevel(levelName, soundOption) {
 	  var levels = {
 	    level1: _level.level1,
@@ -1427,6 +1445,7 @@
 	    level4: _level4.level4,
 	    level5: _level5.level5,
 	    level6: _level6.level6,
+	    end: _titleScreen.titleScreen,
 	    testLevel: _testLvl.testLevel,
 	    longTestLvl: _longTestLvl.longTestLvl
 	  };
@@ -1617,13 +1636,13 @@
 	//order is Error, Type, Complete
 	
 	var level5 = exports.level5 = {
-	  level: '5 - ',
-	  currentText: ["", "end"],
-	  prelevelText: [""],
+	  level: '5 - The Translator',
+	  currentText: ["Ada'tu tareeqi! Hal beemkanek mosaadati?", "Maraming maraming salamat po", "Nous sommes le jeudi 17 novembre 2016. Bienvenue dans notre programme hebdomadaire", "Shinpan wa kooto no katawara ni aru takai isu ni suwaru", "Kaftfahrzeug-Haftpflichtversicherung", "end"],
+	  prelevelText: ["You're a translator now! However, the stage light of the United Nations Council is constantly in your face. Try to type these foreign sentences accurately!"],
 	  nextLevel: 'level6',
 	  animations: {
-	    shake: true,
-	    spotlight: false,
+	    shake: false,
+	    spotlight: true,
 	    flags: false,
 	    cats: false,
 	    random: false
@@ -1651,8 +1670,8 @@
 	
 	var level6 = exports.level6 = {
 	  level: 'Level 6 - The End',
-	  currentText: ["", "end"],
-	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  currentText: ["Honmono no nihongo wo kakitai kedo, romaji dake no hou ga ii da to omou.", "asvlsdu8hfmlkmv!!11!1lls", "I guess this was the last cup of coffee in the world!", "Interview with Andrew Tae", "Single trajectories analyses of the moving vesicles showed that predominance of 3R tau favored the anterograde movement of APP-vesicles, increasing anterograde run lengths and reducing retrograde runs and segmental velocities.", "That's the end of the game! Thanks for playing!", "end"],
+	  prelevelText: ["The Ultimate Test. Stay focused!"],
 	  nextLevel: 'end',
 	  animations: {
 	    shake: true,

@@ -6,7 +6,7 @@ import {level5} from './level5'
 import {level6} from './level6'
 import {testLevel} from './testLvl'
 import {longTestLvl} from './longTestLvl'
-
+import {titleScreen} from '../title/titleScreen'
 export const getLevel = (levelName, soundOption) => {
   let levels = {
     level1: level1,
@@ -15,6 +15,7 @@ export const getLevel = (levelName, soundOption) => {
     level4: level4,
     level5: level5,
     level6: level6,
+    end: titleScreen,
     testLevel: testLevel,
     longTestLvl: longTestLvl
   }

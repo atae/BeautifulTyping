@@ -10,8 +10,14 @@ let soundEffects = [`assets/sounds/Blip_Select.wav`, `assets/sounds/typewriter.w
 
 export const level6 = {
     level: 'Level 6 - The End',
-    currentText: ["","end"],
-    prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+    currentText: ["Honmono no nihongo wo kakitai kedo, romaji dake no hou ga ii da to omou.",
+    "asvlsdu8hfmlkmv!!11!1lls",
+    "I guess this was the last cup of coffee in the world!",
+    "Interview with Andrew Tae",
+    "Single trajectories analyses of the moving vesicles showed that predominance of 3R tau favored the anterograde movement of APP-vesicles, increasing anterograde run lengths and reducing retrograde runs and segmental velocities.",
+    "That's the end of the game! Thanks for playing!",
+    "end"],
+    prelevelText: ["The Ultimate Test. Stay focused!"],
     nextLevel: 'end',
     animations: {
       shake: true,

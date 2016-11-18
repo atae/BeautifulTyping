@@ -34,6 +34,7 @@ export const startLevel = (currentLvl) => {
     let done = ""
     let combo = 0;
     let maxCombo = 0;
+    let medal;
     $(`.results`).addClass("removed")
     // $(`.stageNavigation`).addClass('removed')
     $('.currentText').replaceWith(`<span class="currentText" ><u>${currentText[0][0]}</u>${currentText[0].slice(1)}</span>`)
@@ -155,16 +156,26 @@ export const startLevel = (currentLvl) => {
     let className = "currentText"
     let toggleAnimation = (element) => {
       if (currentLevel["animations"]["shake"] === true) {
-        element.toggleClass("shake")
-        $('.done').toggleClass('shake')
+        element.addClass("shake")
+        $('.done').addClass('shake')
       }
 
-      if (currentLevel["animations"]["spotlight"]){
-        var ctx = $('#c')[0].getContext("2d");
-        ctx.beginPath();
-        ctx.arc(75, 75, 10, 0, Math.PI*2, true);
-        ctx.closePath();
-        ctx.fill();
+      if (currentLevel["animations"]["spotlight"] === true){
+        // var ctx = $('#c')[0].getContext("2d");
+        // ctx.beginPath();
+        // ctx.arc(75, 75, 10, 0, Math.PI*2, true);
+        // ctx.closePath();
+        // ctx.fill();
+        $('.spotlight').removeClass("hidden")
+      }
+    }
+
+    let removeAnimation = (element) => {
+      if (element) {
+      element.removeClass("shake")
+      }
+      if ($('.results').attr('class') !== "results removed") {
+        $('.spotlight').addClass("hidden")
       }
     }
 
@@ -240,6 +251,7 @@ export const startLevel = (currentLvl) => {
           $(`.errors`).replaceWith(`<li class="errors"> Errors: ${errors}</li>`)
         }
           if (currentText[0] == "" && currentText[1] == "end") {
+            removeAnimation($('.currentText'));
             dingSound.play();
             playMusic.stop();
             currentText = currentText.slice(1)
@@ -287,6 +299,7 @@ export const startLevel = (currentLvl) => {
                 $(`.results`).addClass("removed")
                 $(`.retryStage`).off('click');
                 $(`.nextStage`).off('click');
+                $('.spotlight').addClass("hidden")
                 titleScreen();
               })
             // $(`.stageNavigation`).toggleClass('removed')
@@ -299,6 +312,7 @@ export const startLevel = (currentLvl) => {
             $('.done').replaceWith(`<span class="done">${done}</span>`)
             $('.currentText').replaceWith(`<span class="currentText" ><u>${currentText[0][0]}</u>${currentText[0].slice(1)}</span>`)
             toggleAnimation($('.currentText'))
+            // toggleAnimation($('.currentText'))
 
           }
 
@@ -325,6 +339,8 @@ export const startLevel = (currentLvl) => {
 
         $('.done').replaceWith(`<span class="done">${done}</span>`)
         $(`.currentText`).replaceWith(`<span class="done"></span>`)
+        $('.spotlight').addClass("hidden")
+
         titleScreen();
           // $('.keys-entered').replaceWith(`<li class="keys-entered">Correct Keys Entered: ${keys_entered} </li>`)
 })
