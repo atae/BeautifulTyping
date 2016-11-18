@@ -1,5 +1,4 @@
 #Beautiful Typing
-Link to live version
 [Live Link]
 [Live Link]: https://atae.github.io/BeautifulTyping/beauTyping.html
 
@@ -26,6 +25,8 @@ This project uses the following technologies:
   Each level object has every variable needed to change the game, including booleans to indicate which animations to use.
 
   ![tag screenshot](docs/Screenshots/Example Level State.png)
+
+### Game Text Execution
 
 
 
