@@ -780,9 +780,6 @@
 	      muteSoundOption: $('.soundOption').text() == " Sound: Off ",
 	      muteMusicOption: $('.soundOption').text() == " Sound: Off "
 	    };
-	    if (currentLevel['level'] == "6 - The End") {
-	      $(".nextStage").addClass("hidden");
-	    }
 	    $('.soundOption').removeClass('removed');
 	    $('.toTitle').removeClass('hidden');
 	    $('.text').append('<h2><span class="done"></span><span class="currentText"></span>');
@@ -1065,6 +1062,7 @@
 	            $('.retryStage').off('click');
 	            $('.nextStage').off('click');
 	            $('.spotlight').addClass("hidden");
+	
 	            (0, _titleScreen2.default)();
 	          });
 	          // $(`.stageNavigation`).toggleClass('removed')
@@ -1438,8 +1436,7 @@
 	
 	var _longTestLvl = __webpack_require__(12);
 	
-	var _titleScreen = __webpack_require__(13);
-	
+	// import {titleScreen} from '../title/titleScreen'
 	var getLevel = exports.getLevel = function getLevel(levelName, soundOption) {
 	  var levels = {
 	    level1: _level.level1,
@@ -1448,7 +1445,7 @@
 	    level4: _level4.level4,
 	    level5: _level5.level5,
 	    level6: _level6.level6,
-	    end: _titleScreen.titleScreen,
+	    // end: titleScreen,
 	    testLevel: _testLvl.testLevel,
 	    longTestLvl: _longTestLvl.longTestLvl
 	  };

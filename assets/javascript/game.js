@@ -16,9 +16,6 @@ export const startLevel = (currentLvl) => {
       muteSoundOption: ($('.soundOption').text() == " Sound: Off "),
       muteMusicOption: ($('.soundOption').text() == " Sound: Off ")
     }
-    if (currentLevel['level'] == "6 - The End"){
-      $(".nextStage").addClass("hidden")
-    }
     $('.soundOption').removeClass('removed')
     $(`.toTitle`).removeClass('hidden')
     $('.text').append('<h2><span class="done"></span><span class="currentText"></span>')
@@ -303,6 +300,7 @@ export const startLevel = (currentLvl) => {
                 $(`.retryStage`).off('click');
                 $(`.nextStage`).off('click');
                 $('.spotlight').addClass("hidden")
+
                 titleScreen();
               })
             // $(`.stageNavigation`).toggleClass('removed')
