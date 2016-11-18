@@ -52,13 +52,13 @@
 	
 	var _game = __webpack_require__(2);
 	
-	var _animation = __webpack_require__(4);
+	var _animation = __webpack_require__(3);
 	
 	var _animation2 = _interopRequireDefault(_animation);
 	
-	var _levelRequire = __webpack_require__(5);
+	var _levelRequire = __webpack_require__(4);
 	
-	var _titleScreen = __webpack_require__(14);
+	var _titleScreen = __webpack_require__(13);
 	
 	var _titleScreen2 = _interopRequireDefault(_titleScreen);
 	
@@ -751,17 +751,17 @@
 	});
 	exports.startLevel = undefined;
 	
-	var _howler = __webpack_require__(3);
+	var _howler = __webpack_require__(14);
 	
 	var _howler2 = _interopRequireDefault(_howler);
 	
-	var _animation = __webpack_require__(4);
+	var _animation = __webpack_require__(3);
 	
 	var _animation2 = _interopRequireDefault(_animation);
 	
-	var _levelRequire = __webpack_require__(5);
+	var _levelRequire = __webpack_require__(4);
 	
-	var _titleScreen = __webpack_require__(14);
+	var _titleScreen = __webpack_require__(13);
 	
 	var _titleScreen2 = _interopRequireDefault(_titleScreen);
 	
@@ -773,227 +773,1074 @@
 	// export const startLevel = (currentLvl) => {
 	//
 	// }
-	
-	
 	var startLevel = exports.startLevel = function startLevel(currentLvl) {
-	  // debugger
-	  // console.log(animation);
-	  // $('.navbar').toggleClass('hidden')
-	  $('.title').addClass("removed");
-	  $('.done').remove();
-	  $('.currentText').remove();
-	  $('.text').append('<h2><span class="done"></span><span class="currentText"></span>');
-	  var currentLevel = JSON.parse(JSON.stringify(currentLvl));
-	  var currentText = currentLevel['currentText'];
-	  document.removeEventListener('keydown', function (e) {
-	    handleKeyboard(e);
-	  });
-	  clearInterval(gameWatcher);
-	  var score = 0;
-	  var keys_entered = 0;
-	  var wpm = 0;
-	  var averageWpm = 0;
-	  var averageWpmCounter = 0;
-	  var time = 0;
-	  var maxWpm = 0;
-	  var errors = 0;
-	  var done = "";
-	  var combo = 0;
-	  var maxCombo = 0;
-	  $('.results').addClass("removed");
-	  // $(`.stageNavigation`).addClass('removed')
-	  $('.currentText').replaceWith('<span class="currentText" ><u>' + currentText[0][0] + '</u>' + currentText[0].slice(1) + '</span>');
-	  $('.done').replaceWith('<span class="done">' + done + '</span>');
-	  $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
-	  $('.Level').replaceWith('<li class="Level"> Level: ' + currentLevel['level'] + ' </li>');
-	  $('.Timer').replaceWith('<li class="Timer">Time: ' + time + ' seconds');
-	  $('.wpm').replaceWith('<li class="wpm">WPM: ' + wpm + ' wpm </li>');
-	  $('.maxWpm').replaceWith('<li class="maxWpm">Max WPM: ' + maxWpm + ' wpm</li>');
-	  $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
-	  $('.score').replaceWith('<li class="score">Score: ' + score + '</li>');
-	  $('.errors').replaceWith('<li class="errors"> Errors: ' + errors + '</li>');
 	
-	  //Setup sounds
+	  var startGame = function startGame(currentLvl) {
+	    // debugger
+	    // console.log(animation);
+	    // $('.navbar').toggleClass('hidden')
 	
-	  var soundFiles = currentLevel['soundFiles'];
-	  var playMusic = new _howler2.default.Howl({
-	    src: soundFiles[0],
-	    loop: true,
-	    html5: true,
-	    mute: currentLevel['options']['muteMusicOption']
-	  });
-	  var playResult = new _howler2.default.Howl({
-	    src: soundFiles[1],
-	    loop: true,
-	    html5: true,
-	    mute: currentLevel['options']['muteMusicOption']
-	  });
-	
-	  var sfx = currentLevel['sfx'];
-	  var errorSound = new _howler2.default.Howl({
-	    src: [sfx[0]],
-	    volume: 0.4,
-	    mute: currentLevel['options']['muteSoundOption']
-	
-	  });
-	
-	  var typeSound = new _howler2.default.Howl({
-	    src: [sfx[1]],
-	    volume: 1,
-	    mute: currentLevel['options']['muteSoundOption']
-	  });
-	
-	  var dingSound = new _howler2.default.Howl({
-	    src: [sfx[2]],
-	    volume: 1,
-	    mute: currentLevel['options']['muteSoundOption']
-	  });
-	
-	  //Setup Level Gimmicks here
-	  var className = "currentText";
-	  var toggleAnimation = function toggleAnimation(element) {
-	    if (currentLevel["animations"]["shake"] === true) {
-	      element.toggleClass("shake");
-	      $('.done').toggleClass('shake');
-	    }
-	
-	    if (currentLevel["animations"]["spotlight"]) {
-	      var ctx = $('#c')[0].getContext("2d");
-	      ctx.beginPath();
-	      ctx.arc(75, 75, 10, 0, Math.PI * 2, true);
-	      ctx.closePath();
-	      ctx.fill();
-	    }
-	  };
-	
-	  var retryStage = function retryStage(currentLevel) {
-	    startLevel(currentLevel);
-	  };
-	  //setup Stats Bar
-	  var gameWatcher = setInterval(function () {
-	    time++;
-	    wpm = parseInt(keys_entered / 5 / (time / 60));
-	    averageWpm = parseInt((averageWpm + wpm) / 2);
-	    if (wpm > maxWpm) {
-	      maxWpm = wpm;
-	    }
+	    $('.text').append('<h2><span class="done"></span><span class="currentText"></span>');
+	    var currentLevel = JSON.parse(JSON.stringify(currentLvl));
+	    var currentText = currentLevel['currentText'];
+	    document.removeEventListener('keydown', function (e) {
+	      handleKeyboard(e);
+	    });
+	    clearInterval(gameWatcher);
+	    var score = 0;
+	    var keys_entered = 0;
+	    var wpm = 0;
+	    var averageWpm = 0;
+	    var averageWpmCounter = 0;
+	    var time = 0;
+	    var maxWpm = 0;
+	    var errors = 0;
+	    var done = "";
+	    var combo = 0;
+	    var maxCombo = 0;
+	    $('.results').addClass("removed");
+	    // $(`.stageNavigation`).addClass('removed')
+	    $('.currentText').replaceWith('<span class="currentText" ><u>' + currentText[0][0] + '</u>' + currentText[0].slice(1) + '</span>');
+	    $('.done').replaceWith('<span class="done">' + done + '</span>');
+	    $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
 	    $('.Level').replaceWith('<li class="Level"> Level: ' + currentLevel['level'] + ' </li>');
 	    $('.Timer').replaceWith('<li class="Timer">Time: ' + time + ' seconds');
 	    $('.wpm').replaceWith('<li class="wpm">WPM: ' + wpm + ' wpm </li>');
 	    $('.maxWpm').replaceWith('<li class="maxWpm">Max WPM: ' + maxWpm + ' wpm</li>');
-	    $('.averageWpm').replaceWith('<li class="averageWpm"> Average WPM: ' + averageWpm + ' wpm</li');
 	    $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
 	    $('.score').replaceWith('<li class="score">Score: ' + score + '</li>');
 	    $('.errors').replaceWith('<li class="errors"> Errors: ' + errors + '</li>');
-	  }, 1000);
 	
-	  playMusic.play();
+	    //Setup sounds
 	
-	  toggleAnimation($('.currentText'));
+	    var soundFiles = currentLevel['soundFiles'];
+	    var playMusic = new _howler2.default.Howl({
+	      src: soundFiles[0],
+	      loop: true,
+	      html5: true,
+	      mute: currentLevel['options']['muteMusicOption']
+	    });
+	    var playResult = new _howler2.default.Howl({
+	      src: soundFiles[1],
+	      loop: true,
+	      html5: true,
+	      mute: currentLevel['options']['muteMusicOption']
+	    });
 	
-	  document.addEventListener('keydown', function (e) {
-	    var previousSpace = false;
-	    if (currentText.length > 1) {
-	      if (e.key === currentText[0][0]) {
-	        // debugger
-	        typeSound.play();
-	        if (currentText[0][0] == " ") {
-	          done += '\xA0';
-	        } else {
-	          done += currentText[0][0];
-	        }
-	        currentText[0] = currentText[0].slice(1);
-	        keys_entered++;
-	        if (previousSpace === true) {
-	          $('.done').replaceWith('<span class="done" >' + done + ' </span>');
-	          previousSpace = false;
-	        } else {
-	          $('.done').replaceWith('<span class="done">' + done + '</span>');
-	        }
-	        combo++;
-	        score += 100 * (parseInt(combo / 10) + 1) + parseInt(wpm * 0.5);
-	        $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
-	        $('.score').replaceWith('<li class="score">Score: ' + score + '</li>');
-	        if (currentText[0][0] == " ") {
-	          $('.currentText').replaceWith('<span class="currentText" ><u>\xA0</u>' + currentText[0].slice(1) + '</span>');
-	          toggleAnimation($('.currentText'));
-	          previousSpace = true;
-	          //Come back to this space glitch later
-	        } else {
-	          $('.currentText').replaceWith('<span class="currentText" ><u>' + currentText[0][0] + '</u>' + currentText[0].slice(1) + '</span>');
-	          toggleAnimation($('.currentText'));
-	        }
-	      } else if (e.key !== "Shift" && e.key !== "Enter") {
-	        errors++;
-	        errorSound.play();
-	        combo = 0;
-	        $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
-	        $('.errors').replaceWith('<li class="errors"> Errors: ' + errors + '</li>');
+	    var sfx = currentLevel['sfx'];
+	    var errorSound = new _howler2.default.Howl({
+	      src: [sfx[0]],
+	      volume: 0.4,
+	      mute: currentLevel['options']['muteSoundOption']
+	
+	    });
+	
+	    var typeSound = new _howler2.default.Howl({
+	      src: [sfx[1]],
+	      volume: 1,
+	      mute: currentLevel['options']['muteSoundOption']
+	    });
+	
+	    var dingSound = new _howler2.default.Howl({
+	      src: [sfx[2]],
+	      volume: 1,
+	      mute: currentLevel['options']['muteSoundOption']
+	    });
+	
+	    //Setup Level Gimmicks here
+	    var className = "currentText";
+	    var toggleAnimation = function toggleAnimation(element) {
+	      if (currentLevel["animations"]["shake"] === true) {
+	        element.toggleClass("shake");
+	        $('.done').toggleClass('shake');
 	      }
-	      if (currentText[0] == "" && currentText[1] == "end") {
-	        dingSound.play();
-	        playMusic.stop();
-	        currentText = currentText.slice(1);
-	        clearInterval(gameWatcher);
-	        done = "";
-	        $('.done').replaceWith('<span class="done">' + done + '</span>');
-	        $('.currentText').replaceWith('<span class="done"></span>');
-	        playResult.play();
-	        //replace this line with results screen in the future
-	        document.removeEventListener('keydown', function (e) {
-	          handleKeyboard(e);
-	        });
-	        $('.results').removeClass("removed");
-	        $('.retryStage').one('click', function () {
-	          playResult.stop();
-	          $('.nextStage').off('click');
-	          $('.returnToTitle').off('click');
-	          startLevel(currentLvl);
-	        });
 	
-	        $('.nextStage').one('click', function () {
-	          playResult.stop();
-	          $('.retryStage').off('click');
-	          $('.returnToTitle').off('click');
-	          startLevel((0, _levelRequire.getLevel)(currentLevel['nextLevel'], currentLevel['options']));
-	        });
+	      if (currentLevel["animations"]["spotlight"]) {
+	        var ctx = $('#c')[0].getContext("2d");
+	        ctx.beginPath();
+	        ctx.arc(75, 75, 10, 0, Math.PI * 2, true);
+	        ctx.closePath();
+	        ctx.fill();
+	      }
+	    };
 	
-	        $('.nextStage').one('keypress', function (e) {
-	          debugger;
-	          if (e.key === "Enter") {
+	    var retryStage = function retryStage(currentLevel) {
+	      startLevel(currentLevel);
+	    };
+	    //setup Stats Bar
+	    var gameWatcher = setInterval(function () {
+	      time++;
+	      wpm = parseInt(keys_entered / 5 / (time / 60));
+	      averageWpm = parseInt((averageWpm + wpm) / 2);
+	      if (wpm > maxWpm) {
+	        maxWpm = wpm;
+	      }
+	      $('.Level').replaceWith('<li class="Level"> Level: ' + currentLevel['level'] + ' </li>');
+	      $('.Timer').replaceWith('<li class="Timer">Time: ' + time + ' seconds');
+	      $('.wpm').replaceWith('<li class="wpm">WPM: ' + wpm + ' wpm </li>');
+	      $('.maxWpm').replaceWith('<li class="maxWpm">Max WPM: ' + maxWpm + ' wpm</li>');
+	      $('.averageWpm').replaceWith('<li class="averageWpm"> Average WPM: ' + averageWpm + ' wpm</li');
+	      $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
+	      $('.score').replaceWith('<li class="score">Score: ' + score + '</li>');
+	      $('.errors').replaceWith('<li class="errors"> Errors: ' + errors + '</li>');
+	    }, 1000);
+	
+	    playMusic.play();
+	
+	    toggleAnimation($('.currentText'));
+	
+	    document.addEventListener('keydown', function (e) {
+	      var previousSpace = false;
+	      if (currentText.length > 1) {
+	        if (e.key === currentText[0][0]) {
+	          // debugger
+	          typeSound.play();
+	          if (currentText[0][0] == " ") {
+	            done += '\xA0';
+	          } else {
+	            done += currentText[0][0];
+	          }
+	          currentText[0] = currentText[0].slice(1);
+	          keys_entered++;
+	          if (previousSpace === true) {
+	            $('.done').replaceWith('<span class="done" >' + done + ' </span>');
+	            previousSpace = false;
+	          } else {
+	            $('.done').replaceWith('<span class="done">' + done + '</span>');
+	          }
+	          combo++;
+	          score += 100 * (parseInt(combo / 10) + 1) + parseInt(wpm * 0.5);
+	          $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
+	          $('.score').replaceWith('<li class="score">Score: ' + score + '</li>');
+	          if (currentText[0][0] == " ") {
+	            $('.currentText').replaceWith('<span class="currentText" ><u>\xA0</u>' + currentText[0].slice(1) + '</span>');
+	            toggleAnimation($('.currentText'));
+	            previousSpace = true;
+	            //Come back to this space glitch later
+	          } else {
+	            $('.currentText').replaceWith('<span class="currentText" ><u>' + currentText[0][0] + '</u>' + currentText[0].slice(1) + '</span>');
+	            toggleAnimation($('.currentText'));
+	          }
+	        } else if (e.key !== "Shift" && e.key !== "Enter") {
+	          errors++;
+	          errorSound.play();
+	          combo = 0;
+	          $('.combo').replaceWith('<li class="combo">Combo: ' + combo + '</li>');
+	          $('.errors').replaceWith('<li class="errors"> Errors: ' + errors + '</li>');
+	        }
+	        if (currentText[0] == "" && currentText[1] == "end") {
+	          dingSound.play();
+	          playMusic.stop();
+	          currentText = currentText.slice(1);
+	          clearInterval(gameWatcher);
+	          done = "";
+	          $('.done').replaceWith('<span class="done">' + done + '</span>');
+	          $('.currentText').replaceWith('<span class="done"></span>');
+	          playResult.play();
+	          //replace this line with results screen in the future
+	          document.removeEventListener('keydown', function (e) {
+	            handleKeyboard(e);
+	          });
+	          $('.results').removeClass("removed");
+	          $('.retryStage').one('click', function () {
 	            playResult.stop();
+	            $('.nextStage').off('click');
+	            $('.returnToTitle').off('click');
+	            startLevel(currentLvl);
+	          });
+	
+	          $('.nextStage').one('click', function () {
+	            playResult.stop();
+	            $('.results').addClass("removed");
 	            $('.retryStage').off('click');
 	            $('.returnToTitle').off('click');
 	            startLevel((0, _levelRequire.getLevel)(currentLevel['nextLevel'], currentLevel['options']));
-	          }
-	        });
+	          });
 	
-	        $('.returnToTitle').one('click', function () {
-	          // document.reload();
-	          playResult.stop();
-	          $('.results').addClass("removed");
-	          $('.retryStage').off('click');
-	          $('.nextStage').off('click');
-	          (0, _titleScreen2.default)();
-	        });
-	        // $(`.stageNavigation`).toggleClass('removed')
-	      } else if (currentText[0].length === 0) {
-	        currentText = currentText.slice(1);
-	        done = "";
-	        dingSound.play();
-	        // changeBackground();
-	        score += 250 * (parseInt(combo / 10) + 1) + parseInt(wpm + 1);
-	        $('.done').replaceWith('<span class="done">' + done + '</span>');
-	        $('.currentText').replaceWith('<span class="currentText" ><u>' + currentText[0][0] + '</u>' + currentText[0].slice(1) + '</span>');
-	        toggleAnimation($('.currentText'));
-	      }
-	    } else if (currentText[0] == "end") {}
-	    // $('.keys-entered').replaceWith(`<li class="keys-entered">Correct Keys Entered: ${keys_entered} </li>`)
+	          $('.nextStage').one('keypress', function (e) {
+	            debugger;
+	            if (e.key === "Enter") {
+	              playResult.stop();
+	              $('.retryStage').off('click');
+	              $('.returnToTitle').off('click');
+	              startLevel((0, _levelRequire.getLevel)(currentLevel['nextLevel'], currentLevel['options']));
+	            }
+	          });
+	
+	          $('.returnToTitle').one('click', function () {
+	            // document.reload();
+	            playResult.stop();
+	            $('.results').addClass("removed");
+	            $('.retryStage').off('click');
+	            $('.nextStage').off('click');
+	            (0, _titleScreen2.default)();
+	          });
+	          // $(`.stageNavigation`).toggleClass('removed')
+	        } else if (currentText[0].length === 0) {
+	          currentText = currentText.slice(1);
+	          done = "";
+	          dingSound.play();
+	          // changeBackground();
+	          score += 250 * (parseInt(combo / 10) + 1) + parseInt(wpm + 1);
+	          $('.done').replaceWith('<span class="done">' + done + '</span>');
+	          $('.currentText').replaceWith('<span class="currentText" ><u>' + currentText[0][0] + '</u>' + currentText[0].slice(1) + '</span>');
+	          toggleAnimation($('.currentText'));
+	        }
+	      } else if (currentText[0] == "end") {}
+	      // $('.keys-entered').replaceWith(`<li class="keys-entered">Correct Keys Entered: ${keys_entered} </li>`)
+	    });
+	  };
+	  $('.title').addClass("removed");
+	  $('.done').remove();
+	  $('.currentText').remove();
+	
+	  if (currentLvl['preLevelText']) {
+	    $('.preLevelText').removeClass('removed');
+	    $('.preLevelText').replaceWith('<div class = "preLevelText">\n    <h2 class="preLevelTextText"></h2>\n    <br/>\n    <br/>\n    <h2 class="preLevelTextButton"> Click Here To Begin </h2>\n   </div>');
+	    $('.preLevelTextText').replaceWith('<h3 class="preLevelTextText">' + currentLvl['preLevelText'] + '</h3>');
+	  } else {
+	    $('.preLevelTextText').replaceWith('<h2 class="preLevelTextText">No Text Yet.</h2>');
+	  }
+	  $('.preLevelTextButton').one('click', function (e) {
+	    //3
+	    $('.preLevelText').replaceWith('<div class="preLevelText"><h3>3</h3></div>');
+	    //2
+	    setTimeout(function () {
+	      $('.preLevelText').replaceWith('<div class="preLevelText"><h3>2</h3></div>');
+	    }, 1000);
+	    //1
+	    setTimeout(function () {
+	      $('.preLevelText').replaceWith('<div class="preLevelText"><h3>1</h3></div>');
+	    }, 2000);
+	    // GO
+	    setTimeout(function () {
+	      $('.preLevelText').replaceWith('<div class="preLevelText"><h3>Go!</h3></div>');
+	    }, 3000);
+	    // actual Go
+	    setTimeout(function () {
+	      $('.preLevelText').addClass('removed');
+	      startGame(currentLvl);
+	    }, 4000);
 	  });
 	};
 
 /***/ },
 /* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.changeBackground = undefined;
+	
+	var _animejs = __webpack_require__(1);
+	
+	var _animejs2 = _interopRequireDefault(_animejs);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var animation = function animation() {
+	  var c = document.getElementById("c");
+	  //Sets canvase and canvase size
+	  var ctx = c.getContext("2d");
+	  var cH;
+	  var cW;
+	  //Canvas Background
+	  var bgColor = "#FFBE53";
+	
+	  //When do these get used?
+	  var animations = [];
+	  var circles = [];
+	
+	  // Chooses color randomly based on preset array
+	  var colorPicker = function () {
+	    var colors = ["#2980B9", "#FFBE53", "#16a085"];
+	    var textColors = colors.slice(1).push(colors[0]);
+	    var index = 0;
+	    function next() {
+	      index = index++ < colors.length - 1 ? index : 0;
+	      return colors[index];
+	    }
+	    function current() {
+	      return colors[index];
+	    }
+	    function text() {
+	      return textColors[index];
+	    }
+	    return {
+	      next: next,
+	      current: current
+	    };
+	  }();
+	
+	  function removeAnimation(animation) {
+	    var index = animations.indexOf(animation);
+	    if (index > -1) animations.splice(index, 1);
+	  }
+	
+	  // fills the page depending on the size of the page, goes out in a circle
+	  function calcPageFillRadius(x, y) {
+	    var l = Math.max(x - 0, cW - x);
+	    var h = Math.max(y - 0, cH - y);
+	    return Math.sqrt(Math.pow(l, 2) + Math.pow(h, 2));
+	  }
+	
+	  //Looks at clicks to start the event hopefully
+	  function addClickListeners() {
+	    // touch start starts when touch surface is touched?
+	    document.addEventListener("touchstart", handleEvent);
+	    var counter = 0;
+	    var color = "#2ecc71";
+	    document.addEventListener("keydown", function (e) {
+	      // debugger
+	      // if ($('.currentText').text().length <= 2){
+	      counter++;
+	      $('.currentText').css("color", color);
+	      if (counter % 30 === 0 || e.key == "1") {
+	        handleEvent(e); // handleEvent;
+	      }
+	      // } else {
+	      // $('.currentText').off('change',handleEvent);
+	    });
+	    document.addEventListener("mousedown", handleEvent);
+	    var a = setInterval(function () {
+	      handleEvent({ touches: null });
+	    }, Math.random() * 100 + 140);
+	    window.setTimeout(function () {
+	      clearInterval(a);
+	    }, 2000);
+	  };
+	
+	  var handleEvent = function handleEvent(e) {
+	
+	    if (e.touches) {
+	      e.preventDefault();
+	      e = e.touches[0];
+	    }
+	    // goes through color
+	    var pageX = Math.random() * cW;
+	    var pageY = Math.random() * cH;
+	    var currentColor = colorPicker.current();
+	    var nextColor = colorPicker.next();
+	    // expands the color depending on the position of e
+	    var targetR = calcPageFillRadius(pageX, pageY);
+	    var rippleSize = Math.min(200, cW * .4);
+	    var minCoverDuration = 750;
+	
+	    var pageFill = new Circle({
+	      x: pageX,
+	      y: pageY,
+	      r: 0,
+	      fill: nextColor
+	    });
+	    var fillAnimation = (0, _animejs2.default)({
+	      targets: pageFill,
+	      r: targetR,
+	      duration: Math.max(targetR / 2, minCoverDuration),
+	      easing: "easeOutQuart",
+	      complete: function complete() {
+	        bgColor = pageFill.fill;
+	        removeAnimation(fillAnimation);
+	      }
+	    });
+	
+	    var ripple = new Circle({
+	      x: pageX,
+	      y: pageY,
+	      r: 0,
+	      fill: currentColor,
+	      stroke: {
+	        width: 3,
+	        color: currentColor
+	      },
+	      opacity: 1
+	    });
+	    var rippleAnimation = (0, _animejs2.default)({
+	      targets: ripple,
+	      r: rippleSize,
+	      opacity: 0,
+	      easing: "easeOutExpo",
+	      duration: 900,
+	      complete: removeAnimation
+	    });
+	
+	    var particles = [];
+	    for (var i = 0; i < 32; i++) {
+	      var particle = new Circle({
+	        x: pageX,
+	        y: pageY,
+	        fill: currentColor,
+	        r: _animejs2.default.random(24, 48)
+	      });
+	      particles.push(particle);
+	    }
+	    var particlesAnimation = (0, _animejs2.default)({
+	      targets: particles,
+	      x: function x(particle) {
+	        return particle.x + _animejs2.default.random(rippleSize, -rippleSize);
+	      },
+	      y: function y(particle) {
+	        return particle.y + _animejs2.default.random(rippleSize * 1.15, -rippleSize * 1.15);
+	      },
+	      r: 0,
+	      easing: "easeOutExpo",
+	      duration: _animejs2.default.random(1000, 1300),
+	      complete: removeAnimation
+	    });
+	    animations.push(fillAnimation, rippleAnimation, particlesAnimation);
+	  };
+	
+	  function extend(a, b) {
+	    for (var key in b) {
+	      if (b.hasOwnProperty(key)) {
+	        a[key] = b[key];
+	      }
+	    }
+	    return a;
+	  }
+	
+	  var Circle = function Circle(opts) {
+	    extend(this, opts);
+	  };
+	
+	  Circle.prototype.draw = function () {
+	    ctx.globalAlpha = this.opacity || 1;
+	    ctx.beginPath();
+	    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+	    if (this.stroke) {
+	      ctx.strokeStyle = this.stroke.color;
+	      ctx.lineWidth = this.stroke.width;
+	      ctx.stroke();
+	    }
+	    if (this.fill) {
+	      ctx.fillStyle = this.fill;
+	      ctx.fill();
+	    }
+	    ctx.closePath();
+	    ctx.globalAlpha = 1;
+	  };
+	
+	  var animate = (0, _animejs2.default)({
+	    duration: Infinity,
+	    update: function update() {
+	      ctx.fillStyle = bgColor;
+	      ctx.fillRect(0, 0, cW, cH);
+	      animations.forEach(function (anim) {
+	        anim.animatables.forEach(function (animatable) {
+	          animatable.target.draw();
+	        });
+	      });
+	    }
+	  });
+	
+	  var resizeCanvas = function resizeCanvas() {
+	    cW = window.innerWidth;
+	    cH = window.innerHeight;
+	    c.width = cW * devicePixelRatio;
+	    c.height = cH * devicePixelRatio;
+	    ctx.scale(devicePixelRatio, devicePixelRatio);
+	  };
+	
+	  (function init() {
+	    resizeCanvas();
+	    if (window.CP) {
+	      // CodePen's loop detection was causin' problems
+	      // and I have no idea why, so...
+	      window.CP.PenTimer.MAX_TIME_IN_LOOP_WO_EXIT = 6000;
+	    }
+	    window.addEventListener("resize", resizeCanvas);
+	    addClickListeners();
+	    if (!!window.location.pathname.match(/fullcpgrid/)) {
+	      // startFauxClicking();
+	    }
+	    handleInactiveUser();
+	  })();
+	
+	  function handleInactiveUser() {
+	    var inactive = setTimeout(function () {
+	      // fauxClick(cW/2, cH/2);
+	    }, 2000);
+	
+	    function clearInactiveTimeout() {
+	      clearTimeout(inactive);
+	      document.removeEventListener("mousedown", clearInactiveTimeout);
+	      document.removeEventListener("touchstart", clearInactiveTimeout);
+	    }
+	
+	    document.addEventListener("mousedown", clearInactiveTimeout);
+	    document.addEventListener("touchstart", clearInactiveTimeout);
+	  }
+	
+	  // function startFauxClicking() {
+	  // setTimeout(function(){
+	  //   fauxClick(anime.random( cW * .2, cW * .8), anime.random(cH * .2, cH * .8));
+	  //   startFauxClicking();
+	  // }, anime.random(200, 900));
+	  // }
+	  //
+	  // function fauxClick(x, y) {
+	  // var fauxClick = new Event("mousedown");
+	  // fauxClick.pageX = x;
+	  // fauxClick.pageY = y;
+	  // document.dispatchEvent(fauxClick);
+	  //
+	  // }
+	};
+	
+	exports.default = animation;
+	var changeBackground = exports.changeBackground = function changeBackground() {
+	  handleEvent();
+	};
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.getNextLevel = exports.getLevel = undefined;
+	
+	var _level = __webpack_require__(5);
+	
+	var _level2 = __webpack_require__(6);
+	
+	var _level3 = __webpack_require__(7);
+	
+	var _level4 = __webpack_require__(8);
+	
+	var _level5 = __webpack_require__(9);
+	
+	var _level6 = __webpack_require__(10);
+	
+	var _testLvl = __webpack_require__(11);
+	
+	var _longTestLvl = __webpack_require__(12);
+	
+	var getLevel = exports.getLevel = function getLevel(levelName, soundOption) {
+	  var levels = {
+	    level1: _level.level1,
+	    level2: _level2.level2,
+	    level3: _level3.level3,
+	    level4: _level4.level4,
+	    level5: _level5.level5,
+	    level6: _level6.level6,
+	    testLevel: _testLvl.testLevel,
+	    longTestLvl: _longTestLvl.longTestLvl
+	  };
+	  var songfiles = {
+	    result: 'assets/music/Shogun_Beatz.mp3',
+	    gameNormal: 'assets/music/Beautiful_Typing.mp3'
+	    // title: `assets/music/Vatic_Sketch_1.mp3`
+	  };
+	
+	  var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
+	  //order is Error, Type, Complete
+	
+	  // debugger
+	  return {
+	    // soundFiles: songfiles['gameNormal'],
+	    level: levels[levelName]['level'],
+	    currentText: levels[levelName]['currentText'],
+	    preLevelText: levels[levelName]['prelevelText'],
+	    nextLevel: levels[levelName]['nextLevel'],
+	    animations: levels[levelName]['animations'],
+	    soundFiles: [songfiles['gameNormal'], songfiles['result']],
+	    sfx: soundEffects,
+	    options: {
+	      muteSoundOption: soundOption['muteSoundOption'],
+	      muteMusicOption: soundOption['muteMusicOption']
+	    }
+	  };
+	  console.log(levels[levelName]);
+	};
+	
+	var getNextLevel = exports.getNextLevel = function getNextLevel(levelName, soundOption) {
+	  if (typeof levels[levelName] == 'undefined') {
+	    return { level: "End of the Game" };
+	  }
+	};
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var songfiles = {
+	  result: 'assets/music/Shogun_Beatz.mp3',
+	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
+	  // title: `assets/music/Vatic_Sketch_1.mp3`
+	};
+	
+	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
+	//order is Error, Type, Complete
+	
+	var level1 = exports.level1 = {
+	  level: '1 - The Intro',
+	  currentText: ["Welcome!", "If you're looking for someone", "with a charming smile,", "and mad coding chops", "you should give Andrew Tae", "a chance to interview!", "Either way,", "please sit back and enjoy", "the hardest typing test you have ever seen.", "Have fun and good luck!", "end"],
+	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  currentLevel: 'level1',
+	  nextLevel: 'level2',
+	  animations: {
+	    shake: false,
+	    spotlight: false,
+	    flags: false,
+	    cats: false,
+	    random: false
+	  }
+	};
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var songfiles = {
+	  result: 'assets/music/Shogun_Beatz.mp3',
+	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
+	  // title: `assets/music/Vatic_Sketch_1.mp3`
+	};
+	
+	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
+	//order is Error, Type, Complete
+	
+	var level2 = exports.level2 = {
+	  level: '2 - The Coffee',
+	  currentText: ["Scrum meeting at 7PM. Don't be late!", "The security guards called again. You can't keep parking in the spaces reserved for the charity winners. Please move your car now.", "Coffee machine is down again. Looks like we'll have to go get some coffee from across the- Oh, I see you've already got your own cup. Carry on.", "Where is my stapler? Where IS my stapler? WHERE is my stapler? Where is my STAPLER?", "SYNERGY!!!", "!!11!1i!iil!1l1l1l1", "end"],
+	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  nextLevel: 'level3',
+	  animations: {
+	    shake: true,
+	    spotlight: false,
+	    flags: false,
+	    cats: false,
+	    random: false
+	  }
+	};
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var songfiles = {
+	  result: 'assets/music/Shogun_Beatz.mp3',
+	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
+	  // title: `assets/music/Vatic_Sketch_1.mp3`
+	};
+	
+	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
+	//order is Error, Type, Complete
+	
+	var level3 = exports.level3 = {
+	  level: '3 - The Scientist',
+	  currentText: ["In this study, I visualized connexin36-immunoreactive gap junctions and examined the structural features of the interconnected dendrites arising from parvalbumin (PV)-positive interneurons in layer 4 of the feline visual cortex.", "These viruses make sfRNAs by co-opting a cellular exoribonuclease using structured RNAs called xrRNAs.", "end"],
+	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  currentLevel: 'level3',
+	  nextLevel: 'level4',
+	  animations: {
+	    shake: false,
+	    spotlight: false,
+	    flags: false,
+	    cats: false,
+	    random: false
+	  }
+	};
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var songfiles = {
+	  result: 'assets/music/Shogun_Beatz.mp3',
+	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
+	  // title: `assets/music/Vatic_Sketch_1.mp3`
+	};
+	
+	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
+	//order is Error, Type, Complete
+	
+	var level4 = exports.level4 = {
+	  level: '4 - The Cat',
+	  currentText: ["shytnhi.;o8ng d", "gh6op;;;lvfvfggfbv", "brhnykm8lrmjsfr3tr4hhy5ju6i8jn5s", "w aqxdcwrhngvynj6kmu7,il;o[pmk;", ".luy[]hy6nfr cd bl,///////////;'''''''54265y4trdjfghc9 lkjbtdhs113544444444444444444444439wa]", "end"],
+	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  nextLevel: 'level5',
+	  animations: {
+	    shake: false,
+	    spotlight: false,
+	    flags: false,
+	    cats: false,
+	    random: false
+	  }
+	};
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var songfiles = {
+	  result: 'assets/music/Shogun_Beatz.mp3',
+	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
+	  // title: `assets/music/Vatic_Sketch_1.mp3`
+	};
+	
+	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
+	//order is Error, Type, Complete
+	
+	var level5 = exports.level5 = {
+	  level: '5 - The Coffee',
+	  currentText: ["Scrum meeting at 7PM. Don't be late!", "The security guards called again. You can't keep parking in the spaces reserved for the charity winners. Please move your car now.", "Coffee machine is down again. Looks like we'll have to go get some coffee from across the- Oh, I see you've already got your own cup. Carry on.", "Where is my stapler? Where IS my stapler? WHERE is my stapler? Where is my STAPLER?", "SYNERGY!!!", "!!!!11111iii!!!iii!!ii!!ii!11llll", "end"],
+	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  nextLevel: 'level6',
+	  animations: {
+	    shake: true,
+	    spotlight: false,
+	    flags: false,
+	    cats: false,
+	    random: false
+	  }
+	};
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var songfiles = {
+	  result: 'assets/music/Shogun_Beatz.mp3',
+	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
+	  // title: `assets/music/Vatic_Sketch_1.mp3`
+	};
+	
+	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
+	//order is Error, Type, Complete
+	
+	var level6 = exports.level6 = {
+	  level: '',
+	  currentText: [" ", "end"],
+	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
+	  nextLevel: 'end',
+	  animations: {
+	    shake: false,
+	    spotlight: true,
+	    flags: false,
+	    cats: false,
+	    random: false
+	  }
+	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	
+	var songfiles = {
+	  result: "assets/music/Shogun_Beatz.mp3",
+	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
+	  // title: `assets/music/Vatic_Sketch_1.mp3`
+	};
+	
+	var soundEffects = ["assets/sounds/Blip_Select.wav", "assets/sounds/typewriter.wav", "assets/sounds/Pickup_Coin10.wav"];
+	//order is Error, Type, Complete
+	
+	var testLevel = exports.testLevel = {
+	  level: "Tutorial",
+	  currentText: ["Let's get this party started!", "Whoa, two sentences!", "THREEEEEE;;;;;", "end"],
+	  prelevelText: ["testing testing 1 2 3"],
+	  currentLevel: 'testLevel',
+	  nextLevel: "longTestLvl",
+	  animations: {
+	    shake: false,
+	    spotlight: true,
+	    flags: false,
+	    cats: false,
+	    random: false
+	  }
+	};
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var songfiles = {
+	  result: "assets/music/Shogun_Beatz.mp3",
+	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
+	  // title: `assets/music/Vatic_Sketch_1.mp3`
+	};
+	
+	var soundEffects = ["assets/sounds/Blip_Select.wav", "assets/sounds/typewriter.wav", "assets/sounds/Pickup_Coin10.wav"];
+	//order is Error, Type, Complete
+	
+	var longTestLvl = exports.longTestLvl = {
+	  level: "Long Test Level",
+	  currentText: ["Alright, let's get some super long words into this application. What other words can we use I wonder?", "Time to paste a whoooole paragraph in here. I don't know how to type the Lorem thing but it's fine, there are plenty of other words in the actual english language that I can use instead. So take THAT international policy!", "THREEEEEEEEEEEKJSKJHASNKJASJHGDASLCNLIHWQIUDGQWLENQWKLGKDYJASHV>GSLFDH>Z<", "end"],
+	  prelevelText: ["Suuuuuuuper long testing What's up every body it's time for some loooooooong typing I hope everyone was able to make it here okay. Press 1 now to being the game!"],
+	  currentLevel: 'longTestLvl',
+	  nextLevel: 'level1',
+	  animations: {
+	    shake: false,
+	    spotlight: false,
+	    flags: false,
+	    cats: false,
+	    random: false
+	  }
+	};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _levelRequire = __webpack_require__(4);
+	
+	var _game = __webpack_require__(2);
+	
+	var _howler = __webpack_require__(14);
+	
+	var _howler2 = _interopRequireDefault(_howler);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var resetPage = function resetPage() {
+	  $('.Level').replaceWith('<li class = "Level"> Beautiful Typing </li>');
+	  $('.score').replaceWith('<li class = "score hidden"> Score: 0</li>');
+	  $('.Timer').replaceWith('<li class = "Timer hidden"> Time: 0 sec</li>');
+	  $('.wpm').replaceWith('<li class = "wpm hidden"> WPM: 0 wpm</li>');
+	  $('.maxWpm').replaceWith('<li class = "maxWpm hidden"> Max WPM: 0 wpm</li>');
+	  $('.errors').replaceWith('<li class ="errors hidden"> Errors: 0 </li>');
+	  $('.titleName').replaceWith('<h2 class="titleName animated bounceInDown"> Beautiful Typing </h2>');
+	  $('.combo').replaceWith('<li class = "combo hidden"> Combo: 0 </li>');
+	
+	  // $(`.LevelSelect`).replaceWith(`<ul class="LevelSelect animated bounceInLeft">
+	  //     </ul>
+	  //
+	  //     <div id="myModal" class="modal">
+	  //
+	  //         </div>
+	  //
+	  //   </div>
+	  //     <br/>`)
+	};
+	
+	var titleScreen = function titleScreen() {
+	  resetPage();
+	  $('.text').remove('.title');
+	  $('.title').removeClass('removed');
+	  $('.levelList').addClass("removed");
+	
+	  var titleMusic = new _howler2.default.Howl({
+	    src: ['./assets/music/Vatic_Sketch_1.mp3'],
+	    loop: true
+	  });
+	  // if ($('.soundOption')===" Sound: Off "){
+	
+	
+	  titleMusic.play();
+	  // debugger
+	
+	  if ($('.musicOption').text() === " Music: Off ") {
+	    // debugger
+	    titleMusic.stop();
+	  } else {
+	    titleMusic.play();
+	    // debugger
+	  }
+	
+	  // // $('.dreamloLBTable').addClass('removed');
+	  //
+	  var options = {
+	    muteSoundOption: false,
+	    muteMusicOption: false
+	  };
+	
+	  if ($('.LevelSelectList').length === 0) {
+	    $('.LevelSelect').prepend('<ul class="LevelSelectList"><li id="start"> Start Game </li><li id="levels">Level Select</li><li id="leaderboards">Leaderboards</li></ul>');
+	  }
+	  $('#start').on('click', function () {
+	    titleMusic.stop();
+	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level1', options));
+	  });
+	  // if (!$('#levels').onClick){
+	  //   $('#levels').on('click', ()=>{
+	  //     $('.levelList').toggleClass("removed")
+	  //   })
+	  // }
+	  document.getElementById('levels').addEventListener('click', function () {
+	    $('.levelList').toggleClass("removed");
+	  });
+	  $('.test').on('click', function (e) {
+	    titleMusic.stop();
+	    (0, _game.startLevel)((0, _levelRequire.getLevel)('testLevel', options));
+	  });
+	  $('.longTest').on('click', function (e) {
+	    titleMusic.stop();
+	    (0, _game.startLevel)((0, _levelRequire.getLevel)('longTestLvl', options));
+	  });
+	  $('.level1').on('click', function (e) {
+	    titleMusic.stop();
+	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level1', options));
+	  });
+	  $('.level2').on('click', function (e) {
+	    titleMusic.stop();
+	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level2', options));
+	  });
+	  $('.level3').on('click', function (e) {
+	    titleMusic.stop();
+	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level3', options));
+	  });
+	  $('.level4').on('click', function (e) {
+	    titleMusic.stop();
+	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level4', options));
+	  });
+	  $('.level5').on('click', function (e) {
+	    titleMusic.stop();
+	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level5', options));
+	  });
+	  $('.level6').on('click', function (e) {
+	    titleMusic.stop();
+	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level6', options));
+	  });
+	  // $('.leaderboards').on('click', e=> {
+	  //   $('.dreamloLBTable').toggleClass('removed');
+	  //
+	  // })
+	
+	  // Get the modal
+	  var modal = document.getElementById('myModal');
+	
+	  // Get the button that opens the modal
+	  var btn = document.getElementById("leaderboards");
+	
+	  // Get the <span> element that closes the modal
+	  var span = document.getElementsByClassName("close")[0];
+	
+	  // When the user clicks on the button, open the modal
+	  btn.onclick = function () {
+	    modal.style.display = "block";
+	  };
+	
+	  // When the user clicks on <span> (x), close the modal
+	  span.onclick = function () {
+	    modal.style.display = "none";
+	  };
+	
+	  // When the user clicks anywhere outside of the modal, close it
+	  window.onclick = function (event) {
+	    if (event.target == modal) {
+	      modal.style.display = "none";
+	    }
+	  };
+	  $('.soundOption').on('click', function (e) {
+	    // debugger
+	    // e.stopPropagation();
+	    var currentText = $('.soundOption').text();
+	    var newText = currentText === " Sound: Off " ? " Sound: On " : " Sound: Off ";
+	    if (newText === " Sound: Off ") {
+	      debugger;
+	      options['muteSoundOption'] = true;
+	      options['muteMusicOption'] = true;
+	      titleMusic.mute(true);
+	    } else {
+	      // debugger
+	      options['muteSoundOption'] = false;
+	      options['muteMusicOption'] = false;
+	      titleMusic.mute(false);
+	
+	      // Howler.unmute();
+	    }
+	    // }
+	
+	
+	    $('.soundOption').text(newText);
+	    //
+	    //   if ($('.soundOption').text() === " Sound: On ") {
+	    //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: Off </li>')
+	    // } else if ($('.soundOption').text() === " Sound: Off ") {
+	    //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: On </li>')
+	    // }
+	  });
+	
+	  // $('.musicOption').on('click', (e) => {
+	  //   // e.stopPropagation();
+	  //
+	  //   let currentMusicText = $('.musicOption').text()
+	  //   let newMusicText = (currentMusicText === " Music: Off ")? " Music: On " : " Music: Off "
+	  //   if (newMusicText === " Music: Off ") {
+	  //
+	  //     titleMusic.mute(true);
+	  //     options['muteMusicOption'] = true
+	  //   } else {
+	  //     titleMusic.mute(false);
+	  //
+	  //     options['muteMusicOption'] = false
+	  //   }
+	  //   $('.musicOption').text(newMusicText);
+	  // })
+	
+	};
+	
+	// $('#start').on('click', startGame())
+	
+	
+	//insert handlers for levelList
+	
+	exports.default = titleScreen;
+
+/***/ },
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -3754,821 +4601,6 @@
 	})();
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.changeBackground = undefined;
-	
-	var _animejs = __webpack_require__(1);
-	
-	var _animejs2 = _interopRequireDefault(_animejs);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var animation = function animation() {
-	  var c = document.getElementById("c");
-	  //Sets canvase and canvase size
-	  var ctx = c.getContext("2d");
-	  var cH;
-	  var cW;
-	  //Canvas Background
-	  var bgColor = "#FFBE53";
-	
-	  //When do these get used?
-	  var animations = [];
-	  var circles = [];
-	
-	  // Chooses color randomly based on preset array
-	  var colorPicker = function () {
-	    var colors = ["#2980B9", "#FFBE53", "#16a085"];
-	    var textColors = colors.slice(1).push(colors[0]);
-	    var index = 0;
-	    function next() {
-	      index = index++ < colors.length - 1 ? index : 0;
-	      return colors[index];
-	    }
-	    function current() {
-	      return colors[index];
-	    }
-	    function text() {
-	      return textColors[index];
-	    }
-	    return {
-	      next: next,
-	      current: current
-	    };
-	  }();
-	
-	  function removeAnimation(animation) {
-	    var index = animations.indexOf(animation);
-	    if (index > -1) animations.splice(index, 1);
-	  }
-	
-	  // fills the page depending on the size of the page, goes out in a circle
-	  function calcPageFillRadius(x, y) {
-	    var l = Math.max(x - 0, cW - x);
-	    var h = Math.max(y - 0, cH - y);
-	    return Math.sqrt(Math.pow(l, 2) + Math.pow(h, 2));
-	  }
-	
-	  //Looks at clicks to start the event hopefully
-	  function addClickListeners() {
-	    // touch start starts when touch surface is touched?
-	    document.addEventListener("touchstart", handleEvent);
-	    var counter = 0;
-	    var color = "#2ecc71";
-	    document.addEventListener("keydown", function (e) {
-	      // debugger
-	      // if ($('.currentText').text().length <= 2){
-	      counter++;
-	      $('.currentText').css("color", color);
-	      if (counter % 30 === 0 || e.key == "1") {
-	        handleEvent(e); // handleEvent;
-	      }
-	      // } else {
-	      // $('.currentText').off('change',handleEvent);
-	    });
-	    document.addEventListener("mousedown", handleEvent);
-	    var a = setInterval(function () {
-	      handleEvent({ touches: null });
-	    }, Math.random() * 100 + 140);
-	    window.setTimeout(function () {
-	      clearInterval(a);
-	    }, 2000);
-	  };
-	
-	  var handleEvent = function handleEvent(e) {
-	
-	    if (e.touches) {
-	      e.preventDefault();
-	      e = e.touches[0];
-	    }
-	    // goes through color
-	    var pageX = Math.random() * cW;
-	    var pageY = Math.random() * cH;
-	    var currentColor = colorPicker.current();
-	    var nextColor = colorPicker.next();
-	    // expands the color depending on the position of e
-	    var targetR = calcPageFillRadius(pageX, pageY);
-	    var rippleSize = Math.min(200, cW * .4);
-	    var minCoverDuration = 750;
-	
-	    var pageFill = new Circle({
-	      x: pageX,
-	      y: pageY,
-	      r: 0,
-	      fill: nextColor
-	    });
-	    var fillAnimation = (0, _animejs2.default)({
-	      targets: pageFill,
-	      r: targetR,
-	      duration: Math.max(targetR / 2, minCoverDuration),
-	      easing: "easeOutQuart",
-	      complete: function complete() {
-	        bgColor = pageFill.fill;
-	        removeAnimation(fillAnimation);
-	      }
-	    });
-	
-	    var ripple = new Circle({
-	      x: pageX,
-	      y: pageY,
-	      r: 0,
-	      fill: currentColor,
-	      stroke: {
-	        width: 3,
-	        color: currentColor
-	      },
-	      opacity: 1
-	    });
-	    var rippleAnimation = (0, _animejs2.default)({
-	      targets: ripple,
-	      r: rippleSize,
-	      opacity: 0,
-	      easing: "easeOutExpo",
-	      duration: 900,
-	      complete: removeAnimation
-	    });
-	
-	    var particles = [];
-	    for (var i = 0; i < 32; i++) {
-	      var particle = new Circle({
-	        x: pageX,
-	        y: pageY,
-	        fill: currentColor,
-	        r: _animejs2.default.random(24, 48)
-	      });
-	      particles.push(particle);
-	    }
-	    var particlesAnimation = (0, _animejs2.default)({
-	      targets: particles,
-	      x: function x(particle) {
-	        return particle.x + _animejs2.default.random(rippleSize, -rippleSize);
-	      },
-	      y: function y(particle) {
-	        return particle.y + _animejs2.default.random(rippleSize * 1.15, -rippleSize * 1.15);
-	      },
-	      r: 0,
-	      easing: "easeOutExpo",
-	      duration: _animejs2.default.random(1000, 1300),
-	      complete: removeAnimation
-	    });
-	    animations.push(fillAnimation, rippleAnimation, particlesAnimation);
-	  };
-	
-	  function extend(a, b) {
-	    for (var key in b) {
-	      if (b.hasOwnProperty(key)) {
-	        a[key] = b[key];
-	      }
-	    }
-	    return a;
-	  }
-	
-	  var Circle = function Circle(opts) {
-	    extend(this, opts);
-	  };
-	
-	  Circle.prototype.draw = function () {
-	    ctx.globalAlpha = this.opacity || 1;
-	    ctx.beginPath();
-	    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
-	    if (this.stroke) {
-	      ctx.strokeStyle = this.stroke.color;
-	      ctx.lineWidth = this.stroke.width;
-	      ctx.stroke();
-	    }
-	    if (this.fill) {
-	      ctx.fillStyle = this.fill;
-	      ctx.fill();
-	    }
-	    ctx.closePath();
-	    ctx.globalAlpha = 1;
-	  };
-	
-	  var animate = (0, _animejs2.default)({
-	    duration: Infinity,
-	    update: function update() {
-	      ctx.fillStyle = bgColor;
-	      ctx.fillRect(0, 0, cW, cH);
-	      animations.forEach(function (anim) {
-	        anim.animatables.forEach(function (animatable) {
-	          animatable.target.draw();
-	        });
-	      });
-	    }
-	  });
-	
-	  var resizeCanvas = function resizeCanvas() {
-	    cW = window.innerWidth;
-	    cH = window.innerHeight;
-	    c.width = cW * devicePixelRatio;
-	    c.height = cH * devicePixelRatio;
-	    ctx.scale(devicePixelRatio, devicePixelRatio);
-	  };
-	
-	  (function init() {
-	    resizeCanvas();
-	    if (window.CP) {
-	      // CodePen's loop detection was causin' problems
-	      // and I have no idea why, so...
-	      window.CP.PenTimer.MAX_TIME_IN_LOOP_WO_EXIT = 6000;
-	    }
-	    window.addEventListener("resize", resizeCanvas);
-	    addClickListeners();
-	    if (!!window.location.pathname.match(/fullcpgrid/)) {
-	      // startFauxClicking();
-	    }
-	    handleInactiveUser();
-	  })();
-	
-	  function handleInactiveUser() {
-	    var inactive = setTimeout(function () {
-	      // fauxClick(cW/2, cH/2);
-	    }, 2000);
-	
-	    function clearInactiveTimeout() {
-	      clearTimeout(inactive);
-	      document.removeEventListener("mousedown", clearInactiveTimeout);
-	      document.removeEventListener("touchstart", clearInactiveTimeout);
-	    }
-	
-	    document.addEventListener("mousedown", clearInactiveTimeout);
-	    document.addEventListener("touchstart", clearInactiveTimeout);
-	  }
-	
-	  // function startFauxClicking() {
-	  // setTimeout(function(){
-	  //   fauxClick(anime.random( cW * .2, cW * .8), anime.random(cH * .2, cH * .8));
-	  //   startFauxClicking();
-	  // }, anime.random(200, 900));
-	  // }
-	  //
-	  // function fauxClick(x, y) {
-	  // var fauxClick = new Event("mousedown");
-	  // fauxClick.pageX = x;
-	  // fauxClick.pageY = y;
-	  // document.dispatchEvent(fauxClick);
-	  //
-	  // }
-	};
-	
-	exports.default = animation;
-	var changeBackground = exports.changeBackground = function changeBackground() {
-	  handleEvent();
-	};
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.getNextLevel = exports.getLevel = undefined;
-	
-	var _level = __webpack_require__(6);
-	
-	var _level2 = __webpack_require__(7);
-	
-	var _level3 = __webpack_require__(8);
-	
-	var _level4 = __webpack_require__(9);
-	
-	var _level5 = __webpack_require__(10);
-	
-	var _level6 = __webpack_require__(11);
-	
-	var _testLvl = __webpack_require__(12);
-	
-	var _longTestLvl = __webpack_require__(13);
-	
-	var getLevel = exports.getLevel = function getLevel(levelName, soundOption) {
-	  var levels = {
-	    level1: _level.level1,
-	    level2: _level2.level2,
-	    level3: _level3.level3,
-	    level4: _level4.level4,
-	    level5: _level5.level5,
-	    level6: _level6.level6,
-	    testLevel: _testLvl.testLevel,
-	    longTestLvl: _longTestLvl.longTestLvl
-	  };
-	  var songfiles = {
-	    result: 'assets/music/Shogun_Beatz.mp3',
-	    gameNormal: 'assets/music/Beautiful_Typing.mp3'
-	    // title: `assets/music/Vatic_Sketch_1.mp3`
-	  };
-	
-	  var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
-	  //order is Error, Type, Complete
-	
-	  // debugger
-	  return {
-	    // soundFiles: songfiles['gameNormal'],
-	    level: levels[levelName]['level'],
-	    currentText: levels[levelName]['currentText'],
-	    prelevelText: levels[levelName]['prelevelText'],
-	    nextLevel: levels[levelName]['nextLevel'],
-	    animations: levels[levelName]['animations'],
-	    soundFiles: [songfiles['gameNormal'], songfiles['result']],
-	    sfx: soundEffects,
-	    options: {
-	      muteSoundOption: soundOption['muteSoundOption'],
-	      muteMusicOption: soundOption['muteMusicOption']
-	    }
-	  };
-	  console.log(levels[levelName]);
-	};
-	
-	var getNextLevel = exports.getNextLevel = function getNextLevel(levelName, soundOption) {
-	  if (typeof levels[levelName] == 'undefined') {
-	    return { level: "End of the Game" };
-	  }
-	};
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var songfiles = {
-	  result: 'assets/music/Shogun_Beatz.mp3',
-	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
-	  // title: `assets/music/Vatic_Sketch_1.mp3`
-	};
-	
-	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
-	//order is Error, Type, Complete
-	
-	var level1 = exports.level1 = {
-	  level: '1 - The Intro',
-	  currentText: ["Welcome!", "If you're looking for someone", "with a charming smile,", "and mad coding chops", "you should give Andrew Tae", "a chance to interview!", "Either way,", "please sit back and enjoy", "the hardest typing test you have ever seen.", "Have fun and good luck!", "end"],
-	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
-	  currentLevel: 'level1',
-	  nextLevel: 'level2',
-	  animations: {
-	    shake: false,
-	    spotlight: false,
-	    flags: false,
-	    cats: false,
-	    random: false
-	  }
-	};
-
-/***/ },
-/* 7 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var songfiles = {
-	  result: 'assets/music/Shogun_Beatz.mp3',
-	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
-	  // title: `assets/music/Vatic_Sketch_1.mp3`
-	};
-	
-	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
-	//order is Error, Type, Complete
-	
-	var level2 = exports.level2 = {
-	  level: '2 - The Coffee',
-	  currentText: ["Scrum meeting at 7PM. Don't be late!", "The security guards called again. You can't keep parking in the spaces reserved for the charity winners. Please move your car now.", "Coffee machine is down again. Looks like we'll have to go get some coffee from across the- Oh, I see you've already got your own cup. Carry on.", "Where is my stapler? Where IS my stapler? WHERE is my stapler? Where is my STAPLER?", "SYNERGY!!!", "!!11!1i!iil!1l1l1l1", "end"],
-	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
-	  nextLevel: 'level3',
-	  animations: {
-	    shake: true,
-	    spotlight: false,
-	    flags: false,
-	    cats: false,
-	    random: false
-	  }
-	};
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var songfiles = {
-	  result: 'assets/music/Shogun_Beatz.mp3',
-	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
-	  // title: `assets/music/Vatic_Sketch_1.mp3`
-	};
-	
-	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
-	//order is Error, Type, Complete
-	
-	var level3 = exports.level3 = {
-	  level: '3 - The Scientist',
-	  currentText: ["In this study, I visualized connexin36-immunoreactive gap junctions and examined the structural features of the interconnected dendrites arising from parvalbumin (PV)-positive interneurons in layer 4 of the feline visual cortex.", "These viruses make sfRNAs by co-opting a cellular exoribonuclease using structured RNAs called xrRNAs.", "end"],
-	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
-	  currentLevel: 'level3',
-	  nextLevel: 'level4',
-	  animations: {
-	    shake: false,
-	    spotlight: false,
-	    flags: false,
-	    cats: false,
-	    random: false
-	  }
-	};
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var songfiles = {
-	  result: 'assets/music/Shogun_Beatz.mp3',
-	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
-	  // title: `assets/music/Vatic_Sketch_1.mp3`
-	};
-	
-	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
-	//order is Error, Type, Complete
-	
-	var level4 = exports.level4 = {
-	  level: '4 - The Cat',
-	  currentText: ["shytnhi.;o8ng d", "gh6op;;;lvfvfggfbv", "brhnykm8lrmjsfr3tr4hhy5ju6i8jn5s", "w aqxdcwrhngvynj6kmu7,il;o[pmk;", ".luy[]hy6nfr cd bl,///////////;'''''''54265y4trdjfghc9 lkjbtdhs113544444444444444444444439wa]", "end"],
-	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
-	  nextLevel: 'level5',
-	  animations: {
-	    shake: false,
-	    spotlight: false,
-	    flags: false,
-	    cats: false,
-	    random: false
-	  }
-	};
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var songfiles = {
-	  result: 'assets/music/Shogun_Beatz.mp3',
-	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
-	  // title: `assets/music/Vatic_Sketch_1.mp3`
-	};
-	
-	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
-	//order is Error, Type, Complete
-	
-	var level5 = exports.level5 = {
-	  level: '5 - The Coffee',
-	  currentText: ["Scrum meeting at 7PM. Don't be late!", "The security guards called again. You can't keep parking in the spaces reserved for the charity winners. Please move your car now.", "Coffee machine is down again. Looks like we'll have to go get some coffee from across the- Oh, I see you've already got your own cup. Carry on.", "Where is my stapler? Where IS my stapler? WHERE is my stapler? Where is my STAPLER?", "SYNERGY!!!", "!!!!11111iii!!!iii!!ii!!ii!11llll", "end"],
-	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
-	  nextLevel: 'level6',
-	  animations: {
-	    shake: true,
-	    spotlight: false,
-	    flags: false,
-	    cats: false,
-	    random: false
-	  }
-	};
-
-/***/ },
-/* 11 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var songfiles = {
-	  result: 'assets/music/Shogun_Beatz.mp3',
-	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
-	  // title: `assets/music/Vatic_Sketch_1.mp3`
-	};
-	
-	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
-	//order is Error, Type, Complete
-	
-	var level6 = exports.level6 = {
-	  level: '',
-	  currentText: [" ", "end"],
-	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
-	  nextLevel: 'end',
-	  animations: {
-	    shake: false,
-	    spotlight: true,
-	    flags: false,
-	    cats: false,
-	    random: false
-	  }
-	};
-
-/***/ },
-/* 12 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	
-	var songfiles = {
-	  result: "assets/music/Shogun_Beatz.mp3",
-	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
-	  // title: `assets/music/Vatic_Sketch_1.mp3`
-	};
-	
-	var soundEffects = ["assets/sounds/Blip_Select.wav", "assets/sounds/typewriter.wav", "assets/sounds/Pickup_Coin10.wav"];
-	//order is Error, Type, Complete
-	
-	var testLevel = exports.testLevel = {
-	  level: "Tutorial",
-	  currentText: ["Let's get this party started!", "Whoa, two sentences!", "THREEEEEE;;;;;", "end"],
-	  prelevelText: ["testing testing 1 2 3"],
-	  currentLevel: 'testLevel',
-	  nextLevel: "longTestLvl",
-	  animations: {
-	    shake: false,
-	    spotlight: true,
-	    flags: false,
-	    cats: false,
-	    random: false
-	  }
-	};
-
-/***/ },
-/* 13 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var songfiles = {
-	  result: "assets/music/Shogun_Beatz.mp3",
-	  gameNormal: 'assets/music/Beautiful_Typing.mp3'
-	  // title: `assets/music/Vatic_Sketch_1.mp3`
-	};
-	
-	var soundEffects = ["assets/sounds/Blip_Select.wav", "assets/sounds/typewriter.wav", "assets/sounds/Pickup_Coin10.wav"];
-	//order is Error, Type, Complete
-	
-	var longTestLvl = exports.longTestLvl = {
-	  level: "Long Test Level",
-	  currentText: ["Alright, let's get some super long words into this application. What other words can we use I wonder?", "Time to paste a whoooole paragraph in here. I don't know how to type the Lorem thing but it's fine, there are plenty of other words in the actual english language that I can use instead. So take THAT international policy!", "THREEEEEEEEEEEKJSKJHASNKJASJHGDASLCNLIHWQIUDGQWLENQWKLGKDYJASHV>GSLFDH>Z<", "end"],
-	  prelevelText: ["Suuuuuuuper long testing What's up every body it's time for some loooooooong typing I hope everyone was able to make it here okay. Press 1 now to being the game!"],
-	  currentLevel: 'longTestLvl',
-	  nextLevel: 'level1',
-	  animations: {
-	    shake: false,
-	    spotlight: false,
-	    flags: false,
-	    cats: false,
-	    random: false
-	  }
-	};
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _levelRequire = __webpack_require__(5);
-	
-	var _game = __webpack_require__(2);
-	
-	var _howler = __webpack_require__(3);
-	
-	var _howler2 = _interopRequireDefault(_howler);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var resetPage = function resetPage() {
-	  $('.Level').replaceWith('<li class = "Level"> Beautiful Typing </li>');
-	  $('.score').replaceWith('<li class = "score hidden"> Score: 0</li>');
-	  $('.Timer').replaceWith('<li class = "Timer hidden"> Time: 0 sec</li>');
-	  $('.wpm').replaceWith('<li class = "wpm hidden"> WPM: 0 wpm</li>');
-	  $('.maxWpm').replaceWith('<li class = "maxWpm hidden"> Max WPM: 0 wpm</li>');
-	  $('.errors').replaceWith('<li class ="errors hidden"> Errors: 0 </li>');
-	  $('.titleName').replaceWith('<h2 class="titleName animated bounceInDown"> Beautiful Typing </h2>');
-	  $('.combo').replaceWith('<li class = "combo hidden"> Combo: 0 </li>');
-	
-	  // $(`.LevelSelect`).replaceWith(`<ul class="LevelSelect animated bounceInLeft">
-	  //     </ul>
-	  //
-	  //     <div id="myModal" class="modal">
-	  //
-	  //         </div>
-	  //
-	  //   </div>
-	  //     <br/>`)
-	};
-	
-	var titleScreen = function titleScreen() {
-	  resetPage();
-	  $('.text').remove('.title');
-	  $('.title').removeClass('removed');
-	  $('.levelList').addClass("removed");
-	
-	  var titleMusic = new _howler2.default.Howl({
-	    src: ['./assets/music/Vatic_Sketch_1.mp3'],
-	    loop: true
-	  });
-	  // if ($('.soundOption')===" Sound: Off "){
-	
-	
-	  titleMusic.play();
-	  // debugger
-	
-	  if ($('.musicOption').text() === " Music: Off ") {
-	    // debugger
-	    titleMusic.stop();
-	  } else {
-	    titleMusic.play();
-	    // debugger
-	  }
-	
-	  // // $('.dreamloLBTable').addClass('removed');
-	  //
-	  var options = {
-	    muteSoundOption: false,
-	    muteMusicOption: false
-	  };
-	
-	  if ($('.LevelSelectList').length === 0) {
-	    $('.LevelSelect').prepend('<ul class="LevelSelectList"><li id="start"> Start Game </li><li id="levels">Level Select</li><li id="leaderboards">Leaderboards</li></ul>');
-	  }
-	  $('#start').on('click', function () {
-	    titleMusic.stop();
-	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level1', options));
-	  });
-	  // if (!$('#levels').onClick){
-	  //   $('#levels').on('click', ()=>{
-	  //     $('.levelList').toggleClass("removed")
-	  //   })
-	  // }
-	  document.getElementById('levels').addEventListener('click', function () {
-	    $('.levelList').toggleClass("removed");
-	  });
-	  $('.test').on('click', function (e) {
-	    titleMusic.stop();
-	    (0, _game.startLevel)((0, _levelRequire.getLevel)('testLevel', options));
-	  });
-	  $('.longTest').on('click', function (e) {
-	    titleMusic.stop();
-	    (0, _game.startLevel)((0, _levelRequire.getLevel)('longTestLvl', options));
-	  });
-	  $('.level1').on('click', function (e) {
-	    titleMusic.stop();
-	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level1', options));
-	  });
-	  $('.level2').on('click', function (e) {
-	    titleMusic.stop();
-	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level2', options));
-	  });
-	  $('.level3').on('click', function (e) {
-	    titleMusic.stop();
-	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level3', options));
-	  });
-	  $('.level4').on('click', function (e) {
-	    titleMusic.stop();
-	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level4', options));
-	  });
-	  $('.level5').on('click', function (e) {
-	    titleMusic.stop();
-	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level5', options));
-	  });
-	  $('.level6').on('click', function (e) {
-	    titleMusic.stop();
-	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level6', options));
-	  });
-	  // $('.leaderboards').on('click', e=> {
-	  //   $('.dreamloLBTable').toggleClass('removed');
-	  //
-	  // })
-	
-	  // Get the modal
-	  var modal = document.getElementById('myModal');
-	
-	  // Get the button that opens the modal
-	  var btn = document.getElementById("leaderboards");
-	
-	  // Get the <span> element that closes the modal
-	  var span = document.getElementsByClassName("close")[0];
-	
-	  // When the user clicks on the button, open the modal
-	  btn.onclick = function () {
-	    modal.style.display = "block";
-	  };
-	
-	  // When the user clicks on <span> (x), close the modal
-	  span.onclick = function () {
-	    modal.style.display = "none";
-	  };
-	
-	  // When the user clicks anywhere outside of the modal, close it
-	  window.onclick = function (event) {
-	    if (event.target == modal) {
-	      modal.style.display = "none";
-	    }
-	  };
-	  $('.soundOption').on('click', function (e) {
-	    // debugger
-	    // e.stopPropagation();
-	    var currentText = $('.soundOption').text();
-	    var newText = currentText === " Sound: Off " ? " Sound: On " : " Sound: Off ";
-	    if (newText === " Sound: Off ") {
-	      debugger;
-	      options['muteSoundOption'] = true;
-	      options['muteMusicOption'] = true;
-	      titleMusic.mute(true);
-	    } else {
-	      // debugger
-	      options['muteSoundOption'] = false;
-	      options['muteMusicOption'] = false;
-	      titleMusic.mute(false);
-	
-	      // Howler.unmute();
-	    }
-	    // }
-	
-	
-	    $('.soundOption').text(newText);
-	    //
-	    //   if ($('.soundOption').text() === " Sound: On ") {
-	    //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: Off </li>')
-	    // } else if ($('.soundOption').text() === " Sound: Off ") {
-	    //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: On </li>')
-	    // }
-	  });
-	
-	  // $('.musicOption').on('click', (e) => {
-	  //   // e.stopPropagation();
-	  //
-	  //   let currentMusicText = $('.musicOption').text()
-	  //   let newMusicText = (currentMusicText === " Music: Off ")? " Music: On " : " Music: Off "
-	  //   if (newMusicText === " Music: Off ") {
-	  //
-	  //     titleMusic.mute(true);
-	  //     options['muteMusicOption'] = true
-	  //   } else {
-	  //     titleMusic.mute(false);
-	  //
-	  //     options['muteMusicOption'] = false
-	  //   }
-	  //   $('.musicOption').text(newMusicText);
-	  // })
-	
-	};
-	
-	// $('#start').on('click', startGame())
-	
-	
-	//insert handlers for levelList
-	
-	exports.default = titleScreen;
 
 /***/ }
 /******/ ]);

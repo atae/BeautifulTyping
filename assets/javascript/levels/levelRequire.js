@@ -32,7 +32,7 @@ export const getLevel = (levelName, soundOption) => {
     // soundFiles: songfiles['gameNormal'],
   level: levels[levelName]['level'],
   currentText: levels[levelName]['currentText'],
-  prelevelText: levels[levelName]['prelevelText'],
+  preLevelText: levels[levelName]['prelevelText'],
   nextLevel: levels[levelName]['nextLevel'],
   animations: levels[levelName]['animations'],
   soundFiles: [songfiles['gameNormal'], songfiles['result']],

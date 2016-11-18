@@ -9,15 +9,13 @@ import titleScreen from './title/titleScreen'
   // export const startLevel = (currentLvl) => {
   //
   // }
+export const startLevel = (currentLvl) => {
 
-
-  export const startLevel = (currentLvl) => {
+  const startGame = (currentLvl) => {
     // debugger
     // console.log(animation);
     // $('.navbar').toggleClass('hidden')
-    $('.title').addClass("removed")
-    $('.done').remove();
-    $('.currentText').remove();
+
     $('.text').append('<h2><span class="done"></span><span class="currentText"></span>')
     let currentLevel = JSON.parse(JSON.stringify(currentLvl));
     let currentText = currentLevel['currentText']
@@ -192,6 +190,7 @@ import titleScreen from './title/titleScreen'
 
             $(`.nextStage`).one('click', () => {
               playResult.stop()
+              $(`.results`).addClass("removed")
               $(`.retryStage`).off('click');
               $(`.returnToTitle`).off('click');
               startLevel(getLevel(currentLevel['nextLevel'],currentLevel['options']
@@ -233,4 +232,37 @@ import titleScreen from './title/titleScreen'
           // $('.keys-entered').replaceWith(`<li class="keys-entered">Correct Keys Entered: ${keys_entered} </li>`)
 })
 
+}
+$('.title').addClass("removed")
+$('.done').remove();
+$('.currentText').remove();
+
+if (currentLvl['preLevelText']) {
+  $('.preLevelText').removeClass('removed')
+  $(`.preLevelText`).replaceWith(`<div class = "preLevelText">
+    <h2 class="preLevelTextText"></h2>
+    <br/>
+    <br/>
+    <h2 class="preLevelTextButton"> Click Here To Begin </h2>
+   </div>`)
+  $('.preLevelTextText').replaceWith(`<h3 class="preLevelTextText">${currentLvl['preLevelText']}</h3>`)
+} else {
+  $('.preLevelTextText').replaceWith(`<h2 class="preLevelTextText">No Text Yet.</h2>`)
+}
+  $('.preLevelTextButton').one('click', (e) => {
+  //3
+  $('.preLevelText').replaceWith('<div class="preLevelText"><h3>3</h3></div>')
+  //2
+   setTimeout( () => {$('.preLevelText').replaceWith('<div class="preLevelText"><h3>2</h3></div>')},1000)
+  //1
+   setTimeout( () => {$('.preLevelText').replaceWith('<div class="preLevelText"><h3>1</h3></div>')},2000)
+  // GO
+  setTimeout( () => {$('.preLevelText').replaceWith('<div class="preLevelText"><h3>Go!</h3></div>')},3000)
+  // actual Go
+  setTimeout( () => {
+    $(`.preLevelText`).addClass('removed')
+    startGame(currentLvl)
+  },4000)
+
+})
 }

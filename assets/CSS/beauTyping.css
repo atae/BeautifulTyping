@@ -14,6 +14,13 @@ body{
   height: 100%;
 
 }
+
+.preLevelText{
+  position:absolute;
+  z-index: 10;
+  width:100%;
+  height: 100%;
+}
 section {
   display: flex;
   flex-wrap: wrap;
@@ -34,6 +41,8 @@ cursor:default;
 }
 
 h2 {
+  text-align: center;
+
 
 }
 
