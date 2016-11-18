@@ -780,6 +780,9 @@
 	      muteSoundOption: $('.soundOption').text() == " Sound: Off ",
 	      muteMusicOption: $('.soundOption').text() == " Sound: Off "
 	    };
+	    if (currentLevel['level'] == "6 - The End") {
+	      $(".nextStage").addClass("hidden");
+	    }
 	    $('.soundOption').removeClass('removed');
 	    $('.toTitle').removeClass('hidden');
 	    $('.text').append('<h2><span class="done"></span><span class="currentText"></span>');
@@ -1669,7 +1672,7 @@
 	//order is Error, Type, Complete
 	
 	var level6 = exports.level6 = {
-	  level: 'Level 6 - The End',
+	  level: '6 - The End',
 	  currentText: ["Honmono no nihongo wo kakitai kedo, romaji dake no hou ga ii da to omou.", "asvlsdu8hfmlkmv!!11!1lls", "I guess this was the last cup of coffee in the world!", "Interview with Andrew Tae", "Single trajectories analyses of the moving vesicles showed that predominance of 3R tau favored the anterograde movement of APP-vesicles, increasing anterograde run lengths and reducing retrograde runs and segmental velocities.", "That's the end of the game! Thanks for playing!", "end"],
 	  prelevelText: ["The Ultimate Test. Stay focused!"],
 	  nextLevel: 'end',

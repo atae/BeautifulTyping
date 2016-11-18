@@ -9,7 +9,7 @@ let soundEffects = [`assets/sounds/Blip_Select.wav`, `assets/sounds/typewriter.w
   //order is Error, Type, Complete
 
 export const level6 = {
-    level: 'Level 6 - The End',
+    level: '6 - The End',
     currentText: ["Honmono no nihongo wo kakitai kedo, romaji dake no hou ga ii da to omou.",
     "asvlsdu8hfmlkmv!!11!1lls",
     "I guess this was the last cup of coffee in the world!",
