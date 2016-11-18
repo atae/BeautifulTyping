@@ -965,7 +965,7 @@
 	        document.removeEventListener('keydown', function (e) {
 	          handleKeyboard(e);
 	        });
-	        $('.results').toggleClass("removed");
+	        $('.results').removeClass("removed");
 	        $('.retryStage').one('click', function () {
 	          playResult.stop();
 	          $('.nextStage').off('click');
@@ -981,12 +981,12 @@
 	        });
 	
 	        $('.returnToTitle').one('click', function () {
-	          document.reload();
-	          // playResult.stop();
-	          // $(`.results`).toggleClass("removed")
-	          // $(`.retryStage`).off('click');
-	          // $(`.nextStage`).off('click');
-	          // titleScreen();
+	          // document.reload();
+	          playResult.stop();
+	          $('.results').addClass("removed");
+	          $('.retryStage').off('click');
+	          $('.nextStage').off('click');
+	          (0, _titleScreen2.default)();
 	        });
 	        // $(`.stageNavigation`).toggleClass('removed')
 	      } else if (currentText[0].length === 0) {
@@ -4406,6 +4406,7 @@
 	  $('.maxWpm').replaceWith('<li class = "maxWpm hidden"> Max WPM: 0 wpm</li>');
 	  $('.errors').replaceWith('<li class ="errors hidden"> Errors: 0 </li>');
 	  $('.titleName').replaceWith('<h2 class="titleName animated bounceInDown"> Beautiful Typing </h2>');
+	
 	  // $(`.LevelSelect`).replaceWith(`<ul class="LevelSelect animated bounceInLeft">
 	  //     </ul>
 	  //
@@ -4419,6 +4420,8 @@
 	
 	var titleScreen = function titleScreen() {
 	  resetPage();
+	  $('.text').remove('.title');
+	  $('.title').removeClass('removed');
 	  var titleMusic = new _howler2.default.Howl({
 	    src: ['./assets/music/Vatic_Sketch_1.mp3']
 	  });
@@ -4431,45 +4434,56 @@
 	    muteSoundOption: false,
 	    muteMusicOption: false
 	  };
-	  $('.LevelSelect').prepend('<ul class="LevelSelect"><li id="start"> Start Game </li><li class="level">Level Select</li><li id="leaderboards">Leaderboards</li></ul>');
+	
+	  if ($('.LevelSelectList').length === 0) {
+	    $('.LevelSelect').prepend('<ul class="LevelSelectList"><li id="start"> Start Game </li><li id="levels">Level Select</li><li id="leaderboards">Leaderboards</li></ul>');
+	  }
 	  $('#start').on('click', function () {
 	    titleMusic.stop();
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level1', options));
 	  });
 	
-	  $('.level').on('click', function () {
+	  $('#levels').on('click', function () {
 	    $('.levelList').toggleClass("removed");
 	  });
 	  $('.test').on('click', function (e) {
 	    titleMusic.stop();
+	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('testLevel', options));
 	  });
 	  $('.longTest').on('click', function (e) {
 	    titleMusic.stop();
+	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('longTestLvl', options));
 	  });
 	  $('.level1').on('click', function (e) {
 	    titleMusic.stop();
+	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level1', options));
 	  });
 	  $('.level2').on('click', function (e) {
 	    titleMusic.stop();
+	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level2', options));
 	  });
 	  $('.level3').on('click', function (e) {
 	    titleMusic.stop();
+	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level3', options));
 	  });
 	  $('.level4').on('click', function (e) {
 	    titleMusic.stop();
+	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level4', options));
 	  });
 	  $('.level5').on('click', function (e) {
 	    titleMusic.stop();
+	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level5', options));
 	  });
 	  $('.level6').on('click', function (e) {
 	    titleMusic.stop();
+	    $('.levelList').toggleClass("removed");
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level6', options));
 	  });
 	  // $('.leaderboards').on('click', e=> {

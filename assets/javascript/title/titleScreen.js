@@ -11,6 +11,7 @@ const resetPage = () => {
     $('.maxWpm').replaceWith(`<li class = "maxWpm hidden"> Max WPM: 0 wpm</li>`)
     $('.errors').replaceWith(`<li class ="errors hidden"> Errors: 0 </li>`)
     $('.titleName').replaceWith(`<h2 class="titleName animated bounceInDown"> Beautiful Typing </h2>`)
+
     // $(`.LevelSelect`).replaceWith(`<ul class="LevelSelect animated bounceInLeft">
     //     </ul>
     //
@@ -25,10 +26,11 @@ const resetPage = () => {
 
 const titleScreen = () => {
   resetPage()
+  $('.text').remove(`.title`)
+  $('.title').removeClass('removed')
   let titleMusic = new Howler.Howl({
     src:['./assets/music/Vatic_Sketch_1.mp3']
-  }
-  )
+  })
 
   titleMusic.play();
 
@@ -38,37 +40,48 @@ const titleScreen = () => {
     muteSoundOption: false,
     muteMusicOption: false
   }
-  $('.LevelSelect').prepend('<ul class="LevelSelect"><li id="start"> Start Game </li><li class="level">Level Select</li><li id="leaderboards">Leaderboards</li></ul>')
+
+  if ($('.LevelSelectList').length === 0){
+  $('.LevelSelect').prepend('<ul class="LevelSelectList"><li id="start"> Start Game </li><li id="levels">Level Select</li><li id="leaderboards">Leaderboards</li></ul>')
+  }
   $('#start').on('click', ()=>{
     titleMusic.stop()
     startLevel(getLevel(`level1`, options))})
 
-  $('.level').on('click', ()=>{
+  $('#levels').on('click', ()=>{
     $('.levelList').toggleClass("removed")
   })
   $('.test').on('click', e => {
     titleMusic.stop()
+    $('.levelList').toggleClass("removed")
     startLevel(getLevel(`testLevel`, options))})
   $('.longTest').on('click', e => {
     titleMusic.stop()
+    $('.levelList').toggleClass("removed")
     startLevel(getLevel(`longTestLvl`, options))})
   $('.level1').on('click', e => {
     titleMusic.stop()
+    $('.levelList').toggleClass("removed")
     startLevel(getLevel(`level1`, options))})
   $('.level2').on('click', e => {
     titleMusic.stop()
+    $('.levelList').toggleClass("removed")
     startLevel(getLevel(`level2`, options))})
   $('.level3').on('click', e => {
     titleMusic.stop()
+    $('.levelList').toggleClass("removed")
     startLevel(getLevel(`level3`, options))})
   $('.level4').on('click', e => {
     titleMusic.stop()
+    $('.levelList').toggleClass("removed")
     startLevel(getLevel(`level4`, options))})
   $('.level5').on('click', e => {
     titleMusic.stop()
+    $('.levelList').toggleClass("removed")
     startLevel(getLevel(`level5`, options))})
   $('.level6').on('click', e => {
     titleMusic.stop()
+    $('.levelList').toggleClass("removed")
     startLevel(getLevel(`level6`, options))})
   // $('.leaderboards').on('click', e=> {
   //   $('.dreamloLBTable').toggleClass('removed');

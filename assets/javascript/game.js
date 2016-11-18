@@ -183,7 +183,7 @@ import titleScreen from './title/titleScreen'
             playResult.play();
             //replace this line with results screen in the future
             document.removeEventListener('keydown',(e) => { handleKeyboard(e)})
-            $(`.results`).toggleClass("removed")
+            $(`.results`).removeClass("removed")
             $(`.retryStage`).one('click', () => {
               playResult.stop()
               $(`.nextStage`).off('click');
@@ -199,12 +199,12 @@ import titleScreen from './title/titleScreen'
             ))})
 
               $('.returnToTitle').one('click', () => {
-                document.reload();
-                // playResult.stop();
-                // $(`.results`).toggleClass("removed")
-                // $(`.retryStage`).off('click');
-                // $(`.nextStage`).off('click');
-                // titleScreen();
+                // document.reload();
+                playResult.stop();
+                $(`.results`).addClass("removed")
+                $(`.retryStage`).off('click');
+                $(`.nextStage`).off('click');
+                titleScreen();
               })
             // $(`.stageNavigation`).toggleClass('removed')
           } else if (currentText[0].length === 0) {
