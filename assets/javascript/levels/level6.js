@@ -9,12 +9,12 @@ let soundEffects = [`assets/sounds/Blip_Select.wav`, `assets/sounds/typewriter.w
   //order is Error, Type, Complete
 
 export const level6 = {
-    level: '',
-    currentText: [" ","end"],
+    level: 'Level 6 - The End',
+    currentText: ["","end"],
     prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
     nextLevel: 'end',
     animations: {
-      shake: false,
+      shake: true,
       spotlight: true,
       flags: false,
       cats: false,

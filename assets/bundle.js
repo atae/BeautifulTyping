@@ -776,10 +776,12 @@
 	var startLevel = exports.startLevel = function startLevel(currentLvl) {
 	
 	  var startGame = function startGame(currentLvl) {
-	    // debugger
-	    // console.log(animation);
-	    // $('.navbar').toggleClass('hidden')
-	
+	    var options = {
+	      muteSoundOption: $('.soundOption').text() == " Sound: Off ",
+	      muteMusicOption: $('.soundOption').text() == " Sound: Off "
+	    };
+	    $('.soundOption').removeClass('removed');
+	    $('.toTitle').removeClass('hidden');
 	    $('.text').append('<h2><span class="done"></span><span class="currentText"></span>');
 	    var currentLevel = JSON.parse(JSON.stringify(currentLvl));
 	    var currentText = currentLevel['currentText'];
@@ -818,35 +820,103 @@
 	      src: soundFiles[0],
 	      loop: true,
 	      html5: true,
-	      mute: currentLevel['options']['muteMusicOption']
+	      mute: options['muteMusicOption']
 	    });
 	    var playResult = new _howler2.default.Howl({
 	      src: soundFiles[1],
 	      loop: true,
 	      html5: true,
-	      mute: currentLevel['options']['muteMusicOption']
+	      mute: options['muteMusicOption']
 	    });
 	
 	    var sfx = currentLevel['sfx'];
 	    var errorSound = new _howler2.default.Howl({
 	      src: [sfx[0]],
 	      volume: 0.4,
-	      mute: currentLevel['options']['muteSoundOption']
+	      mute: options['muteSoundOption']
 	
 	    });
 	
 	    var typeSound = new _howler2.default.Howl({
 	      src: [sfx[1]],
 	      volume: 1,
-	      mute: currentLevel['options']['muteSoundOption']
+	      mute: options['muteSoundOption']
 	    });
 	
 	    var dingSound = new _howler2.default.Howl({
 	      src: [sfx[2]],
 	      volume: 1,
-	      mute: currentLevel['options']['muteSoundOption']
+	      mute: options['muteSoundOption']
 	    });
 	
+	    $('.soundOption').on('click', function (e) {
+	      // debugger
+	      // e.stopPropagation();
+	      var currentText = $('.soundOption').text();
+	      var newText = currentText === " Sound: Off " ? " Sound: On " : " Sound: Off ";
+	      if (newText === " Sound: Off ") {
+	        playMusic.mute(true);
+	        playResult.mute(true);
+	        playMusic.pause();
+	        playResult.pause();
+	        errorSound = new _howler2.default.Howl({
+	          src: [sfx[0]],
+	          volume: 0.4,
+	          mute: true
+	
+	        });
+	
+	        typeSound = new _howler2.default.Howl({
+	          src: [sfx[1]],
+	          volume: 1,
+	          mute: true
+	        });
+	
+	        dingSound = new _howler2.default.Howl({
+	          src: [sfx[2]],
+	          volume: 1,
+	          mute: true
+	        });
+	      } else {
+	        playMusic.mute(false);
+	        playResult.mute(false);
+	        playMusic.stop();
+	        playResult.stop();
+	        if ($('.results').attr('class') == "results removed") {
+	          playMusic.play();
+	        } else {
+	          playResult.play();
+	        }
+	        errorSound = new _howler2.default.Howl({
+	          src: [sfx[0]],
+	          volume: 0.4,
+	          mute: false
+	
+	        });
+	
+	        typeSound = new _howler2.default.Howl({
+	          src: [sfx[1]],
+	          volume: 1,
+	          mute: false
+	        });
+	
+	        dingSound = new _howler2.default.Howl({
+	          src: [sfx[2]],
+	          volume: 1,
+	          mute: false
+	        });
+	      }
+	      // }
+	
+	
+	      $('.soundOption').text(newText);
+	      //
+	      //   if ($('.soundOption').text() === " Sound: On ") {
+	      //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: Off </li>')
+	      // } else if ($('.soundOption').text() === " Sound: Off ") {
+	      //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: On </li>')
+	      // }
+	    });
 	    //Setup Level Gimmicks here
 	    var className = "currentText";
 	    var toggleAnimation = function toggleAnimation(element) {
@@ -936,7 +1006,9 @@
 	          done = "";
 	          $('.done').replaceWith('<span class="done">' + done + '</span>');
 	          $('.currentText').replaceWith('<span class="done"></span>');
-	          playResult.play();
+	          if ($('.soundOption').text() == " Sound: On ") {
+	            playResult.play();
+	          }
 	          //replace this line with results screen in the future
 	          document.removeEventListener('keydown', function (e) {
 	            handleKeyboard(e);
@@ -944,6 +1016,7 @@
 	          $('.results').removeClass("removed");
 	          $('.retryStage').one('click', function () {
 	            playResult.stop();
+	            $('.soundOption').off('click');
 	            $('.nextStage').off('click');
 	            $('.returnToTitle').off('click');
 	            startLevel(currentLvl);
@@ -952,15 +1025,17 @@
 	          $('.nextStage').one('click', function () {
 	            playResult.stop();
 	            $('.results').addClass("removed");
+	            $('.soundOption').off('click');
 	            $('.retryStage').off('click');
 	            $('.returnToTitle').off('click');
 	            startLevel((0, _levelRequire.getLevel)(currentLevel['nextLevel'], currentLevel['options']));
 	          });
 	
-	          $('.nextStage').one('keypress', function (e) {
+	          $().on('keydown', function (e) {
 	            debugger;
-	            if (e.key === "Enter") {
+	            if (e.key == "Enter") {
 	              playResult.stop();
+	              $('.soundOption').off('click');
 	              $('.retryStage').off('click');
 	              $('.returnToTitle').off('click');
 	              startLevel((0, _levelRequire.getLevel)(currentLevel['nextLevel'], currentLevel['options']));
@@ -970,6 +1045,7 @@
 	          $('.returnToTitle').one('click', function () {
 	            // document.reload();
 	            playResult.stop();
+	            $('.soundOption').off('click');
 	            $('.results').addClass("removed");
 	            $('.retryStage').off('click');
 	            $('.nextStage').off('click');
@@ -987,16 +1063,38 @@
 	          toggleAnimation($('.currentText'));
 	        }
 	      } else if (currentText[0] == "end") {}
+	    });
+	    $('.toTitle').on('click', function (e) {
+	      $('#levels').off('click');
+	      $('.soundOption').off('click');
+	      playResult.stop();
+	      $('.soundOption').off('click');
+	      $('.results').addClass("removed");
+	      $('.retryStage').off('click');
+	      $('.nextStage').off('click');
+	      playMusic.stop();
+	      currentText = "";
+	      clearInterval(gameWatcher);
+	      done = "";
+	      document.removeEventListener('keydown', function (e) {
+	        handleKeyboard(e);
+	      });
+	
+	      $('.done').replaceWith('<span class="done">' + done + '</span>');
+	      $('.currentText').replaceWith('<span class="done"></span>');
+	      (0, _titleScreen2.default)();
 	      // $('.keys-entered').replaceWith(`<li class="keys-entered">Correct Keys Entered: ${keys_entered} </li>`)
 	    });
 	  };
+	
 	  $('.title').addClass("removed");
 	  $('.done').remove();
 	  $('.currentText').remove();
-	
+	  $('.soundOption').addClass('removed');
+	  $('.combo').addClass('removed');
 	  if (currentLvl['preLevelText']) {
 	    $('.preLevelText').removeClass('removed');
-	    $('.preLevelText').replaceWith('<div class = "preLevelText">\n    <h2 class="preLevelTextText"></h2>\n    <br/>\n    <br/>\n    <h2 class="preLevelTextButton"> Click Here To Begin </h2>\n   </div>');
+	    $('.preLevelText').replaceWith('<div class = "preLevelText">\n      <h2 class="preLevelTextText"></h2>\n      <br/>\n      <br/>\n      <h2 class="preLevelTextButton"> Click Here To Begin </h2>\n     </div>');
 	    $('.preLevelTextText').replaceWith('<h3 class="preLevelTextText">' + currentLvl['preLevelText'] + '</h3>');
 	  } else {
 	    $('.preLevelTextText').replaceWith('<h2 class="preLevelTextText">No Text Yet.</h2>');
@@ -1484,7 +1582,7 @@
 	
 	var soundEffects = ['assets/sounds/Blip_Select.wav', 'assets/sounds/typewriter.wav', 'assets/sounds/Pickup_Coin10.wav'];
 	//order is Error, Type, Complete
-	
+	//Have a bouncing cat phrase going around the screen. (i.e. Feed me. Meow.)
 	var level4 = exports.level4 = {
 	  level: '4 - The Cat',
 	  currentText: ["shytnhi.;o8ng d", "gh6op;;;lvfvfggfbv", "brhnykm8lrmjsfr3tr4hhy5ju6i8jn5s", "w aqxdcwrhngvynj6kmu7,il;o[pmk;", ".luy[]hy6nfr cd bl,///////////;'''''''54265y4trdjfghc9 lkjbtdhs113544444444444444444444439wa]", "end"],
@@ -1552,12 +1650,12 @@
 	//order is Error, Type, Complete
 	
 	var level6 = exports.level6 = {
-	  level: '',
-	  currentText: [" ", "end"],
+	  level: 'Level 6 - The End',
+	  currentText: ["", "end"],
 	  prelevelText: ["Welcome to Beautiful Typing! Let's get you warmed up for the tasks ahead."],
 	  nextLevel: 'end',
 	  animations: {
-	    shake: false,
+	    shake: true,
 	    spotlight: true,
 	    flags: false,
 	    cats: false,
@@ -1652,6 +1750,10 @@
 	
 	var _howler2 = _interopRequireDefault(_howler);
 	
+	var _animation = __webpack_require__(3);
+	
+	var _animation2 = _interopRequireDefault(_animation);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var resetPage = function resetPage() {
@@ -1679,6 +1781,7 @@
 	  resetPage();
 	  $('.text').remove('.title');
 	  $('.title').removeClass('removed');
+	
 	  $('.levelList').addClass("removed");
 	
 	  var titleMusic = new _howler2.default.Howl({
@@ -1688,19 +1791,51 @@
 	  // if ($('.soundOption')===" Sound: Off "){
 	
 	
-	  titleMusic.play();
+	  // titleMusic.play();
 	  // debugger
 	
 	  if ($('.musicOption').text() === " Music: Off ") {
 	    // debugger
-	    titleMusic.stop();
-	  } else {
-	    titleMusic.play();
+	    // titleMusic.stop();
+	  } else {}
+	    // titleMusic.play();
 	    // debugger
-	  }
 	
-	  // // $('.dreamloLBTable').addClass('removed');
-	  //
+	
+	    // // $('.dreamloLBTable').addClass('removed');
+	    //
+	  $('.toTitle').addClass("hidden");
+	  (0, _animation2.default)();
+	
+	  $('.soundOption').on('click', function (e) {
+	    // debugger
+	    // e.stopPropagation();
+	    var currentText = $('.soundOption').text();
+	    var newText = currentText === " Sound: Off " ? " Sound: On " : " Sound: Off ";
+	    if (newText === " Sound: Off ") {
+	      // debugger
+	      options['muteSoundOption'] = true;
+	      options['muteMusicOption'] = true;
+	      // titleMusic.mute(true)
+	    } else {
+	      // debugger
+	      options['muteSoundOption'] = false;
+	      options['muteMusicOption'] = false;
+	      // titleMusic.mute(false)
+	
+	      // Howler.unmute();
+	    }
+	    // }
+	
+	
+	    $('.soundOption').text(newText);
+	    //
+	    //   if ($('.soundOption').text() === " Sound: On ") {
+	    //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: Off </li>')
+	    // } else if ($('.soundOption').text() === " Sound: Off ") {
+	    //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: On </li>')
+	    // }
+	  });
 	  var options = {
 	    muteSoundOption: false,
 	    muteMusicOption: false
@@ -1710,7 +1845,10 @@
 	    $('.LevelSelect').prepend('<ul class="LevelSelectList"><li id="start"> Start Game </li><li id="levels">Level Select</li><li id="leaderboards">Leaderboards</li></ul>');
 	  }
 	  $('#start').on('click', function () {
-	    titleMusic.stop();
+	    // titleMusic.stop()
+	    $('#levels').off('click');
+	    $('.soundOption').off('click');
+	
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level1', options));
 	  });
 	  // if (!$('#levels').onClick){
@@ -1718,41 +1856,59 @@
 	  //     $('.levelList').toggleClass("removed")
 	  //   })
 	  // }
-	  document.getElementById('levels').addEventListener('click', function () {
+	  $('#levels').on('click', function () {
 	    $('.levelList').toggleClass("removed");
 	  });
+	
 	  $('.test').on('click', function (e) {
-	    titleMusic.stop();
+	    // titleMusic.stop()
+	    $('#levels').off('click');
+	    $('.soundOption').off('click');
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('testLevel', options));
 	  });
 	  $('.longTest').on('click', function (e) {
-	    titleMusic.stop();
+	    // titleMusic.stop()
+	    $('#levels').off('click');
+	    $('.soundOption').off('click');
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('longTestLvl', options));
 	  });
 	  $('.level1').on('click', function (e) {
-	    titleMusic.stop();
+	    // titleMusic.stop()
+	    $('#levels').off('click');
+	    $('.soundOption').off('click');
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level1', options));
 	  });
 	  $('.level2').on('click', function (e) {
-	    titleMusic.stop();
+	    // titleMusic.stop()
+	    $('#levels').off('click');
+	    $('.soundOption').off('click');
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level2', options));
 	  });
 	  $('.level3').on('click', function (e) {
-	    titleMusic.stop();
+	    // titleMusic.stop()
+	    $('#levels').off('click');
+	    $('.soundOption').off('click');
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level3', options));
 	  });
 	  $('.level4').on('click', function (e) {
-	    titleMusic.stop();
+	    // titleMusic.stop()
+	    $('#levels').off('click');
+	    $('.soundOption').off('click');
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level4', options));
 	  });
 	  $('.level5').on('click', function (e) {
-	    titleMusic.stop();
+	    // titleMusic.stop()
+	    $('#levels').off('click');
+	    $('.soundOption').off('click');
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level5', options));
 	  });
 	  $('.level6').on('click', function (e) {
-	    titleMusic.stop();
+	    // titleMusic.stop()
+	    $('#levels').off('click');
+	    $('.soundOption').off('click');
 	    (0, _game.startLevel)((0, _levelRequire.getLevel)('level6', options));
 	  });
+	
 	  // $('.leaderboards').on('click', e=> {
 	  //   $('.dreamloLBTable').toggleClass('removed');
 	  //
@@ -1783,35 +1939,6 @@
 	      modal.style.display = "none";
 	    }
 	  };
-	  $('.soundOption').on('click', function (e) {
-	    // debugger
-	    // e.stopPropagation();
-	    var currentText = $('.soundOption').text();
-	    var newText = currentText === " Sound: Off " ? " Sound: On " : " Sound: Off ";
-	    if (newText === " Sound: Off ") {
-	      debugger;
-	      options['muteSoundOption'] = true;
-	      options['muteMusicOption'] = true;
-	      titleMusic.mute(true);
-	    } else {
-	      // debugger
-	      options['muteSoundOption'] = false;
-	      options['muteMusicOption'] = false;
-	      titleMusic.mute(false);
-	
-	      // Howler.unmute();
-	    }
-	    // }
-	
-	
-	    $('.soundOption').text(newText);
-	    //
-	    //   if ($('.soundOption').text() === " Sound: On ") {
-	    //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: Off </li>')
-	    // } else if ($('.soundOption').text() === " Sound: Off ") {
-	    //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: On </li>')
-	    // }
-	  });
 	
 	  // $('.musicOption').on('click', (e) => {
 	  //   // e.stopPropagation();
@@ -1820,10 +1947,10 @@
 	  //   let newMusicText = (currentMusicText === " Music: Off ")? " Music: On " : " Music: Off "
 	  //   if (newMusicText === " Music: Off ") {
 	  //
-	  //     titleMusic.mute(true);
+	  titleMusic.mute(true);
 	  //     options['muteMusicOption'] = true
 	  //   } else {
-	  //     titleMusic.mute(false);
+	  titleMusic.mute(false);
 	  //
 	  //     options['muteMusicOption'] = false
 	  //   }

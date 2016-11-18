@@ -12,10 +12,12 @@ import titleScreen from './title/titleScreen'
 export const startLevel = (currentLvl) => {
 
   const startGame = (currentLvl) => {
-    // debugger
-    // console.log(animation);
-    // $('.navbar').toggleClass('hidden')
-
+    let options = {
+      muteSoundOption: ($('.soundOption').text() == " Sound: Off "),
+      muteMusicOption: ($('.soundOption').text() == " Sound: Off ")
+    }
+    $('.soundOption').removeClass('removed')
+    $(`.toTitle`).removeClass('hidden')
     $('.text').append('<h2><span class="done"></span><span class="currentText"></span>')
     let currentLevel = JSON.parse(JSON.stringify(currentLvl));
     let currentText = currentLevel['currentText']
@@ -52,35 +54,103 @@ export const startLevel = (currentLvl) => {
         src: soundFiles[0],
         loop: true,
         html5: true,
-        mute: currentLevel['options']['muteMusicOption']
+        mute: options['muteMusicOption']
       });
       let playResult = new Howler.Howl({
         src: soundFiles[1],
         loop: true,
         html5: true,
-        mute: currentLevel['options']['muteMusicOption']
+        mute: options['muteMusicOption']
       })
 
       let sfx = currentLevel['sfx']
       let errorSound = new Howler.Howl({
         src: [sfx[0]],
         volume: 0.4,
-        mute: currentLevel['options']['muteSoundOption']
+        mute: options['muteSoundOption']
 
       });
 
       let typeSound = new Howler.Howl({
         src: [sfx[1]],
         volume: 1,
-        mute: currentLevel['options']['muteSoundOption']
+        mute: options['muteSoundOption']
       })
 
       let dingSound = new Howler.Howl({
         src: [sfx[2]],
         volume: 1,
-        mute: currentLevel['options']['muteSoundOption']
+        mute: options['muteSoundOption']
       })
 
+      $('.soundOption').on('click', (e) => {
+        // debugger
+        // e.stopPropagation();
+        let currentText = $('.soundOption').text()
+        let newText = (currentText === " Sound: Off ")? " Sound: On " : " Sound: Off "
+        if (newText === " Sound: Off ") {
+          playMusic.mute(true)
+          playResult.mute(true)
+          playMusic.pause()
+          playResult.pause()
+          errorSound = new Howler.Howl({
+            src: [sfx[0]],
+            volume: 0.4,
+            mute: true
+
+          });
+
+          typeSound = new Howler.Howl({
+            src: [sfx[1]],
+            volume: 1,
+            mute: true
+          })
+
+          dingSound = new Howler.Howl({
+            src: [sfx[2]],
+            volume: 1,
+            mute: true
+          })
+        } else {
+          playMusic.mute(false)
+          playResult.mute(false)
+          playMusic.stop()
+          playResult.stop()
+          if ($('.results').attr('class') == "results removed") {
+            playMusic.play()
+          } else {
+            playResult.play()
+          }
+          errorSound = new Howler.Howl({
+            src: [sfx[0]],
+            volume: 0.4,
+            mute: false
+
+          });
+
+          typeSound = new Howler.Howl({
+            src: [sfx[1]],
+            volume: 1,
+            mute: false
+          })
+
+          dingSound = new Howler.Howl({
+            src: [sfx[2]],
+            volume: 1,
+            mute: false
+          })
+        }
+        // }
+
+
+        $('.soundOption').text(newText);
+      //
+      //   if ($('.soundOption').text() === " Sound: On ") {
+      //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: Off </li>')
+      // } else if ($('.soundOption').text() === " Sound: Off ") {
+      //   $('.soundOption').replaceWith('<li class="soundOption"> Sound: On </li>')
+      // }
+      })
     //Setup Level Gimmicks here
     let className = "currentText"
     let toggleAnimation = (element) => {
@@ -177,12 +247,15 @@ export const startLevel = (currentLvl) => {
             done = ""
             $('.done').replaceWith(`<span class="done">${done}</span>`)
             $(`.currentText`).replaceWith(`<span class="done"></span>`)
+            if ($('.soundOption').text() == " Sound: On ") {
             playResult.play();
+            }
             //replace this line with results screen in the future
             document.removeEventListener('keydown',(e) => { handleKeyboard(e)})
             $(`.results`).removeClass("removed")
             $(`.retryStage`).one('click', () => {
               playResult.stop()
+              $('.soundOption').off('click');
               $(`.nextStage`).off('click');
               $(`.returnToTitle`).off('click');
               startLevel(currentLvl)
@@ -191,15 +264,17 @@ export const startLevel = (currentLvl) => {
             $(`.nextStage`).one('click', () => {
               playResult.stop()
               $(`.results`).addClass("removed")
+              $('.soundOption').off('click');
               $(`.retryStage`).off('click');
               $(`.returnToTitle`).off('click');
               startLevel(getLevel(currentLevel['nextLevel'],currentLevel['options']
             ))})
 
-            $(`.nextStage`).one('keypress', (e) => {
+            $().on('keydown', (e) => {
               debugger
-              if (e.key==="Enter"){
+              if (e.key=="Enter"){
               playResult.stop()
+              $('.soundOption').off('click');
               $(`.retryStage`).off('click');
               $(`.returnToTitle`).off('click');
               startLevel(getLevel(currentLevel['nextLevel'],currentLevel['options']
@@ -208,6 +283,7 @@ export const startLevel = (currentLvl) => {
               $('.returnToTitle').one('click', () => {
                 // document.reload();
                 playResult.stop();
+                $('.soundOption').off('click');
                 $(`.results`).addClass("removed")
                 $(`.retryStage`).off('click');
                 $(`.nextStage`).off('click');
@@ -226,43 +302,66 @@ export const startLevel = (currentLvl) => {
 
           }
 
+
+
       } else if (currentText[0] == "end"){
 
       }
+
+      })
+      $('.toTitle').on('click', e => {
+        $(`#levels`).off('click')
+        $(`.soundOption`).off('click')
+        playResult.stop();
+        $('.soundOption').off('click');
+        $(`.results`).addClass("removed")
+        $(`.retryStage`).off('click');
+        $(`.nextStage`).off('click');
+        playMusic.stop();
+        currentText = ""
+        clearInterval(gameWatcher);
+        done = ""
+        document.removeEventListener('keydown',(e) => { handleKeyboard(e)})
+
+        $('.done').replaceWith(`<span class="done">${done}</span>`)
+        $(`.currentText`).replaceWith(`<span class="done"></span>`)
+        titleScreen();
           // $('.keys-entered').replaceWith(`<li class="keys-entered">Correct Keys Entered: ${keys_entered} </li>`)
 })
 
 }
-$('.title').addClass("removed")
-$('.done').remove();
-$('.currentText').remove();
 
-if (currentLvl['preLevelText']) {
-  $('.preLevelText').removeClass('removed')
-  $(`.preLevelText`).replaceWith(`<div class = "preLevelText">
-    <h2 class="preLevelTextText"></h2>
-    <br/>
-    <br/>
-    <h2 class="preLevelTextButton"> Click Here To Begin </h2>
-   </div>`)
-  $('.preLevelTextText').replaceWith(`<h3 class="preLevelTextText">${currentLvl['preLevelText']}</h3>`)
-} else {
-  $('.preLevelTextText').replaceWith(`<h2 class="preLevelTextText">No Text Yet.</h2>`)
-}
-  $('.preLevelTextButton').one('click', (e) => {
-  //3
-  $('.preLevelText').replaceWith('<div class="preLevelText"><h3>3</h3></div>')
-  //2
-   setTimeout( () => {$('.preLevelText').replaceWith('<div class="preLevelText"><h3>2</h3></div>')},1000)
-  //1
-   setTimeout( () => {$('.preLevelText').replaceWith('<div class="preLevelText"><h3>1</h3></div>')},2000)
-  // GO
-  setTimeout( () => {$('.preLevelText').replaceWith('<div class="preLevelText"><h3>Go!</h3></div>')},3000)
-  // actual Go
-  setTimeout( () => {
-    $(`.preLevelText`).addClass('removed')
-    startGame(currentLvl)
-  },4000)
+  $('.title').addClass("removed")
+  $('.done').remove();
+  $('.currentText').remove();
+  $('.soundOption').addClass('removed')
+  $('.combo').addClass('removed')
+  if (currentLvl['preLevelText']) {
+    $('.preLevelText').removeClass('removed')
+    $(`.preLevelText`).replaceWith(`<div class = "preLevelText">
+      <h2 class="preLevelTextText"></h2>
+      <br/>
+      <br/>
+      <h2 class="preLevelTextButton"> Click Here To Begin </h2>
+     </div>`)
+    $('.preLevelTextText').replaceWith(`<h3 class="preLevelTextText">${currentLvl['preLevelText']}</h3>`)
+  } else {
+    $('.preLevelTextText').replaceWith(`<h2 class="preLevelTextText">No Text Yet.</h2>`)
+  }
+    $('.preLevelTextButton').one('click', (e) => {
+    //3
+    $('.preLevelText').replaceWith('<div class="preLevelText"><h3>3</h3></div>')
+    //2
+     setTimeout( () => {$('.preLevelText').replaceWith('<div class="preLevelText"><h3>2</h3></div>')},1000)
+    //1
+     setTimeout( () => {$('.preLevelText').replaceWith('<div class="preLevelText"><h3>1</h3></div>')},2000)
+    // GO
+    setTimeout( () => {$('.preLevelText').replaceWith('<div class="preLevelText"><h3>Go!</h3></div>')},3000)
+    // actual Go
+    setTimeout( () => {
+      $(`.preLevelText`).addClass('removed')
+      startGame(currentLvl)
+    },4000)
 
 })
 }

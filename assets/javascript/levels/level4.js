@@ -7,7 +7,7 @@ let songfiles = {
 
 let soundEffects = [`assets/sounds/Blip_Select.wav`, `assets/sounds/typewriter.wav`, `assets/sounds/Pickup_Coin10.wav`]
   //order is Error, Type, Complete
-
+//Have a bouncing cat phrase going around the screen. (i.e. Feed me. Meow.)
 export const level4 = {
   level: '4 - The Cat',
   currentText: ["shytnhi.;o8ng d",

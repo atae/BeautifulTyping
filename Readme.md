@@ -1,5 +1,7 @@
 #Beautiful Typing
 Link to live version
+[Live Link]
+[Live Link]: https://atae.github.io/BeautifulTyping/beauTyping.html
 
 Beautiful Typing is a series of arcade-style typing challenges that will test the users ability to type in different situations.
 
@@ -10,7 +12,7 @@ Beautiful Typing is a series of arcade-style typing challenges that will test th
 
 
 
-  
+
 ### Level Selecting
   The game loop handles one level at a time, but since I needed multiple levels, I created a level selection method that utilizes JSON objects.
 
