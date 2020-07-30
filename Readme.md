@@ -1,13 +1,12 @@
-#Beautiful Typing
-[Live Link]
-[Live Link]: https://atae.github.io/BeautifulTyping/beauTyping.html
+# Beautiful Typing
+[Live Link](https://atae.github.io/BeautifulTyping/beauTyping.html)
 
 Beautiful Typing is a series of arcade-style typing challenges that will test the users ability to type in different situations.
 
-##Instructions
+## Instructions
   This game requires a keyboard to play. Start the Game or choose a level and type the words as quickly and accurately as possible. The
 
-##Technologies and Technical Features
+## Technologies and Technical Features
 This project uses the following technologies:
 - Vanilla JavaScript and `jquery` for handling game logic
 - `Anime.js` with `HTML5 Canvas` for modern animations and visual feedback
@@ -29,7 +28,7 @@ This project uses the following technologies:
 
 
 
-##To-dos/future features
+## To-dos/future features
   In future versions, I will be implementing the following features:
     - More leaderboard interaction
     - Additional Level ideas implemented with specific animations
