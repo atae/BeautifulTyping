@@ -1,5 +1,5 @@
 # Beautiful Typing
-[Live Link](https://atae.github.io/BeautifulTyping/beauTyping.html)
+[Live Link](https://atae.github.io/BeautifulTyping/beauTypin.html)
 
 Beautiful Typing is a series of arcade-style typing challenges that will test the users ability to type in different situations.
 
